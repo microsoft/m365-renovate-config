@@ -153,6 +153,8 @@ ${modifiedJson}
 ${comments.extra.start}
 ${extraContent}
 ${comments.extra.end}
+
+---
 `,
     };
   });
