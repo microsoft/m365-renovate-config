@@ -12,27 +12,27 @@
 
   "lockFileMaintenance": {
     "automerge": true,
-    "automergeType": "branch"
+    "platformAutomerge": true
   },
 
   "reviewers": ["ecraig12345"],
 
   "packageRules": [
     {
-      // Update Renovate every Monday, only making a PR if tests fail
+      // Update Renovate every Monday
       "extends": ["schedule:earlyMondays"],
       "matchPackageNames": ["renovate"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
-      "automergeType": "branch"
+      "platformAutomerge": true
     },
     {
-      // Update @types/node minor/patch every Monday, only making a PR if tests fail
+      // Update @types/node minor/patch every Monday
       "extends": ["schedule:earlyMondays"],
       "matchPackageNames": ["@types/node"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
-      "automergeType": "branch"
+      "platformAutomerge": true
     },
     {
       // Use "build" for all dep updates because they don't actually affect the configs
