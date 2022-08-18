@@ -51,7 +51,7 @@ jobs:
             exit 1
           fi
         env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN_READ }}
+          TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
 
       - name: Renovate dry run with all presets
         run: yarn test:full
