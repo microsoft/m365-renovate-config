@@ -41,7 +41,7 @@ jobs:
       - name: Verify github token
         run: |
           set -e
-          ghStatus=$(curl -s -w '%{http_code}\n' -H "Authorization: token $TOKEN" https://api.github.com/)
+          ghStatus=$(curl -s -w '%{http_code}\n' -H "Authorization: token $TOKEN" https://api.github.com/ | tail -n 1)
           if [[ $ghStatus -ne 200 ]]; then
             echo "::error::GitHub token is expired or invalid"
             exit 1
