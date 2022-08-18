@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "tsc -p jsconfig.json",
+    "check-token": "node ./scripts/checkToken.js",
     "fix-repo-refs": "node ./scripts/fixRepoRefs.js",
     "format": "prettier --write .",
     "lint": "node ./scripts/lintPresets.js",
