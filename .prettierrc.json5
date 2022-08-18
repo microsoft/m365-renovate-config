@@ -1,0 +1,14 @@
+{
+  "tabWidth": 2,
+  "printWidth": 100,
+  "singleQuote": true,
+  "overrides": [
+    {
+      // format .json5 files as jsonc for VS Code support
+      "files": ["*.json5"],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
+}

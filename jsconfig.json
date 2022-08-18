@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "noEmit": true,
+    "module": "NodeNext",
+    "lib": ["ES2020"],
+    "skipLibCheck": true
+  },
+  "include": ["scripts"],
+  "exclude": ["node_modules"]
+}

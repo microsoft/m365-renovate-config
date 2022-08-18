@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Group all rollup-related updates (except when initially pinning).",
+
+  "packageRules": [
+    {
+      "groupName": "rollup packages",
+      "matchPackagePrefixes": ["@rollup"],
+      "matchPackagePatterns": ["^rollup"],
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+    }
+  ]
+}

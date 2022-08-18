@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Group all eslint-related updates (except when initially pinning).",
+
+  "packageRules": [
+    {
+      "groupName": "eslint packages",
+      "matchPackagePatterns": ["eslint"],
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+    }
+  ]
+}

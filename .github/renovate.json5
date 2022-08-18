@@ -1,0 +1,43 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>microsoft/m365-renovate-config:libraryRecommended",
+    "github>microsoft/m365-renovate-config:keepFresh"
+  ],
+
+  // Ignore default semantic commit config (see packageRules below)
+  "ignorePresets": [":semanticPrefixFixDepsChoreOthers"],
+
+  "labels": ["renovate"],
+
+  "lockFileMaintenance": {
+    "automerge": true,
+    "automergeType": "branch"
+  },
+
+  "reviewers": ["ecraig12345"],
+
+  "packageRules": [
+    {
+      // Update Renovate every Monday, only making a PR if tests fail
+      "extends": ["schedule:earlyMondays"],
+      "matchPackageNames": ["renovate"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      // Update @types/node minor/patch every Monday, only making a PR if tests fail
+      "extends": ["schedule:earlyMondays"],
+      "matchPackageNames": ["@types/node"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      // Use "build" for all dep updates because they don't actually affect the configs
+      "matchPackagePatterns": ["*"],
+      "semanticCommitType": "build"
+    }
+  ]
+}

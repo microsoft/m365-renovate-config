@@ -1,0 +1,60 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Dependency management strategy for library repos, including Beachball change file generation.",
+
+  "extends": ["github>microsoft/m365-renovate-config:libraryRecommended"],
+
+  "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
+
+  "postUpgradeTasks": {
+    "commands": [
+      "git add --all",
+      "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
+      "git reset"
+    ],
+    "fileFilters": ["**/*"],
+    "executionMode": "branch"
+  },
+
+  "pin": {
+    "group": {
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["**/*"],
+        "executionMode": "branch"
+      }
+    }
+  },
+
+  "lockFileMaintenance": {
+    "postUpgradeTasks": {
+      "commands": [
+        "git add --all",
+        "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+        "git reset"
+      ],
+      "fileFilters": ["**/*"],
+      "executionMode": "branch"
+    }
+  },
+
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["**/*"],
+        "executionMode": "branch"
+      }
+    }
+  ]
+}

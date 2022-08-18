@@ -1,0 +1,34 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Group, schedule, and auto-merge all dependency updates in `__fixtures__` sub-folders.",
+
+  "ignorePresets": [":ignoreModulesAndTests"],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/examples/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**"
+  ],
+
+  "packageRules": [
+    {
+      "groupName": "fixture dependencies",
+      "schedule": ["before 5am"],
+      "matchPaths": ["**/__fixtures__/**/package.json"],
+      "matchPackagePatterns": ["*"],
+      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "resolutions"],
+      "major": {
+        "dependencyDashboardApproval": false
+      },
+      "rangeStrategy": "replace",
+      "commitMessagePrefix": "[fixtures]",
+      "commitMessageExtra": "",
+      "automerge": true,
+      "platformAutomerge": true
+    }
+  ]
+}

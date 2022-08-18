@@ -1,0 +1,59 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Group Fluent UI and related package updates (except when initially pinning).",
+
+  "packageRules": [
+    {
+      "groupName": "Fluent UI React v9 packages",
+      "matchPackagePrefixes": ["@fluentui/"],
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
+      "matchCurrentVersion": ">=9.0.0-alpha.0"
+    },
+    {
+      "groupName": "Fluent UI React v9 packages",
+      "matchPackagePrefixes": ["@griffel/"],
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+    },
+    {
+      "groupName": "Fluent UI React v8 packages",
+      "matchPackagePrefixes": ["@fluentui/"],
+      "matchUpdateTypes": ["minor", "patch", "bump", "digest"],
+      "matchCurrentVersion": "/^[1234568]\\./",
+      "excludePackageNames": [
+        "@fluentui/eslint-plugin",
+        "@fluentui/react-conformance",
+        "@fluentui/react-teams"
+      ]
+    },
+    {
+      "groupName": "Fluent UI React v8 packages",
+      "matchPackageNames": ["@fluentui/react-cards"],
+      "matchUpdateTypes": ["minor", "patch", "bump", "digest"]
+    },
+    {
+      "groupName": "Fluent UI React Northstar packages",
+      "matchPackagePrefixes": ["@fluentui/"],
+      "matchUpdateTypes": ["minor", "patch", "bump", "digest"],
+      "matchCurrentVersion": "0.x",
+      "excludePackageNames": [
+        "@fluentui/eslint-plugin",
+        "@fluentui/react-cards",
+        "@fluentui/react-conformance",
+        "@fluentui/public-docsite-setup"
+      ]
+    },
+    {
+      "groupName": "Fabric packages",
+      "matchUpdateTypes": ["minor", "patch", "bump", "digest"],
+      "matchPackageNames": ["office-ui-fabric-react"],
+      "matchPackagePrefixes": ["@uifabric/"]
+    },
+    {
+      "groupName": "Fabric packages",
+      "matchUpdateTypes": ["minor", "patch", "bump", "digest"],
+      "matchPackageNames": ["@fluentui/react"],
+      "matchCurrentVersion": "^7.0.0"
+    }
+  ]
+}

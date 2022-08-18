@@ -1,0 +1,70 @@
+{
+  "name": "@microsoft/m365-renovate-config",
+  "version": "0.0.0-development",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/m365-renovate-config.git"
+  },
+  "scripts": {
+    "build": "tsc -p jsconfig.json",
+    "fix-repo-refs": "node ./scripts/fixRepoRefs.js",
+    "format": "prettier --write .",
+    "lint": "node ./scripts/lintPresets.js",
+    "prepare": "husky install",
+    "release": "semantic-release",
+    "test:basic": "node ./scripts/testPresetsBasic.js",
+    "test:full": "node ./scripts/testPresetsFull.js",
+    "update-readme": "node ./scripts/updateReadme.js",
+    "update-refs": "node ./scripts/updateRefs.js"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.0.3",
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/exec": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@types/jju": "1.4.2",
+    "@types/node": "16.11.47",
+    "conventional-changelog-conventionalcommits": "5.0.0",
+    "execa": "6.1.0",
+    "husky": "8.0.1",
+    "jju": "1.4.0",
+    "prettier": "2.7.1",
+    "renovate": "32.137.0",
+    "semantic-release": "19.0.3",
+    "typescript": "4.7.4"
+  },
+  "release": {
+    "branches": [
+      "v1"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "yarn update-refs <%= nextRelease.gitTag %>"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json",
+            "*.json"
+          ]
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  }
+}

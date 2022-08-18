@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Group React packages and types (except when initially pinning).",
+
+  "packageRules": [
+    {
+      "extends": ["monorepo:react"],
+      "groupName": "React packages",
+      "matchPackageNames": [
+        "@types/react",
+        "@types/react-dom",
+        "@types/react-test-renderer",
+        "@types/react-is"
+      ],
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
+      "matchCurrentVersion": ">=15.0.0"
+    }
+  ]
+}

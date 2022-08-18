@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": ["Recommended config which is intended to be appropriate for most projects."],
+
+  "extends": [
+    ":ignoreModulesAndTests",
+    ":semanticPrefixFixDepsChoreOthers",
+    "group:monorepos",
+    "group:recommended",
+    "workarounds:all",
+    "github>microsoft/m365-renovate-config:groupReact",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue"
+  ],
+
+  "dependencyDashboard": true,
+
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 2,
+
+  "printConfig": true,
+
+  "vulnerabilityAlerts": {
+    "enabled": true
+  }
+}
