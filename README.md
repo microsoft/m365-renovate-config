@@ -119,6 +119,8 @@ This config should be kept somewhat basic. It's somewhat similar to Renovate's [
 - `vulnerabilityAlerts`: Enable PRs to address security vulnerabilities. Note that this **only** works for GitHub and currently is **only** able to update direct dependencies (except in repos using `npm` 6 or older).
 <!-- end extra content -->
 
+---
+
 #### `libraryRecommended`
 
 Recommended config for a JS library repo or monorepo, including pinning `devDependencies`.
@@ -167,6 +169,8 @@ Recommended config for a JS library repo or monorepo, including pinning `devDepe
 "Dependency pinning" refers to using a specific version of a dependency (`1.2.3`) rather than a range (`^1.2.3`, `~1.2.3`, etc). Pinning has its pros and cons for different situations, some of which are discussed in [this article from Renovate](https://docs.renovatebot.com/dependency-pinning/). This preset's strategy of pinning _only_ `devDependencies` is less aggressive than the "auto" strategy used in Renovate's `config:base` to reduce the risk of creating unnecessary duplicates in library or tool consumer repos.
 
 <!-- end extra content -->
+
+---
 
 #### `beachballLibraryRecommended`
 
@@ -243,6 +247,8 @@ Note that in the GitHub app, commands in [`postUpgradeTasks`](https://docs.renov
 
 <!-- end extra content -->
 
+---
+
 ### Grouping presets
 
 #### `groupMore`
@@ -274,6 +280,8 @@ To use this preset but disable an individual grouping, add its name to the `igno
 
 <!-- end extra content -->
 
+---
+
 #### `groupEslint`
 
 Group all eslint-related updates (except when initially pinning).
@@ -297,6 +305,8 @@ Group all eslint-related updates (except when initially pinning).
 <!-- start extra content (EDITABLE between these comments) -->
 
 <!-- end extra content -->
+
+---
 
 #### `groupFixtureUpdates`
 
@@ -353,6 +363,8 @@ To customize this rule's behavior for individual packages, you can add entries t
 - Exclude individual packages: `{ "groupName": "fixture dependencies", "excludePackageNames": ["foo"] }` (or other [exclusion options](https://docs.renovatebot.com/configuration-options/#excludepackagenames))
 - Limit the allowed versions for a specific package: `{ "matchPackageNames": ["foo"], "allowedVersions": "<6.0.0 }`
 <!-- end extra content -->
+
+---
 
 #### `groupFluent`
 
@@ -433,6 +445,8 @@ If any packages are mis-categorized, please file an issue.
 
 <!-- end extra content -->
 
+---
+
 #### `groupJest`
 
 Group jest, ts-jest, jest types, and related packages (except when initially pinning).
@@ -458,6 +472,8 @@ This uses the same name as (and therefore extends) the built-in configs [`group:
 
 <!-- end extra content -->
 
+---
+
 #### `groupReact`
 
 Group React packages and types (except when initially pinning).
@@ -468,16 +484,14 @@ Group React packages and types (except when initially pinning).
 {
   "packageRules": [
     {
-      "extends": ["monorepo:react"],
-      "groupName": "React packages",
+      "groupName": "react monorepo",
       "matchPackageNames": [
         "@types/react",
         "@types/react-dom",
         "@types/react-test-renderer",
-        "@types/react-is"
-      ],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
-      "matchCurrentVersion": ">=15.0.0"
+        "@types/react-is",
+        "@types/scheduler"
+      ]
     }
   ]
 }
@@ -487,9 +501,11 @@ Group React packages and types (except when initially pinning).
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-Unlike Renovate's React grouping preset, this version includes `@types` and (via the `matchCurrentVersion` constraint) excludes secondary packages such as `scheduler`, `react-devtools-*`, and `eslint-plugin-react-hooks`.
+This uses the same name as (and therefore extends) the built-in config [`group:reactMonorepo`](https://docs.renovatebot.com/presets-group/#groupreactmonorepo).
 
 <!-- end extra content -->
+
+---
 
 #### `groupRollup`
 
@@ -515,6 +531,8 @@ Group all rollup-related updates (except when initially pinning).
 <!-- start extra content (EDITABLE between these comments) -->
 
 <!-- end extra content -->
+
+---
 
 ### Other presets
 
@@ -554,6 +572,8 @@ Experimentally, this preset has `stabilityDays` set to 2 to reduce the chance of
 
 <!-- end extra content -->
 
+---
+
 #### `automergeTypes`
 
 Auto-merge minor and patch updates to `@types` `devDependencies` (if the build passes).
@@ -582,6 +602,8 @@ Auto-merge minor and patch updates to `@types` `devDependencies` (if the build p
 Any branch policies will be respected, including required status checks and required reviewers. If you have a required reviewers policy, this will prevent the PRs from merging in an entirely automated manner.
 
 <!-- end extra content -->
+
+---
 
 #### `dependencyDashboardMajor`
 
@@ -629,6 +651,8 @@ Some alternative strategies which would need to be configured per repo (see [Ren
 - Set [schedules](https://docs.renovatebot.com/configuration-options/#schedule) for individual `packageRules` groups to avoid the upgrades being forgotten.
 <!-- end extra content -->
 
+---
+
 #### `keepFresh`
 
 Keep locally-used dependency versions deduplicated and updated.
@@ -658,6 +682,8 @@ It's **highly recommended** to manually run the deduplication command before ena
 
 <!-- end extra content -->
 
+---
+
 #### `newConfigWarningIssue`
 
 Always create a new issue if there's a config problem (for visibility).
@@ -675,6 +701,8 @@ Always create a new issue if there's a config problem (for visibility).
 <!-- start extra content (EDITABLE between these comments) -->
 
 <!-- end extra content -->
+
+---
 
 <!-- end presets -->
 

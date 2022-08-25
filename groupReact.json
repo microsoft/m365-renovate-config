@@ -5,16 +5,14 @@
 
   "packageRules": [
     {
-      "extends": ["monorepo:react"],
-      "groupName": "React packages",
+      "groupName": "react monorepo",
       "matchPackageNames": [
         "@types/react",
         "@types/react-dom",
         "@types/react-test-renderer",
-        "@types/react-is"
-      ],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
-      "matchCurrentVersion": ">=15.0.0"
+        "@types/react-is",
+        "@types/scheduler"
+      ]
     }
   ]
 }

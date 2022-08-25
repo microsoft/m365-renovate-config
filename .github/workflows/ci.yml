@@ -37,21 +37,10 @@ jobs:
       - name: Basic preset validation
         run: yarn test:basic
 
-      # In some cases, Renovate fails silently if the token is invalid, so manually verify that it's valid
-      - name: Verify github token
-        run: |
-          set -e
-          ghStatus=$(curl -s -w '%{http_code}\n' -H "Authorization: token $TOKEN" https://api.github.com/)
-          if [[ $ghStatus -ne 200 ]]; then
-            echo "::error::GitHub token is expired or invalid"
-            exit 1
-          fi
-        env:
-          TOKEN: not-a-token
-          # TOKEN: ${{ secrets.GITHUB_TOKEN_READ }}
-
       - name: Renovate dry run with all presets
-        run: yarn test:full
+        run: |
+          yarn check-token "$TOKEN"
+          yarn test:full
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
 
