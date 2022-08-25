@@ -484,16 +484,14 @@ Group React packages and types (except when initially pinning).
 {
   "packageRules": [
     {
-      "extends": ["monorepo:react"],
-      "groupName": "React packages",
+      "groupName": "react monorepo",
       "matchPackageNames": [
         "@types/react",
         "@types/react-dom",
         "@types/react-test-renderer",
-        "@types/react-is"
-      ],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
-      "matchCurrentVersion": ">=15.0.0"
+        "@types/react-is",
+        "@types/scheduler"
+      ]
     }
   ]
 }
@@ -503,7 +501,7 @@ Group React packages and types (except when initially pinning).
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-Unlike Renovate's React grouping preset, this version includes `@types` and (via the `matchCurrentVersion` constraint) excludes secondary packages such as `scheduler`, `react-devtools-*`, and `eslint-plugin-react-hooks`.
+This uses the same name as (and therefore extends) the built-in config [`group:reactMonorepo`](https://docs.renovatebot.com/presets-group/#groupreactmonorepo).
 
 <!-- end extra content -->
 
