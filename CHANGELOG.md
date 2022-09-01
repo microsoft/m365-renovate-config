@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/microsoft/m365-renovate-config/compare/v1.0.3...v1.0.4) (2022-09-01)
+
+
+### Bug Fixes
+
+* **keepFresh:** allow wider schedule for lock file updates ([22c4317](https://github.com/microsoft/m365-renovate-config/commit/22c4317c0a9dcb0e07d32b098c798c2dee8e68cf))
+
 ## [1.0.3](https://github.com/microsoft/m365-renovate-config/compare/v1.0.2...v1.0.3) (2022-09-01)
 
 
