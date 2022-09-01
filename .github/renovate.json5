@@ -15,7 +15,7 @@
     "platformAutomerge": true
   },
 
-  "reviewers": ["ecraig12345"],
+  "assignees": ["ecraig12345"],
 
   "packageRules": [
     {
