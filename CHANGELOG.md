@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/microsoft/m365-renovate-config/compare/v1.0.1...v1.0.2) (2022-09-01)
+
+
+### Bug Fixes
+
+* update keepFresh to use yarnDedupeFewest ([a166eef](https://github.com/microsoft/m365-renovate-config/commit/a166eeffd6f935c7daddb29ee4e7ec87268ef5e5))
+
 ## [1.0.1](https://github.com/microsoft/m365-renovate-config/compare/v1.0.0...v1.0.1) (2022-08-25)
 
 
