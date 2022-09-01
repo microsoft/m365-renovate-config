@@ -294,7 +294,7 @@ Group all eslint-related updates (except when initially pinning).
     {
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
-      "matchUpdateTypes": ["minor", "patch", "bump", "digest"]
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
     }
   ]
 }
