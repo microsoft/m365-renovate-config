@@ -8,5 +8,5 @@
     "extends": ["schedule:earlyMondays"]
   },
 
-  "postUpdateOptions": ["yarnDedupeFewest", "npmDedupe"]
+  "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
 }
