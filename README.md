@@ -66,6 +66,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [dependencyDashboardMajor](#dependencydashboardmajor)
   - [keepFresh](#keepfresh)
   - [newConfigWarningIssue](#newconfigwarningissue)
+  - [scheduleNoisy](#schedulenoisy)
   <!-- end presets TOC -->
 
 <!-- start presets -->
@@ -699,6 +700,37 @@ Always create a new issue if there's a config problem (for visibility).
 </details>
 
 <!-- start extra content (EDITABLE between these comments) -->
+
+<!-- end extra content -->
+
+---
+
+#### `scheduleNoisy`
+
+Update "noisy" (frequently-updating) packages once a week.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchPackageNames": ["@types/node"],
+      "schedule": ["before 8am on Monday"]
+    },
+    {
+      "matchPackageNames": ["renovate"],
+      "schedule": ["before 8am on Tuesday"]
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+Certain packages tend to publish updates multiple times per week, and getting a PR for every one of those updates can be annoying. This rule includes a list of packages known to update frequently and spreads them out throughout the week (to avoid attempting to create too many PRs at once and being rate limited).
 
 <!-- end extra content -->
 

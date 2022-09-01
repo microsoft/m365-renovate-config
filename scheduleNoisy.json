@@ -1,0 +1,16 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Update \"noisy\" (frequently-updating) packages once a week.",
+
+  "packageRules": [
+    {
+      "matchPackageNames": ["@types/node"],
+      "schedule": ["before 8am on Monday"]
+    },
+    {
+      "matchPackageNames": ["renovate"],
+      "schedule": ["before 8am on Tuesday"]
+    }
+  ]
+}
