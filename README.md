@@ -294,7 +294,7 @@ Group all eslint-related updates (except when initially pinning).
     {
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+      "matchUpdateTypes": ["minor", "patch", "bump", "digest"]
     }
   ]
 }
@@ -665,7 +665,7 @@ Keep locally-used dependency versions deduplicated and updated.
     "enabled": true,
     "extends": ["schedule:earlyMondays"]
   },
-  "postUpdateOptions": ["yarnDedupeFewest", "npmDedupe"]
+  "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
 }
 ```
 
