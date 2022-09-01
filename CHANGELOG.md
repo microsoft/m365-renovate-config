@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/microsoft/m365-renovate-config/compare/v1.0.2...v1.0.3) (2022-09-01)
+
+
+### Bug Fixes
+
+* use correct option name yarnDedupeFewer in keepFresh ([03fdab8](https://github.com/microsoft/m365-renovate-config/commit/03fdab8cb9e89b4692930f543863f83c81a9b767))
+
 ## [1.0.2](https://github.com/microsoft/m365-renovate-config/compare/v1.0.1...v1.0.2) (2022-09-01)
 
 
