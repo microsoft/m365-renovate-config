@@ -663,8 +663,7 @@ Keep locally-used dependency versions deduplicated and updated.
 {
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["before 8am on Monday"],
-    "updateNotScheduled": true
+    "schedule": ["before 8am on Monday"]
   },
   "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
 }
