@@ -663,7 +663,8 @@ Keep locally-used dependency versions deduplicated and updated.
 {
   "lockFileMaintenance": {
     "enabled": true,
-    "extends": ["schedule:earlyMondays"]
+    "schedule": ["before 8am on Monday"],
+    "updateNotScheduled": true
   },
   "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
 }
@@ -673,7 +674,7 @@ Keep locally-used dependency versions deduplicated and updated.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-- [`lockFileMaintenance`](https://docs.renovatebot.com/configuration-options/#lockfilemaintenance): Completely re-create lock files every Monday morning. This will update direct and indirect dependency versions used _only within the repo_ to the latest versions that satisfy semver.
+- [`lockFileMaintenance`](https://docs.renovatebot.com/configuration-options/#lockfilemaintenance): Completely re-create lock files every Monday. This will update direct and indirect dependency versions used _only within the repo_ to the latest versions that satisfy semver.
 - [`postUpdateOptions`](https://docs.renovatebot.com/configuration-options/#postupdateoptions):
   - `yarnDedupeFewer`: If using yarn, run `yarn-deduplicate --strategy fewer` after updates.
   - `npmDedupe`: If using npm, run `npm dedupe` after updates. WARNING: This may slow down Renovate runs significantly.
