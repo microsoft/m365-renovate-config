@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/microsoft/m365-renovate-config/compare/v1.0.4...v1.1.0) (2022-09-01)
+
+
+### Bug Fixes
+
+* **keepFresh:** remove unnecessary updateNotScheduled setting ([480d161](https://github.com/microsoft/m365-renovate-config/commit/480d161a68a1d07cca8997c2ab0089f55a35c175))
+
+
+### Features
+
+* add scheduleNoisy preset ([f880ddb](https://github.com/microsoft/m365-renovate-config/commit/f880ddbd965f9b304cbf91939408c12b4f71fbae))
+
 ## [1.0.4](https://github.com/microsoft/m365-renovate-config/compare/v1.0.3...v1.0.4) (2022-09-01)
 
 
