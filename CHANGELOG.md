@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/microsoft/m365-renovate-config/compare/v1.1.0...v1.2.0) (2022-09-06)
+
+
+### Features
+
+* add beachballLibraryVerbose ([12fa211](https://github.com/microsoft/m365-renovate-config/commit/12fa2111e7ced8fb7bb6431d737b76c147c2906e))
+
 # [1.1.0](https://github.com/microsoft/m365-renovate-config/compare/v1.0.4...v1.1.0) (2022-09-01)
 
 
