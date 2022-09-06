@@ -24,7 +24,7 @@ const getComments = (desc, extraStartDesc) => ({
   end: `<!-- end ${desc} -->`,
 });
 
-const deprecatedPresets = ['autoUpdateTypes'];
+const excludedPresets = ['beachballLibraryVerbose'];
 
 /** @type {PresetGroup[]} */
 const presetGroups = [
@@ -120,7 +120,7 @@ async function updateReadme() {
     process.exit(1);
   }
 
-  const presets = readPresets({ exclude: deprecatedPresets });
+  const presets = readPresets({ exclude: excludedPresets });
   const presetNames = Object.keys(presets).map((p) => path.basename(p, '.json'));
 
   const presetsSection = getMarkedSection(originalReadme, comments.main);
