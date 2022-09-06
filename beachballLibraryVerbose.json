@@ -1,0 +1,58 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Like beachballLibraryRecommended, but with verbose logging for npx (for debugging only).",
+
+  "extends": ["github>microsoft/m365-renovate-config:beachballLibraryRecommended"],
+
+  "postUpgradeTasks": {
+    "commands": [
+      "git add --all",
+      "npx --verbose beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
+      "git reset"
+    ],
+    "fileFilters": ["**/*"],
+    "executionMode": "branch"
+  },
+
+  "pin": {
+    "group": {
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx --verbose beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["**/*"],
+        "executionMode": "branch"
+      }
+    }
+  },
+
+  "lockFileMaintenance": {
+    "postUpgradeTasks": {
+      "commands": [
+        "git add --all",
+        "npx --verbose beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+        "git reset"
+      ],
+      "fileFilters": ["**/*"],
+      "executionMode": "branch"
+    }
+  },
+
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx --verbose beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["**/*"],
+        "executionMode": "branch"
+      }
+    }
+  ]
+}

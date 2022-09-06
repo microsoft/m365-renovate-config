@@ -75,6 +75,7 @@ jobs:
         if: ${{ steps.release.outputs.didRelease == 'yes' }}
         run: |
           set -x
+          git remote set-url origin https://$GITHUB_ACTOR:$TOKEN_RELEASE@github.com/$GITHUB_REPOSITORY.git
           currentTag=$(git describe --tags --abbrev=0 --exact-match)
           git checkout main
           git pull origin main
@@ -82,3 +83,5 @@ jobs:
           git add CHANGELOG.md
           git commit -m "chore: update changelog for $currentTag"
           git push origin main
+        env:
+          TOKEN_RELEASE: ${{ secrets.TOKEN_RELEASE }}
