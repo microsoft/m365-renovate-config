@@ -1,3 +1,11 @@
+## [1.4.2](https://github.com/microsoft/m365-renovate-config/compare/v1.4.1...v1.4.2) (2022-09-09)
+
+
+### Bug Fixes
+
+* clarify groupTypes group name ([5384f40](https://github.com/microsoft/m365-renovate-config/commit/5384f40bf6d0b6f6053ecb258a3e02707b149dc2))
+* exclude other grouped packages from groupTypes ([41efe17](https://github.com/microsoft/m365-renovate-config/commit/41efe175c1ef8923ff00a8e8e317120a872624f7))
+
 ## [1.4.1](https://github.com/microsoft/m365-renovate-config/compare/v1.4.0...v1.4.1) (2022-09-09)
 
 
