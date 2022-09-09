@@ -58,6 +58,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [groupFixtureUpdates](#groupfixtureupdates)
   - [groupFluent](#groupfluent)
   - [groupJest](#groupjest)
+  - [groupNodeMajor](#groupnodemajor)
   - [groupReact](#groupreact)
   - [groupRollup](#grouprollup)
   - [groupTypes](#grouptypes)
@@ -272,6 +273,7 @@ Apply all the groupings from this repo (except groupTypes).
     "github>microsoft/m365-renovate-config:groupFixtureUpdates",
     "github>microsoft/m365-renovate-config:groupFluent",
     "github>microsoft/m365-renovate-config:groupJest",
+    "github>microsoft/m365-renovate-config:groupNodeMajor",
     "github>microsoft/m365-renovate-config:groupReact",
     "github>microsoft/m365-renovate-config:groupRollup",
     "github>microsoft/m365-renovate-config:groupYargs"
@@ -476,6 +478,36 @@ Group jest, ts-jest, jest types, and related packages (except when initially pin
 <!-- start extra content (EDITABLE between these comments) -->
 
 This uses the same name as (and therefore extends) the built-in configs [`group:jestMonorepo`](https://docs.renovatebot.com/presets-group/#groupjestmonorepo), [`group:jestPlusTSJest`](https://docs.renovatebot.com/presets-group/#groupjestplustsjest), and [`group:jestPlusTypes`](https://docs.renovatebot.com/presets-group/#groupjestplustypes).
+
+<!-- end extra content -->
+
+---
+
+#### `groupNodeMajor`
+
+Group major updates of Node and its types.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "groupName": "Node",
+      "matchPackageNames": ["@types/node", "node", "nodejs/node"],
+      "matchUpdateTypes": ["major"]
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+This preset should work for the Node version as defined by `@types/node` dependency, `engines.node` in `package.json`, `.nvmrc`, or `.node-version`.
+
+It does NOT work for `actions/setup-node` (GitHub workflows) or `NodeTool` (Azure Pipelines). For a workaround for GitHub workflows, see the notes on [`restrictNode`](#restrictnodearg0).
 
 <!-- end extra content -->
 
@@ -691,7 +723,6 @@ It does NOT work for `actions/setup-node` (GitHub workflows) or `NodeTool` (Azur
 
 - Specify `engines.node` in `package.json` and specify `node-version-file: package.json` in the action, or
 - Create a `.nvmrc` file and specify `node-version-file: .nvmrc` in the action
-
 <!-- end extra content -->
 
 ---

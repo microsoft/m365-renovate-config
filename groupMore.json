@@ -10,6 +10,7 @@
     "github>microsoft/m365-renovate-config:groupFixtureUpdates",
     "github>microsoft/m365-renovate-config:groupFluent",
     "github>microsoft/m365-renovate-config:groupJest",
+    "github>microsoft/m365-renovate-config:groupNodeMajor",
     "github>microsoft/m365-renovate-config:groupReact",
     "github>microsoft/m365-renovate-config:groupRollup",
     "github>microsoft/m365-renovate-config:groupYargs"
