@@ -37,6 +37,10 @@ const presetGroups = [
     presets: ['groupMore', /^group/],
   },
   {
+    name: 'Compatibility presets',
+    presets: ['disableEsmVersions', 'restrictNode'],
+  },
+  {
     // This group MUST be last!
     name: 'Other presets',
     presets: [],

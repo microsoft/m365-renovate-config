@@ -62,14 +62,15 @@ In this section, ONLY edit between "extra content" marker comments!
   - [groupRollup](#grouprollup)
   - [groupTypes](#grouptypes)
   - [groupYargs](#groupyargs)
+- [Compatibility presets](#compatibility-presets)
+  - [disableEsmVersions](#disableesmversions)
+  - [restrictNode](#restrictnode)
 - [Other presets](#other-presets)
   - [automergeDevLock](#automergedevlock)
   - [automergeTypes](#automergetypes)
   - [dependencyDashboardMajor](#dependencydashboardmajor)
-  - [disableEsmVersions](#disableesmversions)
   - [keepFresh](#keepfresh)
   - [newConfigWarningIssue](#newconfigwarningissue)
-  - [restrictNode](#restrictnode)
   - [scheduleNoisy](#schedulenoisy)
   <!-- end presets TOC -->
 
@@ -622,6 +623,72 @@ Group yargs, yargs-parser, and their types (except when initially pinning).
 
 ---
 
+### Compatibility presets
+
+#### `disableEsmVersions`
+
+Disable upgrades to package versions that have been converted to ES modules.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchPackageNames": ["chalk"],
+      "allowedVersions": "<5.0.0"
+    },
+    {
+      "matchPackageNames": ["execa", "find-up"],
+      "allowedVersions": "<6.0.0"
+    },
+    {
+      "matchPackageNames": ["globby"],
+      "allowedVersions": "<12.0.0"
+    },
+    {
+      "matchPackageNames": ["p-limit"],
+      "allowedVersions": "<4.0.0"
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+While ES modules are the new standard, migrating immediately may not be practical, in particular for libraries whose main consumers can't immediately migrate. This preset is a stopgap to prevent having to verify that every major update does not include an ESM conversion.
+
+<!-- end extra content -->
+
+---
+
+#### `restrictNode(<arg0>)`
+
+Restrict @types/node version to the range `arg0`.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "{{arg0}}"
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+<!-- end extra content -->
+
+---
+
 ### Other presets
 
 #### `automergeDevLock`
@@ -741,45 +808,6 @@ Some alternative strategies which would need to be configured per repo (see [Ren
 
 ---
 
-#### `disableEsmVersions`
-
-Disable upgrades to package versions that have been converted to ES modules.
-
-<details><summary><b>Show config JSON</b></summary>
-
-```json
-{
-  "packageRules": [
-    {
-      "matchPackageNames": ["chalk"],
-      "allowedVersions": "<5.0.0"
-    },
-    {
-      "matchPackageNames": ["execa", "find-up"],
-      "allowedVersions": "<6.0.0"
-    },
-    {
-      "matchPackageNames": ["globby"],
-      "allowedVersions": "<12.0.0"
-    },
-    {
-      "matchPackageNames": ["p-limit"],
-      "allowedVersions": "<4.0.0"
-    }
-  ]
-}
-```
-
-</details>
-
-<!-- start extra content (EDITABLE between these comments) -->
-
-While ES modules are the new standard, migrating immediately may not be practical, in particular for libraries whose main consumers can't immediately migrate. This preset is a stopgap to prevent having to verify that every major update does not include an ESM conversion.
-
-<!-- end extra content -->
-
----
-
 #### `keepFresh`
 
 Keep locally-used dependency versions deduplicated and updated.
@@ -820,31 +848,6 @@ Always create a new issue if there's a config problem (for visibility).
 ```json
 {
   "configWarningReuseIssue": false
-}
-```
-
-</details>
-
-<!-- start extra content (EDITABLE between these comments) -->
-
-<!-- end extra content -->
-
----
-
-#### `restrictNode(<arg0>)`
-
-Restrict @types/node version to the range `arg0`.
-
-<details><summary><b>Show config JSON</b></summary>
-
-```json
-{
-  "packageRules": [
-    {
-      "matchPackageNames": ["@types/node"],
-      "allowedVersions": "{{arg0}}"
-    }
-  ]
 }
 ```
 
