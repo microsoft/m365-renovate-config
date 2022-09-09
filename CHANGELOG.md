@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/microsoft/m365-renovate-config/compare/v1.5.0...v1.6.0) (2022-09-09)
+
+
+### Features
+
+* add disableEsmVersions ([bfbe09f](https://github.com/microsoft/m365-renovate-config/commit/bfbe09f06da192f7c89a56ada6c6faeb1fa728f3))
+
 # [1.5.0](https://github.com/microsoft/m365-renovate-config/compare/v1.4.2...v1.5.0) (2022-09-09)
 
 
