@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/microsoft/m365-renovate-config/compare/v1.3.0...v1.4.0) (2022-09-09)
+
+
+### Features
+
+* add restrictNode ([538ba0c](https://github.com/microsoft/m365-renovate-config/commit/538ba0c423590cf9b8ac4679381e0aad75df8937))
+
 # [1.3.0](https://github.com/microsoft/m365-renovate-config/compare/v1.2.0...v1.3.0) (2022-09-09)
 
 
