@@ -547,7 +547,7 @@ Group minor and patch updates to `@types` `devDependencies`.
 {
   "packageRules": [
     {
-      "groupName": "@types packages",
+      "groupName": "@types devDependencies",
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
@@ -562,7 +562,7 @@ Group minor and patch updates to `@types` `devDependencies`.
       ]
     },
     {
-      "groupName": "@types packages",
+      "groupName": "@types devDependencies",
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch"],
@@ -584,7 +584,7 @@ If you want to exclude a package from this group, add a new `packageRules` entry
 
 ```json
 {
-  "groupName": "@types packages",
+  "groupName": "@types devDependencies",
   "excludePackageNames": ["some-package"]
 }
 ```
