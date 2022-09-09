@@ -66,6 +66,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [automergeDevLock](#automergedevlock)
   - [automergeTypes](#automergetypes)
   - [dependencyDashboardMajor](#dependencydashboardmajor)
+  - [disableEsmVersions](#disableesmversions)
   - [keepFresh](#keepfresh)
   - [newConfigWarningIssue](#newconfigwarningissue)
   - [restrictNode](#restrictnode)
@@ -736,6 +737,45 @@ Some alternative strategies which would need to be configured per repo (see [Ren
 
 - Create a `packageRules` group which requires dependency dashboard approval for only major upgrades of specific packages that are known to be high risk/effort.
 - Set [schedules](https://docs.renovatebot.com/configuration-options/#schedule) for individual `packageRules` groups to avoid the upgrades being forgotten.
+<!-- end extra content -->
+
+---
+
+#### `disableEsmVersions`
+
+Disable upgrades to package versions that have been converted to ES modules.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchPackageNames": ["chalk"],
+      "allowedVersions": "<5.0.0"
+    },
+    {
+      "matchPackageNames": ["execa", "find-up"],
+      "allowedVersions": "<6.0.0"
+    },
+    {
+      "matchPackageNames": ["globby"],
+      "allowedVersions": "<12.0.0"
+    },
+    {
+      "matchPackageNames": ["p-limit"],
+      "allowedVersions": "<4.0.0"
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+While ES modules are the new standard, migrating immediately may not be practical, in particular for libraries whose main consumers can't immediately migrate. This preset is a stopgap to prevent having to verify that every major update does not include an ESM conversion.
+
 <!-- end extra content -->
 
 ---
