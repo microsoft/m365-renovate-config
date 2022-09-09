@@ -12,7 +12,7 @@
       "dependencyDashboardApproval": true
     },
     {
-      "matchCurrentVersion": "<1.0.0",
+      "matchCurrentVersion": "0.x",
       "matchUpdateTypes": ["minor"],
       "dependencyDashboardApproval": true
     }

@@ -8,7 +8,15 @@
       "groupName": "@types packages",
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": ">1.0.0"
+    },
+    {
+      "groupName": "@types packages",
+      "matchPackagePrefixes": ["@types/"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentVersion": "0.x"
     }
   ]
 }
