@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/microsoft/m365-renovate-config/compare/v1.6.0...v1.7.0) (2022-09-09)
+
+
+### Bug Fixes
+
+* **restrictNode:** add more ways of specifying node version ([5f138e8](https://github.com/microsoft/m365-renovate-config/commit/5f138e88b93a432c126b1706c5e86bdb8beb90e8))
+
+
+### Features
+
+* add groupNodeMajor ([92a8bdc](https://github.com/microsoft/m365-renovate-config/commit/92a8bdce1826d75cbe1e99865651d4558e33b4db))
+
 # [1.6.0](https://github.com/microsoft/m365-renovate-config/compare/v1.5.0...v1.6.0) (2022-09-09)
 
 
