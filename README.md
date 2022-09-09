@@ -65,7 +65,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [groupYargs](#groupyargs)
 - [Compatibility presets](#compatibility-presets)
   - [disableEsmVersions](#disableesmversions)
-  - [restrictNode](#restrictnode)
+  - [restrictNode](#restrictnodearg0)
 - [Other presets](#other-presets)
   - [automergeDevLock](#automergedevlock)
   - [automergeTypes](#automergetypes)

@@ -9,6 +9,11 @@ const readmeFile = 'README.md';
  * @typedef {{ start: string; end: string; }} Comments
  * @typedef {{
  *   name: string;
+ *   nameWithArgs: string;
+ *   content: string;
+ * }} PresetSection
+ * @typedef {{
+ *   name: string;
  *   presets: (string | RegExp)[];
  *   rest?: boolean;
  * }} PresetGroup
@@ -81,6 +86,7 @@ const splitByHeading = (text, level) =>
 const getHeadingText = (text, level) =>
   (text.match(new RegExp(`^${'#'.repeat(level)} (.*)`, 'm')) || [])[1]?.trim() || '';
 
+/** @param {string} text */
 const slugify = (text) =>
   text
     .toLowerCase()
@@ -147,6 +153,7 @@ async function updateReadme() {
 
     return {
       name: presetName,
+      nameWithArgs: presetNameWithArgs,
       content: `
 #### \`${presetNameWithArgs}\`
 
@@ -173,7 +180,7 @@ ${comments.extra.end}
   const remainingPresets = [...newPresets];
   const newPresetGroups = presetGroups.map((group) => {
     const { name, presets: presetsToGroup, rest } = group;
-    const includedPresets = /** @type {Array<{ name: string; content: string }>} */ ([]);
+    const includedPresets = /** @type {PresetSection[]} */ ([]);
 
     if (rest) {
       // catch-all case: add all remaining presets to the group
@@ -200,7 +207,7 @@ ${comments.extra.end}
 
     return {
       name,
-      presets: includedPresets.map((p) => p.name),
+      presets: includedPresets,
       content: [`### ${name}`, '', ...includedPresets.map((p) => p.content)].join('\n'),
     };
   });
@@ -211,7 +218,7 @@ ${comments.extra.end}
     .map((group) =>
       [
         `- [${group.name}](#${slugify(group.name)})`,
-        ...group.presets.map((p) => `  - [${p}](#${slugify(p)})`),
+        ...group.presets.map((p) => `  - [${p.name}](#${slugify(p.nameWithArgs)})`),
       ].join('\n')
     )
     .join('\n');
