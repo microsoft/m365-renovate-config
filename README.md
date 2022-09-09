@@ -60,6 +60,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [groupJest](#groupjest)
   - [groupReact](#groupreact)
   - [groupRollup](#grouprollup)
+  - [groupTypes](#grouptypes)
 - [Other presets](#other-presets)
   - [automergeDevLock](#automergedevlock)
   - [automergeTypes](#automergetypes)
@@ -254,7 +255,7 @@ Note that in the GitHub app, commands in [`postUpgradeTasks`](https://docs.renov
 
 #### `groupMore`
 
-Apply all the groupings from this repo.
+Apply all the groupings from this repo (except groupTypes).
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -522,6 +523,33 @@ Group all rollup-related updates (except when initially pinning).
       "matchPackagePrefixes": ["@rollup"],
       "matchPackagePatterns": ["^rollup"],
       "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+<!-- end extra content -->
+
+---
+
+#### `groupTypes`
+
+Group minor and patch updates to @types devDependencies.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "groupName": "@types packages",
+      "matchPackagePrefixes": ["@types/"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ]
 }

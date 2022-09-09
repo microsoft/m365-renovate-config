@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Group minor and patch updates to @types devDependencies.",
+
+  "packageRules": [
+    {
+      "groupName": "@types packages",
+      "matchPackagePrefixes": ["@types/"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"]
+    }
+  ]
+}
