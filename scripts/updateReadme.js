@@ -75,7 +75,7 @@ const splitByHeading = (text, level) =>
  * @type {(text: string, level: number) => string}
  */
 const getHeadingText = (text, level) =>
-  (text.match(new RegExp(`^${'#'.repeat(level)} (.*)`, 'm')) || [])[1] || '';
+  (text.match(new RegExp(`^${'#'.repeat(level)} (.*)`, 'm')) || [])[1]?.trim() || '';
 
 const slugify = (text) =>
   text
@@ -94,7 +94,9 @@ function getPresetExtraTexts(presetNames, presetsSection) {
   splitByHeading(presetsSection, 4)
     .slice(1) // remove the first part, which will be an h3
     .forEach((text) => {
-      const presetName = getHeadingText(text, 4).replace(/`/g, '');
+      const presetName = getHeadingText(text, 4)
+        .replace(/`/g, '')
+        .replace(/ \(.*\)$/, ''); // remove args
       if (!presetName) {
         console.warn('Section REMOVED since it did not match expected format:\n', text);
       } else if (!presetNames.includes(presetName)) {
@@ -128,8 +130,14 @@ async function updateReadme() {
   const presetExtraTexts = getPresetExtraTexts(presetNames, presetsSection);
 
   // Generate preset sections based on the descriptions, custom text, and other JSON
-  const newPresets = Object.entries(presets).map(([presetFile, { json }]) => {
+  const newPresets = Object.entries(presets).map(([presetFile, { content, json }]) => {
     const presetName = path.basename(presetFile, '.json');
+    const presetArgs = content.match(/{{arg\d}}/g);
+    console.log(presetArgs);
+    const presetNameWithArgs = presetArgs
+      ? `${presetName}(${presetArgs.map((arg) => `<${arg.slice(2, -2)}>`).join(', ')})`
+      : presetName;
+    console.log(presetNameWithArgs);
     const extraContent = presetExtraTexts[presetName] || '';
 
     const { description, $schema, ...otherJson } = json;
@@ -138,7 +146,7 @@ async function updateReadme() {
     return {
       name: presetName,
       content: `
-#### \`${presetName}\`
+#### \`${presetNameWithArgs}\`
 
 ${description || ''}
 
