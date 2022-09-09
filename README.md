@@ -67,6 +67,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [dependencyDashboardMajor](#dependencydashboardmajor)
   - [keepFresh](#keepfresh)
   - [newConfigWarningIssue](#newconfigwarningissue)
+  - [restrictNode](#restrictnode)
   - [scheduleNoisy](#schedulenoisy)
   <!-- end presets TOC -->
 
@@ -538,7 +539,7 @@ Group all rollup-related updates (except when initially pinning).
 
 #### `groupTypes`
 
-Group minor and patch updates to @types devDependencies.
+Group minor and patch updates to `@types` `devDependencies`.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -722,6 +723,31 @@ Always create a new issue if there's a config problem (for visibility).
 ```json
 {
   "configWarningReuseIssue": false
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+<!-- end extra content -->
+
+---
+
+#### `restrictNode(<arg0>)`
+
+Restrict @types/node version to the range `arg0`.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "{{arg0}}"
+    }
+  ]
 }
 ```
 
