@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/microsoft/m365-renovate-config/compare/v1.2.0...v1.3.0) (2022-09-09)
+
+
+### Features
+
+* add groupTypes ([f1eba61](https://github.com/microsoft/m365-renovate-config/commit/f1eba6144a28d0620d455b10164fef26c746e652))
+
 # [1.2.0](https://github.com/microsoft/m365-renovate-config/compare/v1.1.0...v1.2.0) (2022-09-06)
 
 
