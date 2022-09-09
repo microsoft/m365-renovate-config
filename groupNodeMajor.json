@@ -1,12 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Restrict Node version to the range `arg0`.",
+  "description": "Group major updates of Node and its types.",
 
   "packageRules": [
     {
+      "groupName": "Node",
       "matchPackageNames": ["@types/node", "node", "nodejs/node"],
-      "allowedVersions": "{{arg0}}"
+      "matchUpdateTypes": ["major"]
     }
   ]
 }

@@ -58,18 +58,20 @@ In this section, ONLY edit between "extra content" marker comments!
   - [groupFixtureUpdates](#groupfixtureupdates)
   - [groupFluent](#groupfluent)
   - [groupJest](#groupjest)
+  - [groupNodeMajor](#groupnodemajor)
   - [groupReact](#groupreact)
   - [groupRollup](#grouprollup)
   - [groupTypes](#grouptypes)
   - [groupYargs](#groupyargs)
+- [Compatibility presets](#compatibility-presets)
+  - [disableEsmVersions](#disableesmversions)
+  - [restrictNode](#restrictnodearg0)
 - [Other presets](#other-presets)
   - [automergeDevLock](#automergedevlock)
   - [automergeTypes](#automergetypes)
   - [dependencyDashboardMajor](#dependencydashboardmajor)
-  - [disableEsmVersions](#disableesmversions)
   - [keepFresh](#keepfresh)
   - [newConfigWarningIssue](#newconfigwarningissue)
-  - [restrictNode](#restrictnode)
   - [scheduleNoisy](#schedulenoisy)
   <!-- end presets TOC -->
 
@@ -271,6 +273,7 @@ Apply all the groupings from this repo (except groupTypes).
     "github>microsoft/m365-renovate-config:groupFixtureUpdates",
     "github>microsoft/m365-renovate-config:groupFluent",
     "github>microsoft/m365-renovate-config:groupJest",
+    "github>microsoft/m365-renovate-config:groupNodeMajor",
     "github>microsoft/m365-renovate-config:groupReact",
     "github>microsoft/m365-renovate-config:groupRollup",
     "github>microsoft/m365-renovate-config:groupYargs"
@@ -480,6 +483,36 @@ This uses the same name as (and therefore extends) the built-in configs [`group:
 
 ---
 
+#### `groupNodeMajor`
+
+Group major updates of Node and its types.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "groupName": "Node",
+      "matchPackageNames": ["@types/node", "node", "nodejs/node"],
+      "matchUpdateTypes": ["major"]
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+This preset should work for the Node version as defined by `@types/node` dependency, `engines.node` in `package.json`, `.nvmrc`, or `.node-version`.
+
+It does NOT work for `actions/setup-node` (GitHub workflows) or `NodeTool` (Azure Pipelines). For a workaround for GitHub workflows, see the notes on [`restrictNode`](#restrictnodearg0).
+
+<!-- end extra content -->
+
+---
+
 #### `groupReact`
 
 Group React packages and types (except when initially pinning).
@@ -622,6 +655,78 @@ Group yargs, yargs-parser, and their types (except when initially pinning).
 
 ---
 
+### Compatibility presets
+
+#### `disableEsmVersions`
+
+Disable upgrades to package versions that have been converted to ES modules.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchPackageNames": ["chalk"],
+      "allowedVersions": "<5.0.0"
+    },
+    {
+      "matchPackageNames": ["execa", "find-up"],
+      "allowedVersions": "<6.0.0"
+    },
+    {
+      "matchPackageNames": ["globby"],
+      "allowedVersions": "<12.0.0"
+    },
+    {
+      "matchPackageNames": ["p-limit"],
+      "allowedVersions": "<4.0.0"
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+While ES modules are the new standard, migrating immediately may not be practical, in particular for libraries whose main consumers can't immediately migrate. This preset is a stopgap to prevent having to verify that every major update does not include an ESM conversion.
+
+<!-- end extra content -->
+
+---
+
+#### `restrictNode(<arg0>)`
+
+Restrict Node version to the range `arg0`.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchPackageNames": ["@types/node", "node", "nodejs/node"],
+      "allowedVersions": "{{arg0}}"
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+This preset should work for the Node version as defined by `@types/node` dependency, `engines.node` in `package.json`, `.nvmrc`, or `.node-version`.
+
+It does NOT work for `actions/setup-node` (GitHub workflows) or `NodeTool` (Azure Pipelines). To ensure the Node version stays in sync for GitHub actions, it's recommended to either:
+
+- Specify `engines.node` in `package.json` and specify `node-version-file: package.json` in the action, or
+- Create a `.nvmrc` file and specify `node-version-file: .nvmrc` in the action
+<!-- end extra content -->
+
+---
+
 ### Other presets
 
 #### `automergeDevLock`
@@ -741,45 +846,6 @@ Some alternative strategies which would need to be configured per repo (see [Ren
 
 ---
 
-#### `disableEsmVersions`
-
-Disable upgrades to package versions that have been converted to ES modules.
-
-<details><summary><b>Show config JSON</b></summary>
-
-```json
-{
-  "packageRules": [
-    {
-      "matchPackageNames": ["chalk"],
-      "allowedVersions": "<5.0.0"
-    },
-    {
-      "matchPackageNames": ["execa", "find-up"],
-      "allowedVersions": "<6.0.0"
-    },
-    {
-      "matchPackageNames": ["globby"],
-      "allowedVersions": "<12.0.0"
-    },
-    {
-      "matchPackageNames": ["p-limit"],
-      "allowedVersions": "<4.0.0"
-    }
-  ]
-}
-```
-
-</details>
-
-<!-- start extra content (EDITABLE between these comments) -->
-
-While ES modules are the new standard, migrating immediately may not be practical, in particular for libraries whose main consumers can't immediately migrate. This preset is a stopgap to prevent having to verify that every major update does not include an ESM conversion.
-
-<!-- end extra content -->
-
----
-
 #### `keepFresh`
 
 Keep locally-used dependency versions deduplicated and updated.
@@ -820,31 +886,6 @@ Always create a new issue if there's a config problem (for visibility).
 ```json
 {
   "configWarningReuseIssue": false
-}
-```
-
-</details>
-
-<!-- start extra content (EDITABLE between these comments) -->
-
-<!-- end extra content -->
-
----
-
-#### `restrictNode(<arg0>)`
-
-Restrict @types/node version to the range `arg0`.
-
-<details><summary><b>Show config JSON</b></summary>
-
-```json
-{
-  "packageRules": [
-    {
-      "matchPackageNames": ["@types/node"],
-      "allowedVersions": "{{arg0}}"
-    }
-  ]
 }
 ```
 
