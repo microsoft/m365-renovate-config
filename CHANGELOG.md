@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/microsoft/m365-renovate-config/compare/v1.4.0...v1.4.1) (2022-09-09)
+
+
+### Bug Fixes
+
+* exclude 0.x from groupTypes ([f0f3a1b](https://github.com/microsoft/m365-renovate-config/commit/f0f3a1b5fc2a8d7b37650834a965edd970d10a06))
+
 # [1.4.0](https://github.com/microsoft/m365-renovate-config/compare/v1.3.0...v1.4.0) (2022-09-09)
 
 
