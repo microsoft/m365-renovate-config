@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/microsoft/m365-renovate-config/compare/v1.4.2...v1.5.0) (2022-09-09)
+
+
+### Bug Fixes
+
+* add groupYargs file ([8ff7423](https://github.com/microsoft/m365-renovate-config/commit/8ff7423055aecbfdc91e574e3c38a3437a99ad33))
+
+
+### Features
+
+* add groupYargs ([9eb24ec](https://github.com/microsoft/m365-renovate-config/commit/9eb24ec24cc13fa223ec58a0f0695441b67628a0))
+
 ## [1.4.2](https://github.com/microsoft/m365-renovate-config/compare/v1.4.1...v1.4.2) (2022-09-09)
 
 

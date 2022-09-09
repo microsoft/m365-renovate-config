@@ -6,12 +6,12 @@
   "extends": [
     "group:monorepos",
     "group:recommended",
-    "github>microsoft/m365-renovate-config:groupEslint",
-    "github>microsoft/m365-renovate-config:groupFixtureUpdates",
-    "github>microsoft/m365-renovate-config:groupFluent",
-    "github>microsoft/m365-renovate-config:groupJest",
-    "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:groupRollup",
-    "github>microsoft/m365-renovate-config:groupYargs"
+    "github>microsoft/m365-renovate-config:groupEslint#v1.5.0",
+    "github>microsoft/m365-renovate-config:groupFixtureUpdates#v1.5.0",
+    "github>microsoft/m365-renovate-config:groupFluent#v1.5.0",
+    "github>microsoft/m365-renovate-config:groupJest#v1.5.0",
+    "github>microsoft/m365-renovate-config:groupReact#v1.5.0",
+    "github>microsoft/m365-renovate-config:groupRollup#v1.5.0",
+    "github>microsoft/m365-renovate-config:groupYargs#v1.5.0"
   ]
 }

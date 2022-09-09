@@ -3,7 +3,7 @@
 
   "description": "Dependency management strategy for library repos, including Beachball change file generation.",
 
-  "extends": ["github>microsoft/m365-renovate-config:libraryRecommended#v1.4.2"],
+  "extends": ["github>microsoft/m365-renovate-config:libraryRecommended#v1.5.0"],
 
   "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
 
