@@ -61,6 +61,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [groupReact](#groupreact)
   - [groupRollup](#grouprollup)
   - [groupTypes](#grouptypes)
+  - [groupYargs](#groupyargs)
 - [Other presets](#other-presets)
   - [automergeDevLock](#automergedevlock)
   - [automergeTypes](#automergetypes)
@@ -270,7 +271,8 @@ Apply all the groupings from this repo (except groupTypes).
     "github>microsoft/m365-renovate-config:groupFluent",
     "github>microsoft/m365-renovate-config:groupJest",
     "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:groupRollup"
+    "github>microsoft/m365-renovate-config:groupRollup",
+    "github>microsoft/m365-renovate-config:groupYargs"
   ]
 }
 ```
@@ -588,6 +590,32 @@ If you want to exclude a package from this group, add a new `packageRules` entry
   "excludePackageNames": ["some-package"]
 }
 ```
+
+<!-- end extra content -->
+
+---
+
+#### `groupYargs`
+
+Group yargs, yargs-parser, and their types (except when initially pinning).
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "groupName": "yargs packages",
+      "matchPackageNames": ["yargs", "yargs-parser", "@types/yargs", "@types/yargs-parser"],
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
 
 <!-- end extra content -->
 
