@@ -550,7 +550,15 @@ Group minor and patch updates to `@types` `devDependencies`.
       "groupName": "@types packages",
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": ">1.0.0"
+    },
+    {
+      "groupName": "@types packages",
+      "matchPackagePrefixes": ["@types/"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentVersion": "0.x"
     }
   ]
 }
@@ -559,6 +567,10 @@ Group minor and patch updates to `@types` `devDependencies`.
 </details>
 
 <!-- start extra content (EDITABLE between these comments) -->
+
+`@types` packages can update frequently, and used as `devDependencies`, they're generally low risk/effort to update. So this preset groups them together to reduce noise.
+
+This group excludes updates to `@types` packages with `0.x` versions since those could technically be breaking changes (and to avoid conflicting with the `dependencyDashboardMajor` preset's `0.x` rule).
 
 <!-- end extra content -->
 
@@ -654,7 +666,7 @@ Require dependency dashboard approval for major upgrades (and minor upgrades of 
       "dependencyDashboardApproval": true
     },
     {
-      "matchCurrentVersion": "<1.0.0",
+      "matchCurrentVersion": "0.x",
       "matchUpdateTypes": ["minor"],
       "dependencyDashboardApproval": true
     }

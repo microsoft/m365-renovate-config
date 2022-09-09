@@ -96,7 +96,7 @@ function getPresetExtraTexts(presetNames, presetsSection) {
     .forEach((text) => {
       const presetName = getHeadingText(text, 4)
         .replace(/`/g, '')
-        .replace(/ \(.*\)$/, ''); // remove args
+        .replace(/\(.*\)$/, ''); // remove args
       if (!presetName) {
         console.warn('Section REMOVED since it did not match expected format:\n', text);
       } else if (!presetNames.includes(presetName)) {
@@ -133,11 +133,9 @@ async function updateReadme() {
   const newPresets = Object.entries(presets).map(([presetFile, { content, json }]) => {
     const presetName = path.basename(presetFile, '.json');
     const presetArgs = content.match(/{{arg\d}}/g);
-    console.log(presetArgs);
     const presetNameWithArgs = presetArgs
       ? `${presetName}(${presetArgs.map((arg) => `<${arg.slice(2, -2)}>`).join(', ')})`
       : presetName;
-    console.log(presetNameWithArgs);
     const extraContent = presetExtraTexts[presetName] || '';
 
     const { description, $schema, ...otherJson } = json;
