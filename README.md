@@ -666,7 +666,7 @@ While ES modules are the new standard, migrating immediately may not be practica
 
 #### `restrictNode(<arg0>)`
 
-Restrict @types/node version to the range `arg0`.
+Restrict Node version to the range `arg0`.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -674,7 +674,7 @@ Restrict @types/node version to the range `arg0`.
 {
   "packageRules": [
     {
-      "matchPackageNames": ["@types/node"],
+      "matchPackageNames": ["@types/node", "node", "nodejs/node"],
       "allowedVersions": "{{arg0}}"
     }
   ]
@@ -684,6 +684,13 @@ Restrict @types/node version to the range `arg0`.
 </details>
 
 <!-- start extra content (EDITABLE between these comments) -->
+
+This preset should work for the Node version as defined by `@types/node` dependency, `engines.node` in `package.json`, `.nvmrc`, or `.node-version`.
+
+It does NOT work for `actions/setup-node` (GitHub workflows) or `NodeTool` (Azure Pipelines). To ensure the Node version stays in sync for GitHub actions, it's recommended to either:
+
+- Specify `engines.node` in `package.json` and specify `node-version-file: package.json` in the action, or
+- Create a `.nvmrc` file and specify `node-version-file: .nvmrc` in the action
 
 <!-- end extra content -->
 

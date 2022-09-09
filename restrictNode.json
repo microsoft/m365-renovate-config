@@ -1,11 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Restrict @types/node version to the range `arg0`.",
+  "description": "Restrict Node version to the range `arg0`.",
 
   "packageRules": [
     {
-      "matchPackageNames": ["@types/node"],
+      "matchPackageNames": ["@types/node", "node", "nodejs/node"],
       "allowedVersions": "{{arg0}}"
     }
   ]
