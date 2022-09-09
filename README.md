@@ -547,14 +547,22 @@ Group minor and patch updates to `@types` `devDependencies`.
 {
   "packageRules": [
     {
-      "groupName": "@types packages",
+      "groupName": "@types devDependencies",
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": ">1.0.0"
+      "matchCurrentVersion": ">1.0.0",
+      "excludePackageNames": [
+        "@types/jest",
+        "@types/react",
+        "@types/react-dom",
+        "@types/react-is",
+        "@types/react-test-renderer",
+        "@types/scheduler"
+      ]
     },
     {
-      "groupName": "@types packages",
+      "groupName": "@types devDependencies",
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch"],
@@ -570,7 +578,16 @@ Group minor and patch updates to `@types` `devDependencies`.
 
 `@types` packages can update frequently, and used as `devDependencies`, they're generally low risk/effort to update. So this preset groups them together to reduce noise.
 
-This group excludes updates to `@types` packages with `0.x` versions since those could technically be breaking changes (and to avoid conflicting with the `dependencyDashboardMajor` preset's `0.x` rule).
+This group excludes updates to `@types` packages with `0.x` versions since those could technically be breaking changes (and to avoid conflicting with the `dependencyDashboardMajor` preset's `0.x` rule). It also excludes things such as `@types/react` which are often included with other groups.
+
+If you want to exclude a package from this group, add a new `packageRules` entry as follows:
+
+```json
+{
+  "groupName": "@types devDependencies",
+  "excludePackageNames": ["some-package"]
+}
+```
 
 <!-- end extra content -->
 

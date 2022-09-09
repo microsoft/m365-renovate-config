@@ -5,14 +5,22 @@
 
   "packageRules": [
     {
-      "groupName": "@types packages",
+      "groupName": "@types devDependencies",
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": ">1.0.0"
+      "matchCurrentVersion": ">1.0.0",
+      "excludePackageNames": [
+        "@types/jest",
+        "@types/react",
+        "@types/react-dom",
+        "@types/react-is",
+        "@types/react-test-renderer",
+        "@types/scheduler"
+      ]
     },
     {
-      "groupName": "@types packages",
+      "groupName": "@types devDependencies",
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch"],
