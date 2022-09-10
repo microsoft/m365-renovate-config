@@ -3,7 +3,7 @@
 
   "description": "Like beachballLibraryRecommended, but with verbose logging for npx (for debugging only).",
 
-  "extends": ["github>microsoft/m365-renovate-config:beachballLibraryRecommended#v1.7.1"],
+  "extends": ["github>microsoft/m365-renovate-config:beachballLibraryRecommended#v1.7.2"],
 
   "postUpgradeTasks": {
     "commands": [

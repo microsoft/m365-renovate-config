@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/microsoft/m365-renovate-config/compare/v1.7.1...v1.7.2) (2022-09-10)
+
+
+### Bug Fixes
+
+* **groupNodeMajor:** remove broken engines rule ([5875670](https://github.com/microsoft/m365-renovate-config/commit/58756708c475084ae342ebf8fa61a03dca3a5712))
+
 ## [1.7.1](https://github.com/microsoft/m365-renovate-config/compare/v1.7.0...v1.7.1) (2022-09-10)
 
 
