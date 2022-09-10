@@ -686,6 +686,10 @@ Disable upgrades to package versions that have been converted to ES modules.
     {
       "matchPackageNames": ["p-limit"],
       "allowedVersions": "<4.0.0"
+    },
+    {
+      "matchPackageNames": ["supports-color"],
+      "allowedVersions": "<9.0.0"
     }
   ]
 }
