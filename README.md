@@ -496,11 +496,6 @@ Group major updates of Node and its types.
       "groupName": "Node",
       "matchPackageNames": ["@types/node", "node", "nodejs/node"],
       "matchUpdateTypes": ["major"]
-    },
-    {
-      "matchPackageNames": ["node"],
-      "matchDepTypes": ["engines"],
-      "rangeStrategy": "bump"
     }
   ]
 }
