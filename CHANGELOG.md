@@ -1,3 +1,11 @@
+## [1.7.1](https://github.com/microsoft/m365-renovate-config/compare/v1.7.0...v1.7.1) (2022-09-10)
+
+
+### Bug Fixes
+
+* **disableEsmVersions:** add supports-color ([39cfa94](https://github.com/microsoft/m365-renovate-config/commit/39cfa94cb92e59aa96385009dba8f6f0e58c993f))
+* **groupNodeMajor:** bump node version in engines ([f22bee7](https://github.com/microsoft/m365-renovate-config/commit/f22bee72c017dc9853ed6924a58ee17f0efbaef7))
+
 # [1.7.0](https://github.com/microsoft/m365-renovate-config/compare/v1.6.0...v1.7.0) (2022-09-09)
 
 
