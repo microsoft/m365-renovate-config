@@ -496,6 +496,11 @@ Group major updates of Node and its types.
       "groupName": "Node",
       "matchPackageNames": ["@types/node", "node", "nodejs/node"],
       "matchUpdateTypes": ["major"]
+    },
+    {
+      "matchPackageNames": ["node"],
+      "matchDepTypes": ["engines"],
+      "rangeStrategy": "bump"
     }
   ]
 }
@@ -681,6 +686,10 @@ Disable upgrades to package versions that have been converted to ES modules.
     {
       "matchPackageNames": ["p-limit"],
       "allowedVersions": "<4.0.0"
+    },
+    {
+      "matchPackageNames": ["supports-color"],
+      "allowedVersions": "<9.0.0"
     }
   ]
 }
