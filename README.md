@@ -671,7 +671,7 @@ Disable upgrades to package versions that have been converted to ES modules.
       "allowedVersions": "<5.0.0"
     },
     {
-      "matchPackageNames": ["execa", "find-up"],
+      "matchPackageNames": ["execa", "find-up", "pretty-bytes"],
       "allowedVersions": "<6.0.0"
     },
     {
