@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/microsoft/m365-renovate-config/compare/v1.7.2...v1.7.3) (2022-09-12)
+
+
+### Bug Fixes
+
+* **disableEsmVersions:** add pretty-bytes ([ccbc878](https://github.com/microsoft/m365-renovate-config/commit/ccbc8785f305c26353433749cf4d184eba07f5f3))
+
 ## [1.7.2](https://github.com/microsoft/m365-renovate-config/compare/v1.7.1...v1.7.2) (2022-09-10)
 
 
