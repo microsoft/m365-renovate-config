@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/microsoft/m365-renovate-config/compare/v1.7.3...v1.8.0) (2022-09-12)
+
+
+### Features
+
+* add groupD3 ([bf79e31](https://github.com/microsoft/m365-renovate-config/commit/bf79e31cf37d635cbce129fb2eda834cbfe4a0fc))
+
 ## [1.7.3](https://github.com/microsoft/m365-renovate-config/compare/v1.7.2...v1.7.3) (2022-09-12)
 
 
