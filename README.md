@@ -54,6 +54,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [beachballLibraryRecommended](#beachballlibraryrecommended)
 - [Grouping presets](#grouping-presets)
   - [groupMore](#groupmore)
+  - [groupD3](#groupd3)
   - [groupEslint](#groupeslint)
   - [groupFixtureUpdates](#groupfixtureupdates)
   - [groupFluent](#groupfluent)
@@ -269,6 +270,7 @@ Apply all the groupings from this repo (except groupTypes).
   "extends": [
     "group:monorepos",
     "group:recommended",
+    "github>microsoft/m365-renovate-config:groupD3",
     "github>microsoft/m365-renovate-config:groupEslint",
     "github>microsoft/m365-renovate-config:groupFixtureUpdates",
     "github>microsoft/m365-renovate-config:groupFluent",
@@ -286,6 +288,32 @@ Apply all the groupings from this repo (except groupTypes).
 <!-- start extra content (EDITABLE between these comments) -->
 
 To use this preset but disable an individual grouping, add its name to the `ignorePresets` array.
+
+<!-- end extra content -->
+
+---
+
+#### `groupD3`
+
+Group D3 updates (except when initially pinning).
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "groupName": "D3 packages",
+      "matchPackagePrefixes": ["d3-", "@types/d3-"],
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
 
 <!-- end extra content -->
 
