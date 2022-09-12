@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "description": "Group D3 updates (except when initially pinning).",
+
+  "packageRules": [
+    {
+      "groupName": "D3 packages",
+      "matchPackagePrefixes": ["d3-", "@types/d3-"],
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+    }
+  ]
+}
