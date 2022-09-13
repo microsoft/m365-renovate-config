@@ -20,6 +20,8 @@
 
   "printConfig": true,
 
+  "timezone": "America/Los_Angeles",
+
   "vulnerabilityAlerts": {
     "enabled": true
   }
