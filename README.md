@@ -612,6 +612,7 @@ Group minor and patch updates to `@types` `devDependencies`.
   "packageRules": [
     {
       "groupName": "@types devDependencies",
+      "schedule": ["before 8am"],
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
@@ -640,7 +641,7 @@ Group minor and patch updates to `@types` `devDependencies`.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-`@types` packages can update frequently, and used as `devDependencies`, they're generally low risk/effort to update. So this preset groups them together to reduce noise.
+`@types` packages can update frequently, and used as `devDependencies`, they're generally low risk/effort to update. So this preset groups them together to reduce noise. It also uses an early-morning schedule since updates to `@types` packages may be released throughout the day, and probably at most one PR per day is desired.
 
 This group excludes updates to `@types` packages with `0.x` versions since those could technically be breaking changes (and to avoid conflicting with the `dependencyDashboardMajor` preset's `0.x` rule). It also excludes things such as `@types/react` which are often included with other groups.
 
