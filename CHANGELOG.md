@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/microsoft/m365-renovate-config/compare/v1.8.0...v1.8.1) (2022-09-13)
+
+
+### Bug Fixes
+
+* **groupTypes:** only run in early morning ([3e59a57](https://github.com/microsoft/m365-renovate-config/commit/3e59a57766ca3b6b222e2b04d2bbe3926062a3ca))
+
 # [1.8.0](https://github.com/microsoft/m365-renovate-config/compare/v1.7.3...v1.8.0) (2022-09-12)
 
 
