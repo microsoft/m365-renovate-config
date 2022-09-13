@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/microsoft/m365-renovate-config/compare/v1.8.1...v1.8.2) (2022-09-13)
+
+
+### Bug Fixes
+
+* **default:** run schedules relative to pacific time ([89616d0](https://github.com/microsoft/m365-renovate-config/commit/89616d0d9e7071dd2e8d83a4f36361c4831483ee))
+
 ## [1.8.1](https://github.com/microsoft/m365-renovate-config/compare/v1.8.0...v1.8.1) (2022-09-13)
 
 
