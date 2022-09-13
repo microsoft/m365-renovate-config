@@ -101,6 +101,7 @@ Recommended config which is intended to be appropriate for most projects.
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,
   "printConfig": true,
+  "timezone": "America/Los_Angeles",
   "vulnerabilityAlerts": {
     "enabled": true
   }
@@ -111,7 +112,7 @@ Recommended config which is intended to be appropriate for most projects.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-This config should be kept somewhat basic. It's somewhat similar to Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase) but does _not_ enable any dependency pinning by default and adds a few extra settings.
+This config should be kept somewhat basic. It's similar to Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase) but does _not_ enable any dependency pinning by default and adds a few extra settings.
 
 - General extensions:
   - `:ignoreModulesAndTests`: Ignore packages under `node_modules` or common test/fixture directory names
@@ -124,6 +125,7 @@ This config should be kept somewhat basic. It's somewhat similar to Renovate's [
 - `dependencyDashboard`: Create a dashboard issue showing update status and allowing updates to be manually triggered (GitHub only)
 - PR limits (`prHourlyLimit` and `prConcurrentLimit`): Prevent Renovate from creating an overwhelming number of PRs all at once. It's _highly encouraged_ to adjust these in your repo to fit your team's needs!
 - `printConfig`: Log the final resolved config to make debugging easier
+- `timezone`: Run schedules relative to Pacific time, since many M365 repos are based in that time zone. See the [time zone list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for other options.
 - `vulnerabilityAlerts`: Enable PRs to address security vulnerabilities. Note that this **only** works for GitHub and currently is **only** able to update direct dependencies (except in repos using `npm` 6 or older).
 <!-- end extra content -->
 
