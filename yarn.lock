@@ -3638,10 +3638,10 @@ globby@^11.0.0, globby@^11.0.1:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-good-enough-parser@1.1.18:
-  version "1.1.18"
-  resolved "https://registry.yarnpkg.com/good-enough-parser/-/good-enough-parser-1.1.18.tgz#f7a2ad9849b891277d1a0b740f304a0fec2b55d9"
-  integrity sha512-qn0UlqAp6r9ZBuGzT3dTOrqDR43NCm2HAoqCKuMoEbp8H6zy55JGlDxdGWVBnpIydwSjx9tqSSlKlaBSDqkUFA==
+good-enough-parser@1.1.19:
+  version "1.1.19"
+  resolved "https://registry.yarnpkg.com/good-enough-parser/-/good-enough-parser-1.1.19.tgz#928bf8bad59ef63d5095d355a20ce625f4cec04a"
+  integrity sha512-O1sdiXjZocP8gFYi5yMJ1kNGTJi9aV563Pjvo6UwOln3+IE+l6bshHqlKYdEM63Pof1KIqPCPKhNzkDPxNoFpw==
   dependencies:
     "@thi.ng/zipper" "1.0.3"
     "@types/moo" "0.5.5"
@@ -5026,10 +5026,10 @@ node-gyp@^9.0.0:
     tar "^6.1.2"
     which "^2.0.2"
 
-node-html-parser@5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-5.4.1.tgz#c9938b9521ef542c2374e4923078f8f2a365f50d"
-  integrity sha512-xy/O2wOEBJsIRLs4avwa1lVY7tIpXXOoHHUJLa0GvnoPPqMG1hgBVl1tNI3GHOwRktTVZy+Y6rjghk4B9/NLyg==
+node-html-parser@5.4.2:
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-5.4.2.tgz#93e004038c17af80226c942336990a0eaed8136a"
+  integrity sha512-RaBPP3+51hPne/OolXxcz89iYvQvKOydaqoePpOgXcrOKZhjVIzmpKZz+Hd/RBO2/zN2q6CNJhQzucVz+u3Jyw==
   dependencies:
     css-select "^4.2.1"
     he "1.2.0"
@@ -5327,10 +5327,10 @@ opener@^1.5.2:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
-openpgp@5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/openpgp/-/openpgp-5.4.0.tgz#679e7ce1c97994d72545bf5be818de15e5707b52"
-  integrity sha512-XgQnK8SYy4Ycg9BDvrXTE4foMwME/+1EfGZWZirUU2VPzU1X3xx094fChjbP10+gUJifAcoWTsT2zAbdhFUxyg==
+openpgp@5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/openpgp/-/openpgp-5.5.0.tgz#235ae5a49d5fda5cfd1d82c4c42cd91433478c14"
+  integrity sha512-SpwcJnxrK9Y0HRM6KxSFqkAEOSWEabCH/c8dII/+y2e5f6KvuDG5ZE7JXaPBaVJNE4VUZZeTphxXDoZD0KOHrw==
   dependencies:
     asn1.js "^5.0.0"
 
@@ -5943,10 +5943,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@32.192.3:
-  version "32.192.3"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-32.192.3.tgz#6cbe44f11c2c12f9935246cbd94b8c6a9384ab65"
-  integrity sha512-m6aBPAYnTcSq8xf+JUSIeBCUM3LZAhL4MhBUD1wx3wK6i2lXbXQog3gzMsBIMPW5nuO7Fi3hTOE4Aj0L+LZf9Q==
+renovate@32.195.1:
+  version "32.195.1"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-32.195.1.tgz#bc4f81f16b2e913a2e071af30071beaf9f4e668d"
+  integrity sha512-4q8p70fqt+wOusON/muj/Go+hM0sPjtwWfk5/Mr7y21x1pZSMWbg5vWSPu7b2SwJqoh2SCQpN34cvs7W2IBhJw==
   dependencies:
     "@aws-sdk/client-ec2" "3.155.0"
     "@aws-sdk/client-ecr" "3.154.0"
@@ -5991,7 +5991,7 @@ renovate@32.192.3:
     git-url-parse "12.0.0"
     github-url-from-git "1.5.0"
     global-agent "3.0.0"
-    good-enough-parser "1.1.18"
+    good-enough-parser "1.1.19"
     got "11.8.5"
     graph-data-structure "2.0.0"
     handlebars "4.7.7"
@@ -6009,8 +6009,8 @@ renovate@32.192.3:
     minimatch "5.1.0"
     moo "0.5.1"
     nanoid "3.3.4"
-    node-html-parser "5.4.1"
-    openpgp "5.4.0"
+    node-html-parser "5.4.2"
+    openpgp "5.5.0"
     p-all "3.0.0"
     p-map "4.0.0"
     p-queue "6.6.2"
@@ -6025,7 +6025,7 @@ renovate@32.192.3:
     semver-stable "3.0.0"
     semver-utils "1.1.4"
     shlex "2.1.2"
-    simple-git "3.13.0"
+    simple-git "3.14.0"
     slugify "1.6.5"
     traverse "0.6.6"
     tslib "2.4.0"
@@ -6299,10 +6299,10 @@ signale@^1.2.1:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
-simple-git@3.13.0:
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.13.0.tgz#36589e201c28cecaca6f3a898e7257c6610e8588"
-  integrity sha512-VYrs3joeHvWGcN3K135RpGpPjm4AHYeOrclwew6LlfHgq6ozQYIW2yMnmjf4PCgVOuSYCbXkdUjyiFawuJz8MA==
+simple-git@3.14.0:
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.14.0.tgz#6b98b445635ea778e8af9baa299dca71ede896ec"
+  integrity sha512-Paad1BkrI7vWhImLybDRYOHnh3WPsHSKXJpmKM+iGjjKNV91XaOdd+yIdZ/gqdzncHDEKYff4k+74oNo1R+U8Q==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
