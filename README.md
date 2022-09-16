@@ -698,24 +698,24 @@ Disable upgrades to package versions that have been converted to ES modules.
 {
   "packageRules": [
     {
-      "matchPackageNames": ["chalk"],
-      "allowedVersions": "<5.0.0"
-    },
-    {
-      "matchPackageNames": ["execa", "find-up", "pretty-bytes"],
-      "allowedVersions": "<6.0.0"
-    },
-    {
-      "matchPackageNames": ["globby"],
-      "allowedVersions": "<12.0.0"
-    },
-    {
       "matchPackageNames": ["p-limit"],
       "allowedVersions": "<4.0.0"
     },
     {
+      "matchPackageNames": ["chalk"],
+      "allowedVersions": "<5.0.0"
+    },
+    {
+      "matchPackageNames": ["ansi-regex", "execa", "find-up", "pretty-bytes"],
+      "allowedVersions": "<6.0.0"
+    },
+    {
       "matchPackageNames": ["supports-color"],
       "allowedVersions": "<9.0.0"
+    },
+    {
+      "matchPackageNames": ["globby"],
+      "allowedVersions": "<12.0.0"
     }
   ]
 }
