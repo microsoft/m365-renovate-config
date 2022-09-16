@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/microsoft/m365-renovate-config/compare/v1.8.2...v1.8.3) (2022-09-16)
+
+
+### Bug Fixes
+
+* **disableEsmVersions:** add ansi-regex ([9e8c1f4](https://github.com/microsoft/m365-renovate-config/commit/9e8c1f4a89ff0704b62d52c37587ce6d71e108dd))
+
 ## [1.8.2](https://github.com/microsoft/m365-renovate-config/compare/v1.8.1...v1.8.2) (2022-09-13)
 
 
