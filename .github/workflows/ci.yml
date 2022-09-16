@@ -6,8 +6,6 @@ on:
       - main
       # validate configs that are pushed to a branch
       - v1
-      # validate renovate updates
-      - 'renovate/*'
 
 concurrency:
   group: ${{ github.ref }}-ci
