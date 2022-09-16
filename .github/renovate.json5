@@ -7,8 +7,13 @@
     "github>microsoft/m365-renovate-config:scheduleNoisy"
   ],
 
-  // Ignore default semantic commit config (see packageRules below)
-  "ignorePresets": [":semanticPrefixFixDepsChoreOthers"],
+
+  "ignorePresets": [
+    // Ignore default semantic commit config (see packageRules below)
+    ":semanticPrefixFixDepsChoreOthers",
+    // Automatically make PRs for major version updates
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
+  ],
 
   "labels": ["renovate"],
 
