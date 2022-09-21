@@ -948,6 +948,10 @@ Update "noisy" (frequently-updating) packages once a week.
     {
       "matchPackageNames": ["renovate"],
       "schedule": ["before 8am on Tuesday"]
+    },
+    {
+      "matchPackagePrefixes": ["@microsoft/api-extractor"],
+      "schedule": ["before 8am on Wednesday"]
     }
   ]
 }
