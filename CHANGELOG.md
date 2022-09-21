@@ -1,3 +1,10 @@
+## [1.8.4](https://github.com/microsoft/m365-renovate-config/compare/v1.8.3...v1.8.4) (2022-09-21)
+
+
+### Bug Fixes
+
+* add `@microsoft/api-extractor` to noisy packages rule ([99ac22c](https://github.com/microsoft/m365-renovate-config/commit/99ac22c68d0843c4275f3eff98f9a284d1699354))
+
 ## [1.8.3](https://github.com/microsoft/m365-renovate-config/compare/v1.8.2...v1.8.3) (2022-09-16)
 
 
