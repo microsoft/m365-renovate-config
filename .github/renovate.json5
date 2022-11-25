@@ -7,7 +7,6 @@
     "github>microsoft/m365-renovate-config:scheduleNoisy"
   ],
 
-
   "ignorePresets": [
     // Ignore default semantic commit config (see packageRules below)
     ":semanticPrefixFixDepsChoreOthers",
