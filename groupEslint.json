@@ -1,13 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Group all eslint-related updates (except when initially pinning).",
+  "description": "Group and schedule all eslint-related updates (except when initially pinning).",
 
   "packageRules": [
     {
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
+      "schedule": ["before 8am on Monday"]
     }
   ]
 }
