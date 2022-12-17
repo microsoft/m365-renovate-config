@@ -323,7 +323,7 @@ Group D3 updates (except when initially pinning).
 
 #### `groupEslint`
 
-Group all eslint-related updates (except when initially pinning).
+Group and schedule all eslint-related updates (except when initially pinning).
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -333,7 +333,8 @@ Group all eslint-related updates (except when initially pinning).
     {
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
+      "schedule": ["before 8am on Monday"]
     }
   ]
 }
