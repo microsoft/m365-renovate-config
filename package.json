@@ -14,7 +14,7 @@
     "format": "prettier --write .",
     "lint": "node ./scripts/lintPresets.js",
     "prepare": "husky install",
-    "release": "semantic-release",
+    "release": "HUSKY=0 semantic-release",
     "test:basic": "node ./scripts/testPresetsBasic.js",
     "test:full": "node ./scripts/testPresetsFull.js",
     "update-readme": "node ./scripts/updateReadme.js",
