@@ -21,7 +21,7 @@
     "update-refs": "node ./scripts/updateRefs.js"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.4.1",
+    "@commitlint/cli": "17.4.2",
     "@semantic-release/changelog": "6.0.2",
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
