@@ -2637,10 +2637,10 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws4@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
-  integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
+aws4@1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.12.0.tgz#ce1c9d143389679e253b314241ea9aa5cec980d3"
+  integrity sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==
 
 azure-devops-node-api@11.2.0:
   version "11.2.0"
@@ -3046,10 +3046,10 @@ columnify@^1.6.0:
     strip-ansi "^6.0.1"
     wcwidth "^1.0.0"
 
-commander@9.4.1, commander@^9.4.1:
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-9.4.1.tgz#d1dd8f2ce6faf93147295c0df13c7c21141cfbdd"
-  integrity sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==
+commander@9.5.0, commander@^9.4.1:
+  version "9.5.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-9.5.0.tgz#bc08d1eb5cedf7ccb797a96199d41c7bc3e60d30"
+  integrity sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==
 
 common-ancestor-path@^1.0.1:
   version "1.0.1"
@@ -5896,11 +5896,6 @@ postcss-selector-parser@^6.0.10:
     cssesc "^3.0.0"
     util-deprecate "^1.0.2"
 
-prettier@2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.1.tgz#4e1fd11c34e2421bc1da9aea9bd8127cd0a35efc"
-  integrity sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==
-
 prettier@2.8.2:
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.2.tgz#c4ea1b5b454d7c4b59966db2e06ed7eec5dfd160"
@@ -6202,10 +6197,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@34.97.5:
-  version "34.97.5"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-34.97.5.tgz#865f7425e36d4d13d8b25cec6d5cb43199f0ba73"
-  integrity sha512-z15bQrkb4vshs2FJ5sfbre47pNfhLCz97hu8Sv7q/aeMAHSwNnBgnAJ/4r37JMlvqno0Q5e7tjr5BR2E6Aho5w==
+renovate@34.105.2:
+  version "34.105.2"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-34.105.2.tgz#482612223409ddbc3760a6a2184188c375862c82"
+  integrity sha512-v7BORr5oSe/d+sKcgGRuQuInFs6nzNQpZPaCMA0GvkhPMXr1DFvKcxx0uTkCEIdfcQe+Mll1DhGhud8XOivh3A==
   dependencies:
     "@aws-sdk/client-codecommit" "3.226.0"
     "@aws-sdk/client-ec2" "3.226.0"
@@ -6236,7 +6231,7 @@ renovate@34.97.5:
     agentkeepalive "4.2.1"
     aggregate-error "3.1.0"
     auth-header "1.0.0"
-    aws4 "1.11.0"
+    aws4 "1.12.0"
     azure-devops-node-api "11.2.0"
     bunyan "1.8.15"
     cacache "17.0.4"
@@ -6244,7 +6239,7 @@ renovate@34.97.5:
     chalk "4.1.2"
     changelog-filename-regex "2.0.1"
     clean-git-ref "2.0.1"
-    commander "9.4.1"
+    commander "9.5.0"
     conventional-commits-detector "1.0.3"
     crypto-random-string "3.3.1"
     deepmerge "4.2.2"
@@ -6289,7 +6284,7 @@ renovate@34.97.5:
     p-queue "6.6.2"
     p-throttle "4.1.1"
     parse-link-header "2.0.0"
-    prettier "2.8.1"
+    prettier "2.8.2"
     quick-lru "5.1.1"
     redis "4.5.1"
     remark "13.0.0"
