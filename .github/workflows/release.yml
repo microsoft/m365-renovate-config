@@ -13,6 +13,9 @@ concurrency:
 env:
   MAJOR_BRANCH: v1
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
