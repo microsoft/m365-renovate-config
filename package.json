@@ -14,27 +14,27 @@
     "format": "prettier --write .",
     "lint": "node ./scripts/lintPresets.js",
     "prepare": "husky install",
-    "release": "semantic-release",
+    "release": "HUSKY=0 semantic-release",
     "test:basic": "node ./scripts/testPresetsBasic.js",
     "test:full": "node ./scripts/testPresetsFull.js",
     "update-readme": "node ./scripts/updateReadme.js",
     "update-refs": "node ./scripts/updateRefs.js"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.1.2",
-    "@semantic-release/changelog": "6.0.1",
+    "@commitlint/cli": "17.4.4",
+    "@semantic-release/changelog": "6.0.2",
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@types/jju": "1.4.2",
-    "@types/node": "16.11.59",
+    "@types/node": "16.18.12",
     "conventional-changelog-conventionalcommits": "5.0.0",
-    "execa": "6.1.0",
-    "husky": "8.0.1",
+    "execa": "7.0.0",
+    "husky": "8.0.3",
     "jju": "1.4.0",
-    "prettier": "2.7.1",
-    "renovate": "32.201.1",
+    "prettier": "2.8.4",
+    "renovate": "34.148.0",
     "semantic-release": "19.0.5",
-    "typescript": "4.8.3"
+    "typescript": "4.9.5"
   },
   "release": {
     "branches": [
