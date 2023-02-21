@@ -30,6 +30,8 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          # Don't save creds in the git config (so it's easier to override later)
+          persist-credentials: false
 
       - name: Set up Node
         uses: actions/setup-node@v3
