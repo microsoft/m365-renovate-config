@@ -6,14 +6,14 @@
   "extends": [
     "group:monorepos",
     "group:recommended",
-    "github>microsoft/m365-renovate-config:groupD3#v1.8.4",
-    "github>microsoft/m365-renovate-config:groupEslint#v1.8.4",
-    "github>microsoft/m365-renovate-config:groupFixtureUpdates#v1.8.4",
-    "github>microsoft/m365-renovate-config:groupFluent#v1.8.4",
-    "github>microsoft/m365-renovate-config:groupJest#v1.8.4",
-    "github>microsoft/m365-renovate-config:groupNodeMajor#v1.8.4",
-    "github>microsoft/m365-renovate-config:groupReact#v1.8.4",
-    "github>microsoft/m365-renovate-config:groupRollup#v1.8.4",
-    "github>microsoft/m365-renovate-config:groupYargs#v1.8.4"
+    "github>microsoft/m365-renovate-config:groupD3#v1.8.5",
+    "github>microsoft/m365-renovate-config:groupEslint#v1.8.5",
+    "github>microsoft/m365-renovate-config:groupFixtureUpdates#v1.8.5",
+    "github>microsoft/m365-renovate-config:groupFluent#v1.8.5",
+    "github>microsoft/m365-renovate-config:groupJest#v1.8.5",
+    "github>microsoft/m365-renovate-config:groupNodeMajor#v1.8.5",
+    "github>microsoft/m365-renovate-config:groupReact#v1.8.5",
+    "github>microsoft/m365-renovate-config:groupRollup#v1.8.5",
+    "github>microsoft/m365-renovate-config:groupYargs#v1.8.5"
   ]
 }

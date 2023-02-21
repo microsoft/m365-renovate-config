@@ -1,3 +1,10 @@
+## [1.8.5](https://github.com/microsoft/m365-renovate-config/compare/v1.8.4...v1.8.5) (2023-02-21)
+
+
+### Bug Fixes
+
+* schedule eslint-related updates ([#51](https://github.com/microsoft/m365-renovate-config/issues/51)) ([410f3d5](https://github.com/microsoft/m365-renovate-config/commit/410f3d548c8b1224e9aa5bfe408f4b56f5a52406))
+
 ## [1.8.4](https://github.com/microsoft/m365-renovate-config/compare/v1.8.3...v1.8.4) (2022-09-21)
 
 
