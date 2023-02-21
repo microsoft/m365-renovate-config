@@ -54,11 +54,22 @@ jobs:
         if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}
         run: |
           set -x
+
+          # Get the existing remote URL without creds, and use a trap (like try/finally)
+          # to restore it after this step finishes
+          trap "git remote set-url origin '$(git remote get-url origin)'" EXIT
+
+          # Add a token to the remote URL for auth during release
+          git remote set-url origin "https://$REPO_PAT@github.com/$GITHUB_REPOSITORY"
+
           git config user.name "GitHub Actions"
           git config user.email "not provided"
+
           git checkout "$MAJOR_BRANCH"
           git merge main --no-edit -Xtheirs
           git push origin main
+        env:
+          REPO_PAT: ${{ secrets.REPO_PAT }}
 
       - name: Release from ${{ env.MAJOR_BRANCH }}
         if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}
