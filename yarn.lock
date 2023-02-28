@@ -4014,10 +4014,10 @@ graceful-fs@4.2.10, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, 
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
 
-graph-data-structure@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/graph-data-structure/-/graph-data-structure-3.1.1.tgz#9c45dbd61ff22f2cbf1790c888d6fdff85c5c1c8"
-  integrity sha512-8hN+cbuxQPX16u6XsNHD365ywgsizdb3/4EQgCADNb/XUpqIWSNfZ2oCuEs59kn0XezVaxz/LK7oJ+kOE7wmMQ==
+graph-data-structure@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/graph-data-structure/-/graph-data-structure-3.2.0.tgz#db7886a69a2073c76291eef75c973d532eea3b48"
+  integrity sha512-GtMD5xvFX947d04IzH0dIPnncglFVQKZpLqLb0jy7OM+dMcm4gY9QNAUfHJryNc0Gd0cSvlMfwulUQ/CPyGczg==
 
 grapheme-splitter@^1.0.4:
   version "1.0.4"
@@ -5337,10 +5337,10 @@ node-gyp@^9.0.0, node-gyp@^9.1.0, node-gyp@^9.3.0:
     tar "^6.1.2"
     which "^2.0.2"
 
-node-html-parser@6.1.4:
-  version "6.1.4"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.4.tgz#763cd362497e427d51fc73dda3dcd8ac52ba85a3"
-  integrity sha512-3muP9Uy/Pz7bQa9TNYVQzWJhNZMqyCx7xJle8kz2/y1UgzAUyXXShc1IcPaJy6u07CE3K5rQcRwlvHzmlySRjg==
+node-html-parser@6.1.5:
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.5.tgz#c819dceb13a10a7642ff92f94f870b4f77968097"
+  integrity sha512-fAaM511feX++/Chnhe475a0NHD8M7AxDInsqQpz6x63GRF7xYNdS8Vo5dKsIVPgsOvG7eioRRTZQnWBrhDHBSg==
   dependencies:
     css-select "^5.1.0"
     he "1.2.0"
@@ -5652,10 +5652,10 @@ opener@^1.5.2:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
-openpgp@5.5.0:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/openpgp/-/openpgp-5.5.0.tgz#235ae5a49d5fda5cfd1d82c4c42cd91433478c14"
-  integrity sha512-SpwcJnxrK9Y0HRM6KxSFqkAEOSWEabCH/c8dII/+y2e5f6KvuDG5ZE7JXaPBaVJNE4VUZZeTphxXDoZD0KOHrw==
+openpgp@5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/openpgp/-/openpgp-5.6.0.tgz#2bbcce109f789d7d9b317fbdec7cc3cd4dc7dbac"
+  integrity sha512-m0UGCSefapbPssLmxJ7z7KydLEdpWjaY5gXoxZgTuNeWDfeRG5lzaORWNxyKg1K4tJnRwSoTp01Vtt8Cenbmgw==
   dependencies:
     asn1.js "^5.0.0"
 
@@ -6266,10 +6266,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@34.148.0:
-  version "34.148.0"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-34.148.0.tgz#502fde486d353788170a0e774a71118f7bfb43b1"
-  integrity sha512-OT0kMSDq4gruVeaKfYZbIJTM+S/rmbkvHix6gIc+XPIQDf6YRQTVcBCQ/iMyFJrOiYKXIaKSgefdImkB+n7Ifw==
+renovate@34.154.1:
+  version "34.154.1"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-34.154.1.tgz#e7a71e557b6e9855bf399b20ca70331972b123dd"
+  integrity sha512-J/PDV72a8BXBiRQqkGeu1TG+zRgUPDCkfzrWculUReszD5X8CTy8Y0mwgmtfuj4+gwkAy7u4bqzEQoDttlJt4w==
   dependencies:
     "@aws-sdk/client-codecommit" "3.256.0"
     "@aws-sdk/client-ec2" "3.256.0"
@@ -6331,7 +6331,7 @@ renovate@34.148.0:
     global-agent "3.0.0"
     good-enough-parser "1.1.22"
     got "11.8.6"
-    graph-data-structure "3.1.1"
+    graph-data-structure "3.2.0"
     handlebars "4.7.7"
     hasha "5.2.2"
     hcl2-parser "1.0.3"
@@ -6348,8 +6348,8 @@ renovate@34.148.0:
     moo "0.5.2"
     ms "2.1.3"
     nanoid "3.3.4"
-    node-html-parser "6.1.4"
-    openpgp "5.5.0"
+    node-html-parser "6.1.5"
+    openpgp "5.6.0"
     p-all "3.0.0"
     p-map "4.0.0"
     p-queue "6.6.2"
@@ -6365,7 +6365,7 @@ renovate@34.148.0:
     semver-stable "3.0.0"
     semver-utils "1.1.4"
     shlex "2.1.2"
-    simple-git "3.16.0"
+    simple-git "3.16.1"
     slugify "1.6.5"
     source-map-support "0.5.21"
     traverse "0.6.7"
@@ -6651,10 +6651,10 @@ signale@^1.2.1:
     figures "^2.0.0"
     pkg-conf "^2.1.0"
 
-simple-git@3.16.0:
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.16.0.tgz#421773e24680f5716999cc4a1d60127b4b6a9dec"
-  integrity sha512-zuWYsOLEhbJRWVxpjdiXl6eyAyGo/KzVW+KFhhw9MqEEJttcq+32jTWSGyxTdf9e/YCohxRE+9xpWFj9FdiJNw==
+simple-git@3.16.1:
+  version "3.16.1"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.16.1.tgz#b67f18cbd3c68bbc4b9177ed49256afe51f12d47"
+  integrity sha512-xzRxMKiy1zEYeHGXgAzvuXffDS0xgsq07Oi4LWEEcVH29vLpcZ2tyQRWyK0NLLlCVaKysZeem5tC1qHEOxsKwA==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
