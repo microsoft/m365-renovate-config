@@ -1,12 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Group jest, ts-jest, jest types, and related packages (except when initially pinning).",
+  "description": "Group and schedule jest, ts-jest, jest types, and related packages (except when initially pinning).",
 
   "packageRules": [
     {
       "groupName": "jest monorepo",
-      "matchPackagePrefixes": ["@types/jest-", "jest-"]
+      "matchPackagePrefixes": ["@types/jest-", "jest-"],
+      "schedule": "before 5am every 2nd and 4th Monday"
     }
   ]
 }

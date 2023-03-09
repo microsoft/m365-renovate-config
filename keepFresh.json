@@ -5,7 +5,7 @@
 
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["before 8am on Monday"]
+    "schedule": ["before 5am every 1st and 3rd Monday"]
   },
 
   "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]

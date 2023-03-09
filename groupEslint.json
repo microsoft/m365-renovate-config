@@ -8,7 +8,7 @@
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
       "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
-      "schedule": ["before 8am on Monday"]
+      "schedule": ["before 5am every 2nd and 4th Monday"]
     }
   ]
 }
