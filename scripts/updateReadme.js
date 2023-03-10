@@ -133,26 +133,25 @@ async function updateReadme() {
   }
 
   const presets = readPresets({ exclude: excludedPresets });
-  const presetNames = Object.keys(presets).map((p) => path.basename(p, '.json'));
+  const presetNames = presets.map((p) => p.name);
 
   const presetsSection = getMarkedSection(originalReadme, comments.main);
 
   const presetExtraTexts = getPresetExtraTexts(presetNames, presetsSection);
 
   // Generate preset sections based on the descriptions, custom text, and other JSON
-  const newPresets = Object.entries(presets).map(([presetFile, { content, json }]) => {
-    const presetName = path.basename(presetFile, '.json');
+  const newPresets = presets.map(({ name, content, json }) => {
     const presetArgs = content.match(/{{arg\d}}/g);
     const presetNameWithArgs = presetArgs
-      ? `${presetName}(${presetArgs.map((arg) => `<${arg.slice(2, -2)}>`).join(', ')})`
-      : presetName;
-    const extraContent = presetExtraTexts[presetName] || '';
+      ? `${name}(${presetArgs.map((arg) => `<${arg.slice(2, -2)}>`).join(', ')})`
+      : name;
+    const extraContent = presetExtraTexts[name] || '';
 
     const { description, $schema, ...otherJson } = json;
     const modifiedJson = JSON.stringify(otherJson, null, 2);
 
     return {
-      name: presetName,
+      name,
       nameWithArgs: presetNameWithArgs,
       content: `
 #### \`${presetNameWithArgs}\`
@@ -228,9 +227,12 @@ ${comments.extra.end}
     .replace(presetsSection, newPresetGroups.map((g) => g.content).join('\n'))
     .replace(oldToc, newToc);
   fs.writeFileSync(readmeFile, newReadme);
-  console.log('\nUpdated readme!\n');
+  console.log('\nUpdated readme! Formatting...\n');
 
-  await runBin('prettier', ['--write', 'README.md'], { stdio: ['ignore', 'ignore', 'inherit'] });
+  await runBin('prettier', ['--write', 'README.md'], {
+    stdio: ['ignore', 'ignore', 'inherit'],
+    reject: true, // throw on failure
+  });
 }
 
 updateReadme().catch((err) => {

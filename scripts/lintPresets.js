@@ -1,4 +1,3 @@
-import path from 'path';
 import { logError } from './utils/github.js';
 import { readPresets } from './utils/readPresets.js';
 
@@ -9,10 +8,9 @@ const requiredAttributes = {
 
 const presets = readPresets();
 
-for (const [presetPath, { json }] of Object.entries(presets)) {
+for (const { name, filename, json } of presets) {
   const logIssue = (message) => {
-    const presetName = path.basename(presetPath, '.json');
-    logError(`${presetName}: ${message}`, `${presetName}.json`);
+    logError(`${name}: ${message}`, filename);
     process.exitCode = 1;
   };
 

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { getExtendsForLocalPreset } from './utils/extends.js';
 import { getEnv } from './utils/getEnv.js';
 import {
   defaultBranch,
@@ -61,9 +62,7 @@ async function runTests() {
     force: {
       printConfig: true,
       // force an "extends" config with all the presets from this repo
-      extends: Object.keys(presets).map(
-        (p) => `${defaultRepo}:${path.basename(p, '.json')}${branchRef}`
-      ),
+      extends: presets.map((p) => getExtendsForLocalPreset(p.name, branchRef)),
       // also use the current branch as the base
       ...(branchName !== defaultBranch && {
         baseBranches: [branchName],
@@ -102,7 +101,7 @@ async function runTests() {
 /** @param {string} logFile */
 function logRenovateError(logFile) {
   /**
-   * @typedef {import('./utils/renovateLogTypes.js').RenovateLog} RenovateLog
+   * @typedef {import('./utils/types.js').RenovateLog} RenovateLog
    * @typedef {RenovateLog & { preset: string }} RenovatePresetDebugLog
    */
   const logs = readRenovateLogs(logFile);

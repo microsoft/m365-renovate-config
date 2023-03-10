@@ -1,7 +1,8 @@
 import fs from 'fs';
 import jju from 'jju';
-import { defaultRepo } from './utils/github.js';
 import { readPresets } from './utils/readPresets.js';
+import { formatFile } from './utils/formatFile.js';
+import { getLocalPresetFromExtends, setExtendsRef } from './utils/extends.js';
 
 const ref = process.argv[2];
 if (!ref) {
@@ -12,15 +13,18 @@ if (!ref) {
 // fix repo references in presets to reflect the new ref
 const presets = readPresets();
 
-for (const [presetFile, { content, json }] of Object.entries(presets)) {
+for (const { json, content, absolutePath } of presets) {
   if (json.extends) {
     json.extends = /** @type {string[]} */ (json.extends).map((preset) =>
       // if it's a preset in this repo, either add the ref to the end or replace the existing ref
-      preset.includes(defaultRepo) ? preset.replace(/($|#.*)/, `#${ref}`) : preset
+      getLocalPresetFromExtends(preset) ? setExtendsRef(preset, ref) : preset
     );
   }
-  fs.writeFileSync(presetFile, jju.update(content, json, { indent: 2 }));
+  fs.writeFileSync(absolutePath, jju.update(content, json, { indent: 2 }));
 }
+
+// format the presets (jju uses a different style)
+formatFile('*.json');
 
 // // fix repo references in config files to reflect the repo/branch being tested
 // const headRef = /** @type {string} */ (process.env.GITHUB_HEAD_REF);
