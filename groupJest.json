@@ -7,7 +7,7 @@
     {
       "groupName": "jest monorepo",
       "matchPackagePrefixes": ["@types/jest-", "jest-"],
-      "schedule": "before 5am every 2nd and 4th Monday"
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }

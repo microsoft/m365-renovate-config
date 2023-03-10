@@ -6,7 +6,7 @@
   "packageRules": [
     {
       "groupName": "@types devDependencies",
-      "schedule": ["before 5am every 1st and 3rd Monday"],
+      "schedule": ["before 5am on the 1st and 15th day of the month"],
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],

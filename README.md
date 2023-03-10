@@ -334,7 +334,7 @@ Group and schedule all eslint-related updates (except when initially pinning).
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
       "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
-      "schedule": ["before 5am every 2nd and 4th Monday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }
@@ -369,7 +369,7 @@ Group, schedule, and auto-merge all dependency updates in `__fixtures__` sub-fol
   "packageRules": [
     {
       "groupName": "fixture dependencies",
-      "schedule": ["before 5am every 1st and 3rd Monday"],
+      "schedule": ["before 5am on the 1st and 15th day of the month"],
       "matchPaths": ["**/__fixtures__/**/package.json"],
       "matchPackagePatterns": ["*"],
       "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "resolutions"],
@@ -499,7 +499,7 @@ Group and schedule jest, ts-jest, jest types, and related packages (except when 
     {
       "groupName": "jest monorepo",
       "matchPackagePrefixes": ["@types/jest-", "jest-"],
-      "schedule": "before 5am every 2nd and 4th Monday"
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }
@@ -616,7 +616,7 @@ Group minor and patch updates to `@types` `devDependencies`.
   "packageRules": [
     {
       "groupName": "@types devDependencies",
-      "schedule": ["before 5am every 1st and 3rd Monday"],
+      "schedule": ["before 5am on the 1st and 15th day of the month"],
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
@@ -898,7 +898,7 @@ Keep locally-used dependency versions deduplicated and updated.
 {
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["before 5am every 1st and 3rd Monday"]
+    "schedule": ["before 5am on the 1st and 15th day of the month"]
   },
   "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
 }
@@ -950,11 +950,11 @@ Update "noisy" (frequently-updating) packages once every other week.
   "packageRules": [
     {
       "matchPackageNames": ["renovate"],
-      "schedule": ["before 5am every 2nd and 4th Tuesday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     },
     {
       "matchPackagePrefixes": ["@microsoft/api-extractor"],
-      "schedule": ["before 5am every 2nd and 4th Wednesday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }
