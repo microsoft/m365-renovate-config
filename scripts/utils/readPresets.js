@@ -1,19 +1,21 @@
 import fs from 'fs';
 import jju from 'jju';
 import path from 'path';
-import { logError } from './github.js';
+import { logError, repoRenovateConfigPath } from './github.js';
 import { root } from './paths.js';
 
 const excludeFiles = ['jsconfig.json', 'package.json'];
-const repoConfigPath = path.join(root, '.github/renovate.json5');
+const repoConfigAbsPath = path.join(root, repoRenovateConfigPath);
 
 /**
+ * Get the contents of the preset files and optionally the repo Renovate config.
+ * If the repo config is included, it will be first in the array (needed for basic tests).
  * @param {Object} param0
  * @param {boolean} [param0.includeRepoConfig] whether to include .github/renovate.json5
  * @param {string[]} [param0.exclude] presets names to exclude
- * @returns {Record<string, { content: string; json: any }>} mapping from preset absolute path to content
+ * @returns {import('./types.js').LocalPresetData[]}
  */
-export function readPresets({ includeRepoConfig, exclude = [] } = {}) {
+export function readPresets({ includeRepoConfig, exclude: excludePresets = [] } = {}) {
   const presetFiles = fs
     .readdirSync(root)
     .filter((file) => /^[^.].*\.json$/.test(file) && !excludeFiles.includes(file));
@@ -23,21 +25,31 @@ export function readPresets({ includeRepoConfig, exclude = [] } = {}) {
     process.exit(1);
   }
 
-  const presets = /** @type {*} */ ({});
+  const presets = /** @type {import('./types.js').LocalPresetData[]} */ ([]);
 
   if (includeRepoConfig) {
-    // In the config validation test, it's important that the repo config is the first key so that
-    // if it needs migration, it will be updated before the other presets are validated (because
-    // there's no way to prevent Renovate from validating the repo config along with each preset)
-    const content = fs.readFileSync(repoConfigPath, 'utf8');
-    presets[repoConfigPath] = { content, json: jju.parse(content) };
+    const content = fs.readFileSync(repoConfigAbsPath, 'utf8');
+    presets.push({
+      absolutePath: repoConfigAbsPath,
+      filename: repoRenovateConfigPath,
+      content,
+      json: jju.parse(content),
+      name: 'repo config',
+    });
   }
 
   for (const preset of presetFiles) {
-    if (!exclude.includes(path.basename(preset, '.json'))) {
+    const presetName = path.basename(preset, '.json');
+    if (!excludePresets.includes(presetName)) {
       const presetPath = path.join(root, preset);
       const content = fs.readFileSync(presetPath, 'utf8');
-      presets[presetPath] = { content, json: JSON.parse(content) };
+      presets.push({
+        absolutePath: presetPath,
+        name: presetName,
+        filename: preset,
+        content,
+        json: JSON.parse(content),
+      });
     }
   }
 

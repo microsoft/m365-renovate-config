@@ -5,5 +5,10 @@ import { spawnSync } from 'child_process';
  * @param {string} file path to file
  */
 export function formatFile(file) {
-  spawnSync('yarn', ['prettier', '--write', file], { stdio: 'inherit' });
+  const res = spawnSync('yarn', ['prettier', '--write', '--loglevel=warn', file], {
+    stdio: 'pipe',
+  });
+  if (res.status !== 0) {
+    throw new Error(`Failed to run prettier on ${file}: ${res.stderr.toString()}`);
+  }
 }

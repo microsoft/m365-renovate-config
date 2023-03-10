@@ -1,20 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Update \"noisy\" (frequently-updating) packages once a week.",
+  "description": "Update \"noisy\" (frequently-updating) packages once every other week.",
 
   "packageRules": [
     {
-      "matchPackageNames": ["@types/node"],
-      "schedule": ["before 8am on Monday"]
-    },
-    {
       "matchPackageNames": ["renovate"],
-      "schedule": ["before 8am on Tuesday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     },
     {
       "matchPackagePrefixes": ["@microsoft/api-extractor"],
-      "schedule": ["before 8am on Wednesday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }

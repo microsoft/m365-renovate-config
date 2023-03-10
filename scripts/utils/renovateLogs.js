@@ -2,8 +2,8 @@ import fs from 'fs';
 import { logEndGroup, logGroup } from './github.js';
 
 /**
- * @typedef {import('./renovateLogTypes.js').RenovateLog} RenovateLog
- * @typedef {import('./renovateLogTypes.js').RenovateLogLevel} RenovateLogLevel
+ * @typedef {import('./types.js').RenovateLog} RenovateLog
+ * @typedef {import('./types.js').RenovateLogLevel} RenovateLogLevel
  */
 
 /**

@@ -334,7 +334,7 @@ Group and schedule all eslint-related updates (except when initially pinning).
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
       "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
-      "schedule": ["before 8am on Monday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }
@@ -369,7 +369,7 @@ Group, schedule, and auto-merge all dependency updates in `__fixtures__` sub-fol
   "packageRules": [
     {
       "groupName": "fixture dependencies",
-      "schedule": ["before 5am"],
+      "schedule": ["before 5am on the 1st and 15th day of the month"],
       "matchPaths": ["**/__fixtures__/**/package.json"],
       "matchPackagePatterns": ["*"],
       "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "resolutions"],
@@ -489,7 +489,7 @@ If any packages are mis-categorized, please file an issue.
 
 #### `groupJest`
 
-Group jest, ts-jest, jest types, and related packages (except when initially pinning).
+Group and schedule jest, ts-jest, jest types, and related packages (except when initially pinning).
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -498,7 +498,8 @@ Group jest, ts-jest, jest types, and related packages (except when initially pin
   "packageRules": [
     {
       "groupName": "jest monorepo",
-      "matchPackagePrefixes": ["@types/jest-", "jest-"]
+      "matchPackagePrefixes": ["@types/jest-", "jest-"],
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }
@@ -615,18 +616,21 @@ Group minor and patch updates to `@types` `devDependencies`.
   "packageRules": [
     {
       "groupName": "@types devDependencies",
-      "schedule": ["before 8am"],
+      "schedule": ["before 5am on the 1st and 15th day of the month"],
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": ">1.0.0",
+      "excludePackagePrefixes": ["@types/d3-", "@types/jest-"],
       "excludePackageNames": [
         "@types/jest",
         "@types/react",
         "@types/react-dom",
         "@types/react-is",
         "@types/react-test-renderer",
-        "@types/scheduler"
+        "@types/scheduler",
+        "@types/yargs",
+        "@types/yargs-parser"
       ]
     },
     {
@@ -682,6 +686,8 @@ Group yargs, yargs-parser, and their types (except when initially pinning).
 </details>
 
 <!-- start extra content (EDITABLE between these comments) -->
+
+Note that if you depend on both `yargs` and `yargs-parser`, and they have different major versions, this preset can cause an immortal PR (so you may want to the `ignorePresets` array).
 
 <!-- end extra content -->
 
@@ -892,7 +898,7 @@ Keep locally-used dependency versions deduplicated and updated.
 {
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["before 8am on Monday"]
+    "schedule": ["before 5am on the 1st and 15th day of the month"]
   },
   "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
 }
@@ -935,7 +941,7 @@ Always create a new issue if there's a config problem (for visibility).
 
 #### `scheduleNoisy`
 
-Update "noisy" (frequently-updating) packages once a week.
+Update "noisy" (frequently-updating) packages once every other week.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -943,16 +949,12 @@ Update "noisy" (frequently-updating) packages once a week.
 {
   "packageRules": [
     {
-      "matchPackageNames": ["@types/node"],
-      "schedule": ["before 8am on Monday"]
-    },
-    {
       "matchPackageNames": ["renovate"],
-      "schedule": ["before 8am on Tuesday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     },
     {
       "matchPackagePrefixes": ["@microsoft/api-extractor"],
-      "schedule": ["before 8am on Wednesday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }
