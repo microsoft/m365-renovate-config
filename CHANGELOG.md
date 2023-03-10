@@ -1,3 +1,11 @@
+## [1.8.6](https://github.com/microsoft/m365-renovate-config/compare/v1.8.5...v1.8.6) (2023-03-10)
+
+
+### Bug Fixes
+
+* Reduce scheduled update frequency ([a99d3d9](https://github.com/microsoft/m365-renovate-config/commit/a99d3d92c939cca155ee553ef55523a24549bea0))
+* use valid schedules ([2bd4e18](https://github.com/microsoft/m365-renovate-config/commit/2bd4e18dab011d4116956ff199213c946b841ceb))
+
 ## [1.8.5](https://github.com/microsoft/m365-renovate-config/compare/v1.8.4...v1.8.5) (2023-02-21)
 
 
