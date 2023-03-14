@@ -8,12 +8,11 @@
     "github>microsoft/m365-renovate-config:dependencyDashboardMajor#no-pin"
   ],
 
-  "rangeStrategy": "update-lockfile",
-
   "packageRules": [
     {
       "matchDepTypes": ["devDependencies"],
-      "commitMessageTopic": "devDependency {{{depName}}}"
+      "commitMessageTopic": "devDependency {{{depName}}}",
+      "rangeStrategy": "update-lockfile"
     }
   ]
 }

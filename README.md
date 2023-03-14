@@ -93,11 +93,7 @@ Recommended config which is intended to be appropriate for most projects.
 ```json
 {
   "extends": [
-    ":ignoreModulesAndTests",
-    ":semanticPrefixFixDepsChoreOthers",
-    "group:monorepos",
-    "group:recommended",
-    "workarounds:all",
+    "config:base",
     "github>microsoft/m365-renovate-config:groupReact#no-pin",
     "github>microsoft/m365-renovate-config:newConfigWarningIssue#no-pin"
   ],
@@ -116,16 +112,18 @@ Recommended config which is intended to be appropriate for most projects.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-This config should be kept somewhat basic. It's similar to Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase) but does _not_ enable any dependency pinning by default and adds a few extra settings.
+This config should be kept somewhat basic, since it's intended to be appropriate for most repos.
 
-- General extensions:
+- Inherited from Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase):
   - `:ignoreModulesAndTests`: Ignore packages under `node_modules` or common test/fixture directory names
   - [`:semanticPrefixFixDepsChoreOthers`](https://docs.renovatebot.com/presets-default/#semanticprefixfixdepschoreothers): If the repo uses semantic commits, Renovate will use `fix` for dependencies and `chore` for others
   - [`workarounds:all`](https://docs.renovatebot.com/presets-workarounds/#workaroundsall): Workarounds for known problems with packages
 - Package grouping extensions:
   - [`group:monorepos`](https://docs.renovatebot.com/presets-group/#groupmonorepos): Group known monorepos
   - [`group:recommended`](https://docs.renovatebot.com/presets-group/#grouprecommended): Other known groupings (mostly not relevant for node)
-  - [`groupReact`](#groupreact) (from this repo): Group React-related packages and types
+- Inherited from configs in this repo:
+  - [`groupReact`](#groupreact): Group React-related packages and types
+  - [`newConfigWarningIssue`](#newconfigwarningissue): Create a new issue every time there's a config warning
 - `dependencyDashboard`: Create a dashboard issue showing update status and allowing updates to be manually triggered (GitHub only)
 - PR limits (`prHourlyLimit` and `prConcurrentLimit`): Prevent Renovate from creating an overwhelming number of PRs all at once. It's _highly encouraged_ to adjust these in your repo to fit your team's needs!
 - `printConfig`: Log the final resolved config to make debugging easier
@@ -147,11 +145,11 @@ Recommended config for a JS library repo or monorepo, including rangeStrategy.
     "github>microsoft/m365-renovate-config#no-pin",
     "github>microsoft/m365-renovate-config:dependencyDashboardMajor#no-pin"
   ],
-  "rangeStrategy": "update-lockfile",
   "packageRules": [
     {
       "matchDepTypes": ["devDependencies"],
-      "commitMessageTopic": "devDependency {{{depName}}}"
+      "commitMessageTopic": "devDependency {{{depName}}}",
+      "rangeStrategy": "update-lockfile"
     }
   ]
 }
@@ -164,15 +162,10 @@ Recommended config for a JS library repo or monorepo, including rangeStrategy.
 - Extensions:
   - This repo's [default config](#default)
   - Require dependency dashboard approval for major upgrades
-- Set the [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy) for different update types:
-  - Pin `devDependencies` (see below)
-  - Widen ranges when updating `peerDependencies`
-  - For other updates (including `dependencies`), replace the range with a newer one if the new version falls outside it, and update nothing otherwise
-- `commitMessageTopic`: Where appropriate, use "devDependencies" in commit messages (instead of the default "dependencies") to be clearer about what is being modified
-
-"Dependency pinning" refers to using a specific version of a dependency (`1.2.3`) rather than a range (`^1.2.3`, `~1.2.3`, etc). Pinning has its pros and cons for different situations, some of which are discussed in [this article from Renovate](https://docs.renovatebot.com/dependency-pinning/). This preset's strategy of pinning _only_ `devDependencies` is less aggressive than the "auto" strategy used in Renovate's `config:base` to reduce the risk of creating unnecessary duplicates in library or tool consumer repos.
-
-<!-- end extra content -->
+- Overrides for `devDependencies`:
+  - [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy): if the new version is in range, only update the lock file (otherwise replace it)
+  - `commitMessageTopic`: Use "devDependencies" in commit messages (instead of the default "dependencies") to be clearer about what is being modified
+  <!-- end extra content -->
 
 ---
 
