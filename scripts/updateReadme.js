@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import { readPresets } from './utils/readPresets.js';
 import { runBin } from './utils/runBin.js';
 
@@ -67,10 +66,9 @@ const requiredComments = /** @type {string[]} */ ([]).concat(
 
 /**
  * Get section content between marker comments
- * @type {(text: string, comments: Comments) => string}
+ * @type {(text: string, cmmts: Comments) => string}
  */
-const getMarkedSection = (text, comments) =>
-  text.split(comments.start)[1].split(comments.end)[0].trim();
+const getMarkedSection = (text, cmmts) => text.split(cmmts.start)[1].split(cmmts.end)[0].trim();
 
 /**
  * Get the text under each heading of the given level
