@@ -2,6 +2,10 @@
 
 Shared Renovate presets for use in M365 projects.
 
+## 🧪 `no-pin` beta version 🧪
+
+This branch tests recent improvements to [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy): specifically, the ability to do dev dep updates via the lock file instead of pinning.
+
 ## Useful links
 
 - [All configuration options](https://docs.renovatebot.com/configuration-options/)
@@ -94,8 +98,8 @@ Recommended config which is intended to be appropriate for most projects.
     "group:monorepos",
     "group:recommended",
     "workarounds:all",
-    "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue"
+    "github>microsoft/m365-renovate-config:groupReact#no-pin",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue#no-pin"
   ],
   "dependencyDashboard": true,
   "prConcurrentLimit": 10,
@@ -133,31 +137,21 @@ This config should be kept somewhat basic. It's similar to Renovate's [`config:b
 
 #### `libraryRecommended`
 
-Recommended config for a JS library repo or monorepo, including pinning `devDependencies`.
+Recommended config for a JS library repo or monorepo, including rangeStrategy.
 
 <details><summary><b>Show config JSON</b></summary>
 
 ```json
 {
   "extends": [
-    "github>microsoft/m365-renovate-config",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
+    "github>microsoft/m365-renovate-config#no-pin",
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#no-pin"
   ],
-  "rangeStrategy": "replace",
-  "pin": {
-    "group": {
-      "commitMessageTopic": "devDependencies"
-    }
-  },
+  "rangeStrategy": "update-lockfile",
   "packageRules": [
     {
       "matchDepTypes": ["devDependencies"],
-      "commitMessageTopic": "devDependency {{{depName}}}",
-      "rangeStrategy": "pin"
-    },
-    {
-      "matchDepTypes": ["peerDependencies"],
-      "rangeStrategy": "widen"
+      "commitMessageTopic": "devDependency {{{depName}}}"
     }
   ]
 }
@@ -190,7 +184,7 @@ Dependency management strategy for library repos, including Beachball change fil
 
 ```json
 {
-  "extends": ["github>microsoft/m365-renovate-config:libraryRecommended"],
+  "extends": ["github>microsoft/m365-renovate-config:libraryRecommended#no-pin"],
   "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
   "postUpgradeTasks": {
     "commands": [
@@ -272,15 +266,15 @@ Apply all the groupings from this repo (except groupTypes).
   "extends": [
     "group:monorepos",
     "group:recommended",
-    "github>microsoft/m365-renovate-config:groupD3",
-    "github>microsoft/m365-renovate-config:groupEslint",
-    "github>microsoft/m365-renovate-config:groupFixtureUpdates",
-    "github>microsoft/m365-renovate-config:groupFluent",
-    "github>microsoft/m365-renovate-config:groupJest",
-    "github>microsoft/m365-renovate-config:groupNodeMajor",
-    "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:groupRollup",
-    "github>microsoft/m365-renovate-config:groupYargs"
+    "github>microsoft/m365-renovate-config:groupD3#no-pin",
+    "github>microsoft/m365-renovate-config:groupEslint#no-pin",
+    "github>microsoft/m365-renovate-config:groupFixtureUpdates#no-pin",
+    "github>microsoft/m365-renovate-config:groupFluent#no-pin",
+    "github>microsoft/m365-renovate-config:groupJest#no-pin",
+    "github>microsoft/m365-renovate-config:groupNodeMajor#no-pin",
+    "github>microsoft/m365-renovate-config:groupReact#no-pin",
+    "github>microsoft/m365-renovate-config:groupRollup#no-pin",
+    "github>microsoft/m365-renovate-config:groupYargs#no-pin"
   ]
 }
 ```

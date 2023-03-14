@@ -9,8 +9,8 @@
     "group:monorepos",
     "group:recommended",
     "workarounds:all",
-    "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue"
+    "github>microsoft/m365-renovate-config:groupReact#no-pin",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue#no-pin"
   ],
 
   "dependencyDashboard": true,

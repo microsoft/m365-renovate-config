@@ -1,30 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Recommended config for a JS library repo or monorepo, including pinning `devDependencies`.",
+  "description": "Recommended config for a JS library repo or monorepo, including rangeStrategy.",
 
   "extends": [
-    "github>microsoft/m365-renovate-config",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
+    "github>microsoft/m365-renovate-config#no-pin",
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#no-pin"
   ],
 
-  "rangeStrategy": "replace",
-
-  "pin": {
-    "group": {
-      "commitMessageTopic": "devDependencies"
-    }
-  },
+  "rangeStrategy": "update-lockfile",
 
   "packageRules": [
     {
       "matchDepTypes": ["devDependencies"],
-      "commitMessageTopic": "devDependency {{{depName}}}",
-      "rangeStrategy": "pin"
-    },
-    {
-      "matchDepTypes": ["peerDependencies"],
-      "rangeStrategy": "widen"
+      "commitMessageTopic": "devDependency {{{depName}}}"
     }
   ]
 }
