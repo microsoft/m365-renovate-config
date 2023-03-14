@@ -112,10 +112,10 @@ async function checkPreset(preset, hasInvalidRepoConfig) {
         filename
       );
       return 'unknown';
-    } else {
-      logError(`Unknown error validating ${filename}. See logs for details.`, filename);
-      return 'error';
     }
+
+    logError(`Unknown error validating ${filename}. See logs for details.`, filename);
+    return 'error';
   }
 
   if (migratedConfig || newConfig) {
@@ -140,26 +140,24 @@ function migrateConfig(preset, migratedConfig) {
 
   // Update the file if running locally or this is the repo config (to prevent others from failing).
   // There's no point in updating other configs in CI since they can't be committed.
-  let shouldUpdate = !isGithub || filename === repoRenovateConfigPath;
+  const isRepoConfig = filename === repoRenovateConfigPath;
   let result = /** @type {Result} */ ('ok');
 
   if (isGithub) {
     result = 'error';
     // Log errors for CI
-    let error = `❌ ${filename} requires migration.\n`;
-    if (shouldUpdate) {
-      error +=
-        'This migration will be run locally in CI so that the other presets ' +
-        'can be validated, but you must update this config ';
-    } else {
-      error += 'You must update this config ';
-    }
-    (error += 'by either running this test locally or manually copying the following content.'),
-      logError(error, filename);
+    logError(
+      `❌ ${filename} requires migration.\n` +
+        (isRepoConfig
+          ? 'This will be done locally in CI so the other presets can be validated, but you '
+          : 'You ') +
+        'must update this config by either running this test locally or manually copying the following content.',
+      filename
+    );
     console.log(migratedContent);
   }
 
-  if (shouldUpdate) {
+  if (!isGithub || isRepoConfig) {
     // Actually update and format the file
     console.log(`Migrating ${filename} (see git diff for details)`);
     fs.writeFileSync(absolutePath, migratedContent);
