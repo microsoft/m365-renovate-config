@@ -36,7 +36,7 @@
     "prettier": "2.8.4",
     "renovate": "35.4.2",
     "semantic-release": "19.0.5",
-    "typescript": "4.9.5"
+    "typescript": "5.0.2"
   },
   "release": {
     "branches": [
