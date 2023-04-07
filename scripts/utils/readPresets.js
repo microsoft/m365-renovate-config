@@ -4,7 +4,7 @@ import path from 'path';
 import { logError, repoRenovateConfigPath } from './github.js';
 import { root } from './paths.js';
 
-const excludeFiles = ['jsconfig.json', 'package.json'];
+const excludeFiles = ['tsconfig.json', 'package.json'];
 const repoConfigAbsPath = path.join(root, repoRenovateConfigPath);
 
 /**

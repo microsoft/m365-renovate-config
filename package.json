@@ -8,7 +8,7 @@
     "url": "https://github.com/microsoft/m365-renovate-config.git"
   },
   "scripts": {
-    "build": "tsc -p jsconfig.json",
+    "build": "tsc",
     "check-token": "node ./scripts/checkToken.js",
     "fix-repo-refs": "node ./scripts/fixRepoRefs.js",
     "format": "prettier --write .",

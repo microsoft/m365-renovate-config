@@ -4,7 +4,8 @@
     "noEmit": true,
     "module": "NodeNext",
     "lib": ["ES2021"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"]
   },
   "include": ["scripts"],
   "exclude": ["node_modules"]
