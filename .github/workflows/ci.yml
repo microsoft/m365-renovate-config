@@ -19,6 +19,8 @@ jobs:
         with:
           fetch-depth: 0
 
+      - run: printenv | sort
+
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
