@@ -3,8 +3,9 @@
     "checkJs": true,
     "noEmit": true,
     "module": "NodeNext",
-    "lib": ["ES2020"],
-    "skipLibCheck": true
+    "lib": ["ES2021"],
+    "skipLibCheck": true,
+    "types": ["node"]
   },
   "include": ["scripts"],
   "exclude": ["node_modules"]

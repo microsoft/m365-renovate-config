@@ -9,6 +9,7 @@ on:
 
 concurrency:
   group: ${{ github.ref }}-ci
+  cancel-in-progress: true
 
 jobs:
   ci:
@@ -25,6 +26,9 @@ jobs:
           node-version-file: .nvmrc
 
       - run: yarn --frozen-lockfile
+
+      - name: Check formatting
+        run: yarn format:check
 
       - name: Type check scripts
         run: yarn build

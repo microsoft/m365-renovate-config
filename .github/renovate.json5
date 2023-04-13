@@ -1,10 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>microsoft/m365-renovate-config:automergeTypes",
     "github>microsoft/m365-renovate-config:libraryRecommended",
-    "github>microsoft/m365-renovate-config:keepFresh",
-    "github>microsoft/m365-renovate-config:scheduleNoisy"
+    "github>microsoft/m365-renovate-config:keepFresh"
   ],
 
   "ignorePresets": [
@@ -18,16 +16,31 @@
 
   "lockFileMaintenance": {
     "automerge": true,
-    "platformAutomerge": true
+    "platformAutomerge": true,
+    "semanticCommitType": "build"
   },
 
-  "assignees": ["ecraig12345"],
+  "pin": {
+    "enabled": false
+  },
+  "rangeStrategy": "update-lockfile",
 
   "packageRules": [
     {
       // Use "build" for all dep updates because they don't actually affect the configs
       "matchPackagePatterns": ["*"],
       "semanticCommitType": "build"
+    },
+    {
+      // Group updates of all deps except Renovate.
+      "groupName": "devDependencies",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "excludeDepNames": ["renovate"]
+    },
+    {
+      "matchPackageNames": ["renovate"],
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }
