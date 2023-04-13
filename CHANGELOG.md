@@ -1,3 +1,10 @@
+## [1.8.7](https://github.com/microsoft/m365-renovate-config/compare/v1.8.6...v1.8.7) (2023-04-13)
+
+
+### Bug Fixes
+
+* remove renovate from scheduleNoisy ([198e004](https://github.com/microsoft/m365-renovate-config/commit/198e00442ecf1ae4a7ca812b04ebd93d896ddf40))
+
 ## [1.8.6](https://github.com/microsoft/m365-renovate-config/compare/v1.8.5...v1.8.6) (2023-03-10)
 
 
