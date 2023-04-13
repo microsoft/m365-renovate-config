@@ -18,7 +18,7 @@ import { runBin } from './utils/runBin.js';
 
 async function runTests() {
   const ref = getEnv('GITHUB_REF', isGithub);
-  const branchName = ref.replace('refs/heads', '');
+  const branchName = ref.replace('refs/heads/', '');
   const repository = getEnv('GITHUB_REPOSITORY', isGithub);
   const eventName = getEnv('GITHUB_EVENT_NAME', isGithub);
   const token = getEnv('TOKEN', isGithub);
