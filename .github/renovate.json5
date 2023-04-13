@@ -19,7 +19,10 @@
     "platformAutomerge": true
   },
 
-  "assignees": ["ecraig12345"],
+  "pin": {
+    "enabled": false
+  },
+  "rangeStrategy": "update-lockfile",
 
   "packageRules": [
     {

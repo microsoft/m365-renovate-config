@@ -27,6 +27,9 @@ jobs:
 
       - run: yarn --frozen-lockfile
 
+      - name: Check formatting
+        run: yarn format:check
+
       - name: Type check scripts
         run: yarn build
 
