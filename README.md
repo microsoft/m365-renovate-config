@@ -789,9 +789,9 @@ Auto-merge minor and patch updates to `devDependencies` and lock file maintenanc
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
       "platformAutomerge": true,
-      "stabilityDays": 2,
       "internalChecksFilter": "strict",
-      "excludePackageNames": ["typescript"]
+      "excludePackageNames": ["typescript"],
+      "minimumReleaseAge": "2 days"
     }
   ]
 }
