@@ -16,7 +16,8 @@
 
   "lockFileMaintenance": {
     "automerge": true,
-    "platformAutomerge": true
+    "platformAutomerge": true,
+    "semanticCommitType": "build"
   },
 
   "pin": {
