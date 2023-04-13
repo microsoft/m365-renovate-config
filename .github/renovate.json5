@@ -40,7 +40,7 @@
     },
     {
       "matchPackageNames": ["renovate"],
-      "schedule": ["before 5am every monday"]
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
 }
