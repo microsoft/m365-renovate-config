@@ -949,10 +949,6 @@ Update "noisy" (frequently-updating) packages once every other week.
 {
   "packageRules": [
     {
-      "matchPackageNames": ["renovate"],
-      "schedule": ["before 5am on the 8th and 22nd day of the month"]
-    },
-    {
       "matchPackagePrefixes": ["@microsoft/api-extractor"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
