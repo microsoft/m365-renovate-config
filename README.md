@@ -370,9 +370,18 @@ Group, schedule, and auto-merge all dependency updates in `__fixtures__` sub-fol
     {
       "groupName": "fixture dependencies",
       "schedule": ["before 5am on the 1st and 15th day of the month"],
-      "matchPaths": ["**/__fixtures__/**/package.json"],
+      "matchPaths": ["**/__fixtures__/**"],
       "matchPackagePatterns": ["*"],
-      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "resolutions"],
+      "matchDepTypes": [
+        "dependencies",
+        "devDependencies",
+        "engines",
+        "optionalDependencies",
+        "overrides",
+        "packageManager",
+        "peerDependencies",
+        "resolutions"
+      ],
       "major": {
         "dependencyDashboardApproval": false
       },
