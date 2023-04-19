@@ -1,3 +1,10 @@
+## [1.8.8](https://github.com/microsoft/m365-renovate-config/compare/v1.8.7...v1.8.8) (2023-04-19)
+
+
+### Bug Fixes
+
+* include more dep types in groupFixtures ([ec07661](https://github.com/microsoft/m365-renovate-config/commit/ec07661b7759006165acef982b9cef2182c52fbc))
+
 ## [1.8.7](https://github.com/microsoft/m365-renovate-config/compare/v1.8.6...v1.8.7) (2023-04-13)
 
 
