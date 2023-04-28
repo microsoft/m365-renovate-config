@@ -48,7 +48,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           batch: true
           mode: output
-          changeGlob: '.changeset/!(README).md'
+          changeGlob: '.changeset/*.md'
 
       - name: Release from ${{ env.MAJOR_BRANCH }}
         if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}

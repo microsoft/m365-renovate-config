@@ -44,7 +44,7 @@ async function runTests() {
 
   const presets = readPresets();
   // add a reference to the branch if not testing main
-  const branchRef = branchName === defaultBranch ? '' : `#${branchName}`;
+  const branchRef = branchName === defaultBranch ? '' : branchName;
 
   const logFile = path.join(root, 'renovate.log');
   fs.writeFileSync(logFile, ''); // Renovate wants this to exist already
