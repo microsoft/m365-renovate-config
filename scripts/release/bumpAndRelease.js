@@ -49,15 +49,15 @@ export async function amendChangelog(prevVersion, newVersion) {
   const heading = getHeadingText(changelogEntry, headingLevel);
 
   // April 27, 2023 at 7:58 PM
-  const releaseDate = new Date().toLocaleString('en', {
+  const releaseDate = new Date().toLocaleString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     hour12: true,
     hour: 'numeric',
     minute: 'numeric',
-    timeZone: 'US/Pacific',
-    timeZoneName: 'shortOffset',
+    timeZone: 'America/Los_Angeles',
+    timeZoneName: 'short',
   });
   const compareLink = `[Compare source](https://github.com/${defaultRepo}/compare/v${prevVersion}...v${newVersion})`;
 
