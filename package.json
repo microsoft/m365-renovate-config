@@ -9,66 +9,30 @@
   },
   "scripts": {
     "build": "tsc",
+    "change": "changeset",
     "check-token": "node ./scripts/checkToken.js",
-    "fix-repo-refs": "node ./scripts/fixRepoRefs.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . && node ./scripts/lintPresets.js",
-    "prepare": "husky install",
-    "release": "HUSKY=0 semantic-release",
+    "release": "node ./scripts/release/index.js",
     "test:basic": "node ./scripts/testPresetsBasic.js",
     "test:full": "node ./scripts/testPresetsFull.js",
-    "update-readme": "node ./scripts/updateReadme.js",
-    "update-refs": "node ./scripts/updateRefs.js"
+    "update-readme": "node ./scripts/updateReadme.js"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.5.1",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/exec": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.1",
+    "@changesets/read": "^0.5.9",
+    "@changesets/types": "^5.2.1",
+    "@octokit/rest": "^19.0.7",
     "@types/jju": "^1.4.2",
     "@types/node": "^18.15.11",
-    "conventional-changelog-conventionalcommits": "^5.0.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "execa": "^7.1.1",
-    "husky": "^8.0.3",
     "jju": "^1.4.0",
     "prettier": "^2.8.7",
     "renovate": "35.61.0",
-    "semantic-release": "^21.0.1",
     "typescript": "^5.0.3"
-  },
-  "release": {
-    "branches": [
-      "v1"
-    ],
-    "plugins": [
-      [
-        "@semantic-release/commit-analyzer",
-        {
-          "preset": "conventionalcommits"
-        }
-      ],
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog",
-      [
-        "@semantic-release/exec",
-        {
-          "prepareCmd": "yarn update-refs <%= nextRelease.gitTag %>"
-        }
-      ],
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "CHANGELOG.md",
-            "package.json",
-            "*.json"
-          ]
-        }
-      ],
-      "@semantic-release/github"
-    ]
   }
 }

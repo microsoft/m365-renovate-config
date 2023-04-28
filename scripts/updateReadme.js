@@ -1,11 +1,18 @@
 import fs from 'fs';
 import { readPresets } from './utils/readPresets.js';
 import { runBin } from './utils/runBin.js';
+import {
+  getComments,
+  getHeadingText,
+  getMarkedSection,
+  slugify,
+  splitByHeading,
+} from './utils/markdown.js';
 
 const readmeFile = 'README.md';
 
 /**
- * @typedef {{ start: string; end: string; }} Comments
+ * @typedef {import('./utils/markdown.js').Comments} Comments
  * @typedef {{
  *   name: string;
  *   nameWithArgs: string;
@@ -18,15 +25,6 @@ const readmeFile = 'README.md';
  * }} PresetGroup
  * @typedef {{ [presetName: string]: string }} PresetExtraTexts
  */
-
-/**
- * Get marker comments wrapping a section
- * @type {(desc: string, extraStartDesc?: string) => Comments}
- */
-const getComments = (desc, extraStartDesc) => ({
-  start: `<!-- start ${desc}${extraStartDesc ? ` (${extraStartDesc})` : ''} -->`,
-  end: `<!-- end ${desc} -->`,
-});
 
 const excludedPresets = ['beachballLibraryVerbose'];
 
@@ -63,33 +61,6 @@ const comments = {
 const requiredComments = /** @type {string[]} */ ([]).concat(
   ...[comments.main, comments.toc].map(({ start, end }) => [start, end])
 );
-
-/**
- * Get section content between marker comments
- * @type {(text: string, cmmts: Comments) => string}
- */
-const getMarkedSection = (text, cmmts) => text.split(cmmts.start)[1].split(cmmts.end)[0].trim();
-
-/**
- * Get the text under each heading of the given level
- * @type {(text: string, level: number) => string[]}
- */
-const splitByHeading = (text, level) =>
-  text.trim().split(new RegExp(`^(?=${'#'.repeat(level)} .*\n)`, 'gm'));
-
-/**
- * Get the text of the first heading of the given level
- * @type {(text: string, level: number) => string}
- */
-const getHeadingText = (text, level) =>
-  (text.match(new RegExp(`^${'#'.repeat(level)} (.*)`, 'm')) || [])[1]?.trim() || '';
-
-/** @param {string} text */
-const slugify = (text) =>
-  text
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]/g, '');
 
 /**
  * Get any extra text added for each preset

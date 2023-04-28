@@ -129,9 +129,9 @@ async function checkPreset(preset, hasInvalidRepoConfig) {
  * Write migrated config content to a file and format it if appropriate.
  * @param {LocalPresetData} preset
  * @param {*} migratedConfig
- * @returns {Result}
+ * @returns {Promise<Result>}
  */
-function migrateConfig(preset, migratedConfig) {
+async function migrateConfig(preset, migratedConfig) {
   const { filename, absolutePath, content } = preset;
   const migratedContent = jju.update(content, migratedConfig, {
     indent: 2,
@@ -162,7 +162,7 @@ function migrateConfig(preset, migratedConfig) {
     console.log(`Migrating ${filename} (see git diff for details)`);
     fs.writeFileSync(absolutePath, migratedContent);
     try {
-      formatFile(absolutePath);
+      await formatFile(absolutePath);
     } catch (err) {
       console.error(err);
       result = 'error';

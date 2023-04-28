@@ -1,14 +1,12 @@
-import { spawnSync } from 'child_process';
+import { runBin } from './runBin.js';
 
 /**
  * Format a file with Prettier
  * @param {string} file path to file
  */
-export function formatFile(file) {
-  const res = spawnSync('yarn', ['prettier', '--write', '--loglevel=warn', file], {
+export async function formatFile(file) {
+  await runBin('prettier', ['--write', '--loglevel=warn', file], {
     stdio: 'pipe',
+    reject: true,
   });
-  if (res.status !== 0) {
-    throw new Error(`Failed to run prettier on ${file}: ${res.stderr.toString()}`);
-  }
 }

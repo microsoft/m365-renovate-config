@@ -1,6 +1,7 @@
 import path from 'path';
 
-export const defaultRepo = 'microsoft/m365-renovate-config';
+export const defaultRepoDetails = { owner: 'microsoft', repo: 'm365-renovate-config' };
+export const defaultRepo = `${defaultRepoDetails.owner}/${defaultRepoDetails.repo}`;
 export const defaultBranch = 'main';
 export const primaryBranches = [defaultBranch, 'v1'];
 export const isGithub = !!process.env.CI;

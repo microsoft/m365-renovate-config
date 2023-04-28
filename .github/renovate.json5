@@ -6,8 +6,6 @@
   ],
 
   "ignorePresets": [
-    // Ignore default semantic commit config (see packageRules below)
-    ":semanticPrefixFixDepsChoreOthers",
     // Automatically make PRs for major version updates
     "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
   ],
@@ -16,8 +14,7 @@
 
   "lockFileMaintenance": {
     "automerge": true,
-    "platformAutomerge": true,
-    "semanticCommitType": "build"
+    "platformAutomerge": true
   },
 
   "pin": {
@@ -25,12 +22,9 @@
   },
   "rangeStrategy": "update-lockfile",
 
+  "semanticCommits": "disabled",
+
   "packageRules": [
-    {
-      // Use "build" for all dep updates because they don't actually affect the configs
-      "matchPackagePatterns": ["*"],
-      "semanticCommitType": "build"
-    },
     {
       // Group updates of all deps except Renovate.
       "groupName": "devDependencies",
