@@ -23,34 +23,28 @@ export function readPackageJson() {
 }
 
 /**
- * @param {string} version
+ * Get the changelog entry and add a release date and compare link.
+ * Returns the new entry's text (not the full changelog).
+ * (This would ideally be done via some changesets API during the `version` command,
+ * but that's not supported as of writing.)
+ * @param {string} prevVersion
+ * @param {string} newVersion
  */
-export function getChangelogEntry(version) {
+export async function amendChangelog(prevVersion, newVersion) {
   const changelog = fs.readFileSync(changelogFile, 'utf8');
 
   let changelogEntry = '';
   const sections = splitByHeading(changelog, headingLevel);
   for (const section of sections) {
-    if (getHeadingText(section, headingLevel) === version) {
+    if (getHeadingText(section, headingLevel) === newVersion) {
       changelogEntry = section;
     }
   }
 
   if (!changelogEntry) {
-    throw new Error(`Couldn't find changelog entry for version ${version}`);
+    throw new Error(`Couldn't find changelog entry for version ${newVersion}`);
   }
-  return changelogEntry;
-}
 
-/**
- * Add a release date and compare link to the changelog file. (This would ideally be done via some
- * changesets API during the `version` process, but that's not supported as of writing.)
- * @param {string} changelogEntry
- * @param {string} prevVersion
- * @param {string} newVersion
- */
-async function amendChangelog(changelogEntry, prevVersion, newVersion) {
-  const changelog = fs.readFileSync(changelogFile, 'utf8');
   const heading = getHeadingText(changelogEntry, headingLevel);
 
   // April 27, 2023 at 7:58 PM
@@ -66,12 +60,15 @@ async function amendChangelog(changelogEntry, prevVersion, newVersion) {
   });
   const compareLink = `[Compare source](https://github.com/${defaultRepo}/compare/v${prevVersion}...v${newVersion})`;
 
-  fs.writeFileSync(
-    changelogFile,
-    changelog.replace(heading, `${heading}\n\n$${compareLink} (${releaseDate})`)
+  const amendedEntry = changelogEntry.replace(
+    heading,
+    `${heading}\n\n${compareLink} - ${releaseDate}`
   );
 
+  fs.writeFileSync(changelogFile, changelog.replace(changelogEntry, amendedEntry));
   await formatFile(changelogFile);
+
+  return amendedEntry;
 }
 
 /**
@@ -106,8 +103,7 @@ export async function bumpAndRelease(githubToken, majorBranch) {
 
   // Add a date and tag link to the changelog file (technically the tag doesn't exist yet
   // and creating it could fail, but that's not a big deal)
-  const changelogEntry = getChangelogEntry(newVersion);
-  await amendChangelog(changelogEntry, prevVersion, newVersion);
+  const changelogEntry = await amendChangelog(prevVersion, newVersion);
 
   // Commit and push on the main branch (remove changesets; update changelog and version)
   await gitUtils.commitAll(`Bump version to ${newVersion}`);
@@ -134,7 +130,8 @@ export async function bumpAndRelease(githubToken, majorBranch) {
   await octokit.rest.repos.createRelease({
     name: tagName,
     tag_name: tagName,
-    body: changelogEntry,
+    // Remove the header (the release page shows a redundant header)
+    body: changelogEntry.replace(getHeadingText(changelogEntry, headingLevel), ''),
     prerelease: tagName.includes('-'),
     ...defaultRepoDetails,
   });
