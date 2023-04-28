@@ -106,7 +106,7 @@ export async function bumpAndRelease(githubToken, majorBranch) {
 
   // Add a date and tag link to the changelog file (technically the tag doesn't exist yet
   // and creating it could fail, but that's not a big deal)
-  const changelogEntry = getChangelogEntry(tagName);
+  const changelogEntry = getChangelogEntry(newVersion);
   await amendChangelog(changelogEntry, prevVersion, newVersion);
 
   // Commit and push on the main branch (remove changesets; update changelog and version)
