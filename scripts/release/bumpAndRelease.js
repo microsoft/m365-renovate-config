@@ -22,6 +22,7 @@ const { default: readChangesets } = changesetsReadModule;
 
 const changelogFile = path.join(root, 'CHANGELOG.md');
 const headingLevel = 2;
+const skipCi = '[skip ci]';
 
 /**
  * Get the changelog entry and add a release date and compare link.
@@ -116,32 +117,36 @@ export async function bumpAndRelease(github, githubToken) {
   const changelogEntry = await amendChangelog(prevVersion, newVersion);
   logEndGroup();
 
-  // Commit and push on the main branch (remove changesets; update changelog and version)
+  // Commit and push on the main branch (remove changesets; update changelog and version).
+  // A CI run on this commit is unnecessary.
   logGroup('Committing and updating main');
-  await gitUtils.commitAll(`Bump version to ${newVersion}`);
+  await gitUtils.commitAll(`Bump version to ${newVersion} ${skipCi}`);
   await gitUtils.push(defaultBranch);
   logEndGroup();
 
   // Switch to the release branch and merge with main
   logGroup('Merging main into release branch ' + releaseBranch);
   await gitUtils.switchToMaybeExistingBranch(releaseBranch);
-  await gitUtils.mergeMain();
+  await gitUtils.mergeMain(`Merge ${defaultBranch} into ${releaseBranch} ${skipCi}`);
   logEndGroup();
 
   // Create a commit and tag with "extends" refs pointing to the release *tag*
   logGroup('Creating commit and tag for ' + tagName);
   await updateRefs(tagName);
-  await gitUtils.commitAll(`Update tag refs for ${tagName}`);
+  await gitUtils.commitAll(`Update tag refs for ${tagName} ${skipCi}`);
   await gitUtils.tag(tagName);
-  await gitUtils.push(releaseBranch);
-  await gitUtils.pushTags();
   logEndGroup();
 
   // Now create another commit with "extends" refs pointing to the major version release branch
   logGroup('Updating branch refs and committing for ' + releaseBranch);
   await updateRefs(releaseBranch);
-  await gitUtils.commitAll(`Update branch refs for ${releaseBranch}`);
+  // Allow CI to run on this final commit in the release branch
+  await gitUtils.commitAll(`Update branch refs for ${releaseBranch} (version ${newVersion})`);
+  logEndGroup();
+
+  logGroup('Pushing release branch updates and tag');
   await gitUtils.push(releaseBranch);
+  await gitUtils.pushTags();
   logEndGroup();
 
   // Create GitHub release pointing to the tag (with full tag refs and using the

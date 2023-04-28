@@ -55,9 +55,12 @@ export async function switchToMaybeExistingBranch(branch) {
   }
 }
 
-/** Merge with main (accepting main version for any conflicts) */
-export async function mergeMain() {
-  await git(['merge', defaultBranch, '--no-edit', '-Xtheirs']);
+/**
+ * Merge with main (accepting main version for any conflicts)
+ * @param {string} [message]
+ */
+export async function mergeMain(message) {
+  await git(['merge', defaultBranch, '--no-edit', '-Xtheirs', ...(message ? ['-m', message] : [])]);
 }
 
 /** @param {string} tagName */
