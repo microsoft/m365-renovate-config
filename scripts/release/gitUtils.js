@@ -3,45 +3,53 @@ import fs from 'fs';
 import { exec } from '../utils/exec.js';
 import { defaultBranch } from '../utils/github.js';
 
-/** @type {import('execa').Options} */
-const wrapperOptions = { stdio: 'inherit', reject: true };
-
 const netrc = `${process.env.HOME}/.netrc`;
 const user = 'github-actions[bot]';
 
+/** @param {string[]} args */
+function git(args) {
+  return exec('git', args, { stdio: 'inherit', reject: true });
+}
+
 /**
+ * Set username and email (as github-actions[bot]) and GitHub credentials (in .netrc).
+ * Also set event handlers to try to clean up the credentials on exit.
  * @param {string} githubToken
  */
 export async function setCredentials(githubToken) {
-  await exec('git', ['config', 'user.name', user], wrapperOptions);
-  await exec('git', ['config', 'user.email', `${user}@users.noreply.github.com"`], wrapperOptions);
+  await git(['config', 'user.name', user]);
+  await git(['config', 'user.email', `${user}@users.noreply.github.com"`]);
 
   console.log('setting GitHub credentials in .netrc');
   fs.writeFileSync(netrc, `machine github.com\nlogin ${user}\npassword ${githubToken}`);
+
+  process.on('exit', cleanUpCredentials);
+  process.on('SIGINT', cleanUpCredentials);
+  process.on('SIGTERM', cleanUpCredentials);
 }
 
 export function cleanUpCredentials() {
   fs.rmSync(netrc, { force: true });
 }
 
-/**
- * @param {string} branch
- */
+/** @param {string} branch */
 export async function push(branch) {
-  await exec('git', ['push', 'origin', `HEAD:${branch}`], wrapperOptions);
+  await git(['push', 'origin', `HEAD:${branch}`]);
 }
 
 export async function pushTags() {
-  await exec('git', ['push', 'origin', '--tags'], wrapperOptions);
+  await git(['push', 'origin', '--tags']);
 }
 
 /**
+ * Switch to the branch, creating it if it doesn't exist
  * @param {string} branch
  */
 export async function switchToMaybeExistingBranch(branch) {
+  // for this one, don't throw on error (it's expected if the branch doesn't exist)
   const result = await exec('git', ['checkout', branch], { reject: false });
   if (result.failed) {
-    await exec('git', ['checkout', '-b', branch], wrapperOptions);
+    await git(['checkout', '-b', branch]);
   } else {
     console.log('Switched to existing branch', branch);
   }
@@ -49,14 +57,12 @@ export async function switchToMaybeExistingBranch(branch) {
 
 /** Merge with main (accepting main version for any conflicts) */
 export async function mergeMain() {
-  await exec('git', ['merge', defaultBranch, '--no-edit', '-Xtheirs'], wrapperOptions);
+  await git(['merge', defaultBranch, '--no-edit', '-Xtheirs']);
 }
 
-/**
- * @param {string} tagName
- */
+/** @param {string} tagName */
 export async function tag(tagName) {
-  await exec('git', ['tag', tagName], wrapperOptions);
+  await git(['tag', tagName]);
 }
 
 /**
@@ -64,13 +70,11 @@ export async function tag(tagName) {
  * @param {'hard' | 'soft' | 'mixed'} [mode]
  */
 export async function reset(pathSpec, mode = 'hard') {
-  await exec('git', ['reset', `--${mode}`, pathSpec], wrapperOptions);
+  await git(['reset', `--${mode}`, pathSpec]);
 }
 
-/**
- * @param {string} message
- */
+/** @param {string} message */
 export async function commitAll(message) {
-  await exec('git', ['add', '.'], wrapperOptions);
-  await exec('git', ['commit', '-m', message], wrapperOptions);
+  await git(['add', '.']);
+  await git(['commit', '-m', message]);
 }

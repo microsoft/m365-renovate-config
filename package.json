@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/m365-renovate-config",
-  "version": "1.8.12",
+  "version": "1.8.13",
   "private": true,
   "type": "module",
   "repository": {
@@ -24,13 +24,13 @@
     "@changesets/cli": "^2.26.1",
     "@changesets/read": "^0.5.9",
     "@changesets/types": "^5.2.1",
-    "@octokit/rest": "^19.0.7",
     "@types/jju": "^1.4.2",
     "@types/node": "^18.15.11",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "execa": "^7.1.1",
     "jju": "^1.4.0",
+    "node-fetch": "^3.3.1",
     "prettier": "^2.8.7",
     "renovate": "35.61.0",
     "typescript": "^5.0.3"

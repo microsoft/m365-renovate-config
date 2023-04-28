@@ -1,9 +1,10 @@
 import path from 'path';
+import { getReleaseBranches } from './getReleaseBranches.js';
 
 export const defaultRepoDetails = { owner: 'microsoft', repo: 'm365-renovate-config' };
 export const defaultRepo = `${defaultRepoDetails.owner}/${defaultRepoDetails.repo}`;
 export const defaultBranch = 'main';
-export const primaryBranches = [defaultBranch, 'v1'];
+export const primaryBranches = [defaultBranch, ...getReleaseBranches()];
 export const isGithub = !!process.env.CI;
 /** Relative path to the repo renovate config */
 export const repoRenovateConfigPath = '.github/renovate.json5';
