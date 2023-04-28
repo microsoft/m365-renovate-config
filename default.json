@@ -9,8 +9,8 @@
     "group:monorepos",
     "group:recommended",
     "workarounds:all",
-    "github>microsoft/m365-renovate-config:groupReact#v1",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue#v1"
+    "github>microsoft/m365-renovate-config:groupReact#v1.8.12",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue#v1.8.12"
   ],
 
   "dependencyDashboard": true,
