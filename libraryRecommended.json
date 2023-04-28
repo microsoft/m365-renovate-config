@@ -4,8 +4,8 @@
   "description": "Recommended config for a JS library repo or monorepo, including pinning `devDependencies`.",
 
   "extends": [
-    "github>microsoft/m365-renovate-config#v1",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#v1"
+    "github>microsoft/m365-renovate-config#v1.8.11",
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#v1.8.11"
   ],
 
   "rangeStrategy": "replace",
