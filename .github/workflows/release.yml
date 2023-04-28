@@ -2,10 +2,10 @@ name: Release
 
 on:
   workflow_dispatch:
-  # workflow_run:
-  #   workflows: [CI]
-  #   types: [completed]
-  #   branches: [main]
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-release
@@ -41,16 +41,14 @@ jobs:
 
       - run: yarn --frozen-lockfile
 
-      - name: Check for newer runs
+      - name: Check if release is needed
         uses: ecraig12345/beachball-actions/should-release@v1
         id: shouldRelease
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           batch: true
           mode: output
-          # The should-release action is primarily made for beachball, so it checks for change files.
-          # Since this repo doesn't use change files, check for any files instead.
-          changeGlob: '*'
+          changeGlob: '.changeset/!(README).md'
 
       - name: Release from ${{ env.MAJOR_BRANCH }}
         if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}

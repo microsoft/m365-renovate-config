@@ -39,12 +39,12 @@ export function logOther(level, text, file) {
  * @param {string} name Group name
  */
 export function logGroup(name) {
-  console.log(isGithub ? `::group::${name}` : name);
+  console.log(isGithub ? `::group::${name}` : `${name}\n`);
 }
 
 /**
  * In CI, end a log group using github workflow commands. Logs an empty line in local runs.
  */
 export function logEndGroup() {
-  console.log(isGithub ? '::endgroup::' : '');
+  console.log(isGithub ? '::endgroup::\n' : '\n\n');
 }
