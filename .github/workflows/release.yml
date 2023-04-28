@@ -64,8 +64,8 @@ jobs:
           # Add a token to the remote URL for auth during release
           git remote set-url origin "https://$REPO_PAT@github.com/$GITHUB_REPOSITORY"
 
-          git config user.name "GitHub Actions"
-          git config user.email "not provided"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git checkout "$MAJOR_BRANCH"
           git merge main --no-edit -Xtheirs
