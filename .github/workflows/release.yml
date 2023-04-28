@@ -10,9 +10,6 @@ on:
 concurrency:
   group: ${{ github.ref }}-release
 
-env:
-  MAJOR_BRANCH: v1
-
 permissions:
   actions: read
 
@@ -23,7 +20,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    # This environment contains secrets needed for publishing
+    # This environment contains secrets needed for publishing and is only accessible to main builds
     environment: release
 
     steps:
@@ -50,10 +47,15 @@ jobs:
           mode: output
           changeGlob: '.changeset/*.md'
 
-      - name: Release from ${{ env.MAJOR_BRANCH }}
+      - name: Release
         if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}
-        run: |
-          yarn check-token "$GITHUB_TOKEN"
-          yarn release
+        uses: actions/github-script@v6
         env:
+          # Used by changesets and when pushing updates
           GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
+        with:
+          # Used to authenticate the `github` object (used for creating the release)
+          github-token: ${{ secrets.REPO_PAT }}
+          script: |
+            const { release } = await import('./scripts/release/index.js');
+            await release(github);

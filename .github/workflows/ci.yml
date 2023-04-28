@@ -5,7 +5,7 @@ on:
     branches:
       - main
       # validate configs that are pushed to a branch
-      - v1
+      - 'v[0-9]*'
 
 concurrency:
   group: ${{ github.ref }}-ci

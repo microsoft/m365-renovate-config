@@ -46,7 +46,8 @@ function runTests() {
     [`github>${defaultRepo}:automergeTypes`, 'automergeTypes'],
     [`github>${defaultRepo}:restrictNode(14)`, 'restrictNode'],
   ];
-  const refTests = tests.map(([str, preset]) => [str + '#v1', preset]);
+
+  const refTests = tests.map(([str, preset]) => [str + '#v123', preset]);
 
   for (const [extnds, preset] of [...tests, ...refTests]) {
     const res1 = getLocalPresetFromExtends(extnds);
@@ -57,12 +58,12 @@ function runTests() {
       `Expected getLocalPresetFromExtends("${extnds}") to return "${preset}". Got: ${resStr}`
     );
 
-    const res2 = setExtendsRef(extnds, 'v2');
-    const withRef = extnds.includes('#v1') ? extnds.replace('#v1', '#v2') : extnds + '#v2';
+    const res2 = setExtendsRef(extnds, 'v456');
+    const withRef = extnds.includes('#v123') ? extnds.replace('#v123', '#v456') : extnds + '#v456';
     assert.strictEqual(
       res2,
       withRef,
-      `Expected setExtendsRef("${extnds}", "v2") to return "${withRef}". Got: "${res2}"`
+      `Expected setExtendsRef("${extnds}", "v456") to return "${withRef}". Got: "${res2}"`
     );
   }
 }

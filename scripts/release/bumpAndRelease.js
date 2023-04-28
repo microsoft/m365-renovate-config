@@ -1,5 +1,4 @@
 import changesetsReadModule from '@changesets/read';
-import { Octokit } from '@octokit/rest';
 import fs from 'fs';
 import path from 'path';
 import * as gitUtils from './gitUtils.js';
@@ -15,18 +14,13 @@ import { runBin } from '../utils/runBin.js';
 import { getHeadingText, splitByHeading } from '../utils/markdown.js';
 import { updateRefs } from './updateRefs.js';
 import { formatFile } from '../utils/formatFile.js';
+import { readPackageJson } from '../utils/readPackageJson.js';
+import { getReleaseBranchFromVersion } from '../utils/getReleaseBranches.js';
 
 const { default: readChangesets } = changesetsReadModule;
 
 const changelogFile = path.join(root, 'CHANGELOG.md');
 const headingLevel = 2;
-
-/**
- * @returns {{ name: string; version: string }}
- */
-export function readPackageJson() {
-  return JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
-}
 
 /**
  * Get the changelog entry and add a release date and compare link.
@@ -37,8 +31,6 @@ export function readPackageJson() {
  * @param {string} newVersion
  */
 export async function amendChangelog(prevVersion, newVersion) {
-  console.log('\nUpdating changelog with date and compare link');
-
   const changelog = fs.readFileSync(changelogFile, 'utf8');
 
   let changelogEntry = '';
@@ -80,14 +72,13 @@ export async function amendChangelog(prevVersion, newVersion) {
 }
 
 /**
- * @param {string} githubToken
- * @param {string} majorBranch
+ * Update changelog and version, commit/push to main and `releaseBranch`, and create a release.
+ *
+ * PRE: User info and credentials are set
+ *
+ * @param {import('@octokit/rest').Octokit} github
  */
-export async function bumpAndRelease(githubToken, majorBranch) {
-  const octokit = new Octokit({
-    auth: githubToken,
-    ...defaultRepoDetails,
-  });
+export async function bumpAndRelease(github) {
   const changesets = await readChangesets(root);
   if (!changesets.length) {
     console.log('No changesets found');
@@ -103,19 +94,22 @@ export async function bumpAndRelease(githubToken, majorBranch) {
 
   // Update the version and changelog
   logGroup('Bumping versions and updating changelog locally');
-
   await runBin('changeset', ['version'], { cwd: root, stdio: 'inherit', reject: true });
+  logEndGroup();
 
+  // Get the new version to determine the tag name and release branch
   const newVersion = readPackageJson().version;
   if (prevVersion === newVersion) {
     throw new Error('Version was not updated, despite non-empty changesets existing');
   }
   const tagName = `v${newVersion}`;
+  // This MUST be calculcated after the version is updated, in case it's a major bump
+  const releaseBranch = getReleaseBranchFromVersion(newVersion);
 
   // Add a date and tag link to the changelog file (technically the tag doesn't exist yet
   // and creating it could fail, but that's not a big deal)
+  logGroup('Amending generated changelog entry');
   const changelogEntry = await amendChangelog(prevVersion, newVersion);
-
   logEndGroup();
 
   // Commit and push on the main branch (remove changesets; update changelog and version)
@@ -125,8 +119,8 @@ export async function bumpAndRelease(githubToken, majorBranch) {
   logEndGroup();
 
   // Switch to the release branch and merge with main
-  logGroup('Merging main into release branch ' + majorBranch);
-  await gitUtils.switchToMaybeExistingBranch(majorBranch);
+  logGroup('Merging main into release branch ' + releaseBranch);
+  await gitUtils.switchToMaybeExistingBranch(releaseBranch);
   await gitUtils.mergeMain();
   logEndGroup();
 
@@ -135,21 +129,21 @@ export async function bumpAndRelease(githubToken, majorBranch) {
   await updateRefs(tagName);
   await gitUtils.commitAll(`Update tag refs for ${tagName}`);
   await gitUtils.tag(tagName);
-  await gitUtils.push(majorBranch);
+  await gitUtils.push(releaseBranch);
   await gitUtils.pushTags();
   logEndGroup();
 
-  // Now create another commit with "extends" refs pointing to the major branch
-  logGroup('Updating branch refs and committing for ' + majorBranch);
-  await updateRefs(majorBranch);
-  await gitUtils.commitAll(`Update branch refs for ${majorBranch}`);
-  await gitUtils.push(majorBranch);
+  // Now create another commit with "extends" refs pointing to the major version release branch
+  logGroup('Updating branch refs and committing for ' + releaseBranch);
+  await updateRefs(releaseBranch);
+  await gitUtils.commitAll(`Update branch refs for ${releaseBranch}`);
+  await gitUtils.push(releaseBranch);
   logEndGroup();
 
   // Create GitHub release pointing to the tag (with full tag refs and using the
   // non-amended changelog entry text)
   logGroup('Creating GitHub release for ' + tagName);
-  await octokit.rest.repos.createRelease({
+  await github.rest.repos.createRelease({
     name: tagName,
     tag_name: tagName,
     // Remove the header (the release page shows a redundant header)
