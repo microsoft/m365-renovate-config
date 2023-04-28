@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 1.8.12
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v1.8.11...v1.8.12) - April 27, 2023 at 9:17 PM GMT-7
+
+### Patch Changes
+
+- [`0a8f68e`](https://github.com/microsoft/m365-renovate-config/commit/0a8f68ef2fa4266598622aacfaecc854b37bc550) - More release updates (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 1.8.11
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v1.8.10...v1.8.11) - April 27, 2023 at 8:53 PM GMT-7
