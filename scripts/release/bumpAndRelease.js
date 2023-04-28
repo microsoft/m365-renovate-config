@@ -3,7 +3,13 @@ import { Octokit } from '@octokit/rest';
 import fs from 'fs';
 import path from 'path';
 import * as gitUtils from './gitUtils.js';
-import { defaultBranch, defaultRepo, defaultRepoDetails } from '../utils/github.js';
+import {
+  defaultBranch,
+  defaultRepo,
+  defaultRepoDetails,
+  logEndGroup,
+  logGroup,
+} from '../utils/github.js';
 import { root } from '../utils/paths.js';
 import { runBin } from '../utils/runBin.js';
 import { getHeadingText, splitByHeading } from '../utils/markdown.js';
@@ -31,6 +37,8 @@ export function readPackageJson() {
  * @param {string} newVersion
  */
 export async function amendChangelog(prevVersion, newVersion) {
+  console.log('\nUpdating changelog with date and compare link');
+
   const changelog = fs.readFileSync(changelogFile, 'utf8');
 
   let changelogEntry = '';
@@ -66,7 +74,7 @@ export async function amendChangelog(prevVersion, newVersion) {
   );
 
   fs.writeFileSync(changelogFile, changelog.replace(changelogEntry, amendedEntry));
-  await formatFile(changelogFile);
+  await formatFile(changelogFile, { quiet: true });
 
   return amendedEntry;
 }
@@ -90,9 +98,12 @@ export async function bumpAndRelease(githubToken, majorBranch) {
     return;
   }
 
+  // Local bump and changelog update
   const prevVersion = readPackageJson().version;
 
   // Update the version and changelog
+  logGroup('Bumping versions and updating changelog locally');
+
   await runBin('changeset', ['version'], { cwd: root, stdio: 'inherit', reject: true });
 
   const newVersion = readPackageJson().version;
@@ -105,28 +116,39 @@ export async function bumpAndRelease(githubToken, majorBranch) {
   // and creating it could fail, but that's not a big deal)
   const changelogEntry = await amendChangelog(prevVersion, newVersion);
 
+  logEndGroup();
+
   // Commit and push on the main branch (remove changesets; update changelog and version)
+  logGroup('Committing and updating main');
   await gitUtils.commitAll(`Bump version to ${newVersion}`);
   await gitUtils.push(defaultBranch);
+  logEndGroup();
 
   // Switch to the release branch and merge with main
+  logGroup('Merging main into release branch ' + majorBranch);
   await gitUtils.switchToMaybeExistingBranch(majorBranch);
   await gitUtils.mergeMain();
+  logEndGroup();
 
   // Create a commit and tag with "extends" refs pointing to the release *tag*
+  logGroup('Creating commit and tag for ' + tagName);
   await updateRefs(tagName);
   await gitUtils.commitAll(`Update tag refs for ${tagName}`);
   await gitUtils.tag(tagName);
   await gitUtils.push(majorBranch);
   await gitUtils.pushTags();
+  logEndGroup();
 
   // Now create another commit with "extends" refs pointing to the major branch
+  logGroup('Updating branch refs and committing for ' + majorBranch);
   await updateRefs(majorBranch);
   await gitUtils.commitAll(`Update branch refs for ${majorBranch}`);
   await gitUtils.push(majorBranch);
+  logEndGroup();
 
   // Create GitHub release pointing to the tag (with full tag refs and using the
   // non-amended changelog entry text)
+  logGroup('Creating GitHub release for ' + tagName);
   await octokit.rest.repos.createRelease({
     name: tagName,
     tag_name: tagName,
@@ -135,4 +157,5 @@ export async function bumpAndRelease(githubToken, majorBranch) {
     prerelease: tagName.includes('-'),
     ...defaultRepoDetails,
   });
+  logEndGroup();
 }

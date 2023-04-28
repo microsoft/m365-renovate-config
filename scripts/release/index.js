@@ -14,7 +14,7 @@ import { logError } from '../utils/github.js';
     throw new Error('Missing MAJOR_BRANCH environment variable');
   }
 
-  // await gitUtils.setCredentials(githubToken);
+  await gitUtils.setCredentials(githubToken);
 
   await bumpAndRelease(githubToken, branch);
 })().catch((err) => {
