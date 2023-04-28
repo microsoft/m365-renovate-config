@@ -1,3 +1,5 @@
+# m365-renovate-config
+
 ## 1.8.8
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v1.8.7...v1.8.8) (2023-04-19)
