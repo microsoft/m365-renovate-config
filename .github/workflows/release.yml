@@ -57,5 +57,5 @@ jobs:
           # Used to authenticate the `github` object (used for creating the release)
           github-token: ${{ secrets.REPO_PAT }}
           script: |
-            const { release } = await import('./scripts/release/index.js');
+            const release = require('./scripts/release/index.cjs');
             await release(github);
