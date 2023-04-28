@@ -46,10 +46,10 @@ export function getChangelogEntry(version) {
  * Add a release date and compare link to the changelog file. (This would ideally be done via some
  * changesets API during the `version` process, but that's not supported as of writing.)
  * @param {string} changelogEntry
- * @param {string} prevTag
- * @param {string} currTag
+ * @param {string} prevVersion
+ * @param {string} newVersion
  */
-async function amendChangelog(changelogEntry, prevTag, currTag) {
+async function amendChangelog(changelogEntry, prevVersion, newVersion) {
   const changelog = fs.readFileSync(changelogFile, 'utf8');
   const heading = getHeadingText(changelogEntry, headingLevel);
 
@@ -64,7 +64,7 @@ async function amendChangelog(changelogEntry, prevTag, currTag) {
     timeZone: 'US/Pacific',
     timeZoneName: 'shortOffset',
   });
-  const compareLink = `[Compare source](https://github.com/${defaultRepo}/compare/${prevTag}...${currTag})`;
+  const compareLink = `[Compare source](https://github.com/${defaultRepo}/compare/v${prevVersion}...v${newVersion})`;
 
   fs.writeFileSync(
     changelogFile,
@@ -107,7 +107,7 @@ export async function bumpAndRelease(githubToken, majorBranch) {
   // Add a date and tag link to the changelog file (technically the tag doesn't exist yet
   // and creating it could fail, but that's not a big deal)
   const changelogEntry = getChangelogEntry(tagName);
-  await amendChangelog(changelogEntry, `v${prevVersion}`, tagName);
+  await amendChangelog(changelogEntry, prevVersion, newVersion);
 
   // Commit and push on the main branch (remove changesets; update changelog and version)
   await gitUtils.commitAll(`Bump version to ${tagName}`);
