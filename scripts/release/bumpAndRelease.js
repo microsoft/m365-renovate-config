@@ -16,6 +16,7 @@ import { updateRefs } from './updateRefs.js';
 import { formatFile } from '../utils/formatFile.js';
 import { readPackageJson } from '../utils/readPackageJson.js';
 import { getReleaseBranchFromVersion } from '../utils/getReleaseBranches.js';
+import { checkToken } from '../checkToken.js';
 
 const { default: readChangesets } = changesetsReadModule;
 
@@ -73,12 +74,15 @@ export async function amendChangelog(prevVersion, newVersion) {
 
 /**
  * Update changelog and version, commit/push to main and `releaseBranch`, and create a release.
- *
- * PRE: User info and credentials are set
+ * Throws an error if anything fails.
  *
  * @param {import('@octokit/rest').Octokit} github
+ * @param {string} githubToken
  */
-export async function bumpAndRelease(github) {
+export async function bumpAndRelease(github, githubToken) {
+  await checkToken(githubToken);
+  await gitUtils.setCredentials(githubToken);
+
   const changesets = await readChangesets(root);
   if (!changesets.length) {
     console.log('No changesets found');

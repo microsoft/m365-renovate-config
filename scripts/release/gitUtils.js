@@ -12,7 +12,8 @@ function git(args) {
 }
 
 /**
- * Set username and email (as github-actions[bot]) and GitHub credentials (in .netrc)
+ * Set username and email (as github-actions[bot]) and GitHub credentials (in .netrc).
+ * Also set event handlers to try to clean up the credentials on exit.
  * @param {string} githubToken
  */
 export async function setCredentials(githubToken) {
@@ -21,6 +22,10 @@ export async function setCredentials(githubToken) {
 
   console.log('setting GitHub credentials in .netrc');
   fs.writeFileSync(netrc, `machine github.com\nlogin ${user}\npassword ${githubToken}`);
+
+  process.on('exit', cleanUpCredentials);
+  process.on('SIGINT', cleanUpCredentials);
+  process.on('SIGTERM', cleanUpCredentials);
 }
 
 export function cleanUpCredentials() {
