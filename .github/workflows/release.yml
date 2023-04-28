@@ -55,7 +55,7 @@ jobs:
       - name: Release from ${{ env.MAJOR_BRANCH }}
         if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}
         run: |
-          yarn check-token "$GH_TOKEN"
+          yarn check-token "$GITHUB_TOKEN"
           yarn release
         env:
-          GH_TOKEN: ${{ secrets.REPO_PAT }}
+          GITHUB_TOKEN: ${{ secrets.REPO_PAT }}

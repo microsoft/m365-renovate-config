@@ -4,9 +4,9 @@ import * as gitUtils from './gitUtils.js';
 import { logError } from '../utils/github.js';
 
 (async () => {
-  const githubToken = process.env.GH_TOKEN;
+  const githubToken = process.env.GITHUB_TOKEN;
   if (!githubToken) {
-    throw new Error('Missing GH_TOKEN environment variable');
+    throw new Error('Missing GITHUB_TOKEN environment variable');
   }
 
   const branch = process.env.MAJOR_BRANCH;
