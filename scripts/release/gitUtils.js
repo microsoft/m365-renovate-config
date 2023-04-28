@@ -13,8 +13,8 @@ const user = 'github-actions[bot]';
  * @param {string} githubToken
  */
 export async function setCredentials(githubToken) {
-  await exec('git', ['config', 'user.name', `"${user}"`], wrapperOptions);
-  await exec('git', ['config', 'user.email', `"${user}@users.noreply.github.com"`], wrapperOptions);
+  await exec('git', ['config', 'user.name', user], wrapperOptions);
+  await exec('git', ['config', 'user.email', `${user}@users.noreply.github.com"`], wrapperOptions);
 
   console.log('setting GitHub credentials in .netrc');
   fs.writeFileSync(netrc, `machine github.com\nlogin ${user}\npassword ${githubToken}`);

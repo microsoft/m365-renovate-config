@@ -68,7 +68,7 @@ async function amendChangelog(changelogEntry, prevVersion, newVersion) {
 
   fs.writeFileSync(
     changelogFile,
-    changelog.replace(heading, `${heading}\n\n${releaseDate} • ${compareLink}`)
+    changelog.replace(heading, `${heading}\n\n$${compareLink} (${releaseDate})`)
   );
 
   await formatFile(changelogFile);
@@ -110,7 +110,7 @@ export async function bumpAndRelease(githubToken, majorBranch) {
   await amendChangelog(changelogEntry, prevVersion, newVersion);
 
   // Commit and push on the main branch (remove changesets; update changelog and version)
-  await gitUtils.commitAll(`Bump version to ${tagName}`);
+  await gitUtils.commitAll(`Bump version to ${newVersion}`);
   await gitUtils.push(defaultBranch);
 
   // Switch to the release branch and merge with main
