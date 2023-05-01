@@ -4,7 +4,7 @@ import jju from 'jju';
 import path from 'path';
 import { Transform } from 'stream';
 import { getLocalPresetFromExtends } from './utils/extends.js';
-import { formatFile } from './utils/formatFile.js';
+import { formatFileContents } from './utils/formatFile.js';
 import {
   isGithub,
   logEndGroup,
@@ -160,11 +160,11 @@ async function migrateConfig(preset, migratedConfig) {
   if (!isGithub || isRepoConfig) {
     // Actually update and format the file
     console.log(`Migrating ${filename} (see git diff for details)`);
-    fs.writeFileSync(absolutePath, migratedContent);
     try {
-      await formatFile(absolutePath);
+      const formattedContent = await formatFileContents(absolutePath, migratedContent);
+      fs.writeFileSync(absolutePath, formattedContent);
     } catch (err) {
-      console.error(err);
+      logError(err);
       result = 'error';
     }
   }

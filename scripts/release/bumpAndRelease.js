@@ -1,7 +1,7 @@
 import changesetsReadModule from '@changesets/read';
 import fs from 'fs';
 import path from 'path';
-import * as gitUtils from './gitUtils.js';
+import * as git from '../utils/git.js';
 import {
   defaultBranch,
   defaultRepo,
@@ -13,7 +13,7 @@ import { root } from '../utils/paths.js';
 import { runBin } from '../utils/runBin.js';
 import { getHeadingText, splitByHeading } from '../utils/markdown.js';
 import { updateRefs } from './updateRefs.js';
-import { formatFile } from '../utils/formatFile.js';
+import { formatFileContents } from '../utils/formatFile.js';
 import { readPackageJson } from '../utils/readPackageJson.js';
 import { getReleaseBranchFromVersion } from '../utils/getReleaseBranches.js';
 import { checkToken } from '../checkToken.js';
@@ -22,6 +22,7 @@ const { default: readChangesets } = changesetsReadModule;
 
 const changelogFile = path.join(root, 'CHANGELOG.md');
 const headingLevel = 2;
+const skipCi = '[skip ci]';
 
 /**
  * Get the changelog entry and add a release date and compare link.
@@ -66,8 +67,11 @@ export async function amendChangelog(prevVersion, newVersion) {
     `${heading}\n\n${compareLink} - ${releaseDate}`
   );
 
-  fs.writeFileSync(changelogFile, changelog.replace(changelogEntry, amendedEntry));
-  await formatFile(changelogFile, { quiet: true });
+  const formattedContent = await formatFileContents(
+    changelogFile,
+    changelog.replace(changelogEntry, amendedEntry)
+  );
+  fs.writeFileSync(changelogFile, formattedContent);
 
   return amendedEntry;
 }
@@ -81,7 +85,7 @@ export async function amendChangelog(prevVersion, newVersion) {
  */
 export async function bumpAndRelease(github, githubToken) {
   await checkToken(githubToken);
-  await gitUtils.setCredentials(githubToken);
+  await git.setCredentials(githubToken);
 
   const changesets = await readChangesets(root);
   if (!changesets.length) {
@@ -116,32 +120,36 @@ export async function bumpAndRelease(github, githubToken) {
   const changelogEntry = await amendChangelog(prevVersion, newVersion);
   logEndGroup();
 
-  // Commit and push on the main branch (remove changesets; update changelog and version)
+  // Commit and push on the main branch (remove changesets; update changelog and version).
+  // A CI run on this commit is unnecessary.
   logGroup('Committing and updating main');
-  await gitUtils.commitAll(`Bump version to ${newVersion}`);
-  await gitUtils.push(defaultBranch);
+  await git.commitAll(`Bump version to ${newVersion} ${skipCi}`);
+  await git.push(defaultBranch);
   logEndGroup();
 
   // Switch to the release branch and merge with main
   logGroup('Merging main into release branch ' + releaseBranch);
-  await gitUtils.switchToMaybeExistingBranch(releaseBranch);
-  await gitUtils.mergeMain();
+  await git.switchToMaybeExistingBranch(releaseBranch);
+  await git.mergeMain(`Merge ${defaultBranch} into ${releaseBranch} ${skipCi}`);
   logEndGroup();
 
   // Create a commit and tag with "extends" refs pointing to the release *tag*
   logGroup('Creating commit and tag for ' + tagName);
   await updateRefs(tagName);
-  await gitUtils.commitAll(`Update tag refs for ${tagName}`);
-  await gitUtils.tag(tagName);
-  await gitUtils.push(releaseBranch);
-  await gitUtils.pushTags();
+  await git.commitAll(`Update tag refs for ${tagName} ${skipCi}`);
+  await git.tag(tagName);
   logEndGroup();
 
   // Now create another commit with "extends" refs pointing to the major version release branch
   logGroup('Updating branch refs and committing for ' + releaseBranch);
   await updateRefs(releaseBranch);
-  await gitUtils.commitAll(`Update branch refs for ${releaseBranch}`);
-  await gitUtils.push(releaseBranch);
+  // Allow CI to run on this final commit in the release branch
+  await git.commitAll(`Update branch refs for ${releaseBranch} (version ${newVersion})`);
+  logEndGroup();
+
+  logGroup('Pushing release branch updates and tag');
+  await git.push(releaseBranch);
+  await git.pushTags();
   logEndGroup();
 
   // Create GitHub release pointing to the tag (with full tag refs and using the

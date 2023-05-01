@@ -1,14 +1,17 @@
 // Heavily modified from https://github.com/changesets/action
 import fs from 'fs';
-import { exec } from '../utils/exec.js';
-import { defaultBranch } from '../utils/github.js';
+import { exec } from './exec.js';
+import { defaultBranch } from './github.js';
 
 const netrc = `${process.env.HOME}/.netrc`;
 const user = 'github-actions[bot]';
 
-/** @param {string[]} args */
-function git(args) {
-  return exec('git', args, { stdio: 'inherit', reject: true });
+/**
+ * @param {string[]} args
+ * @param {Parameters<typeof exec>[2]} [options]
+ */
+export function git(args, options) {
+  return exec('git', args, { stdio: 'inherit', reject: true, ...options });
 }
 
 /**
@@ -47,7 +50,7 @@ export async function pushTags() {
  */
 export async function switchToMaybeExistingBranch(branch) {
   // for this one, don't throw on error (it's expected if the branch doesn't exist)
-  const result = await exec('git', ['checkout', branch], { reject: false });
+  const result = await git(['checkout', branch], { stdio: 'pipe', reject: false });
   if (result.failed) {
     await git(['checkout', '-b', branch]);
   } else {
@@ -55,9 +58,12 @@ export async function switchToMaybeExistingBranch(branch) {
   }
 }
 
-/** Merge with main (accepting main version for any conflicts) */
-export async function mergeMain() {
-  await git(['merge', defaultBranch, '--no-edit', '-Xtheirs']);
+/**
+ * Merge with main (accepting main version for any conflicts)
+ * @param {string} [message]
+ */
+export async function mergeMain(message) {
+  await git(['merge', defaultBranch, '--no-edit', '-Xtheirs', ...(message ? ['-m', message] : [])]);
 }
 
 /** @param {string} tagName */
