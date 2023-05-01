@@ -209,6 +209,7 @@ ${comments.extra.end}
       "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes."
     );
   } else {
+    fs.writeFileSync(readmeFile, newReadme);
     console.log('\nUpdated readme!\n');
   }
 }

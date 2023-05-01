@@ -36,7 +36,7 @@ export function splitByHeading(text, level) {
 }
 
 /**
- * Get the text of the first heading of the given level
+ * Get the text of the first heading of the given level (excluding the `#`s)
  * @param {string} text
  * @param {number} level
  * @returns {string}

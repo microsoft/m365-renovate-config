@@ -40,6 +40,7 @@ export async function amendChangelog(prevVersion, newVersion) {
   for (const section of sections) {
     if (getHeadingText(section, headingLevel) === newVersion) {
       changelogEntry = section;
+      break;
     }
   }
 
@@ -159,7 +160,7 @@ export async function bumpAndRelease(github, githubToken) {
     name: tagName,
     tag_name: tagName,
     // Remove the header (the release page shows a redundant header)
-    body: changelogEntry.replace(getHeadingText(changelogEntry, headingLevel), ''),
+    body: changelogEntry.replace(/^#+.*?\n+/, ''),
     prerelease: tagName.includes('-'),
     ...defaultRepoDetails,
   });
