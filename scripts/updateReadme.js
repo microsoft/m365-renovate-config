@@ -201,7 +201,7 @@ ${comments.extra.end}
       .replace(oldToc, newToc)
   );
 
-  if (newReadme === originalReadme) {
+  if (newReadme.trim() === originalReadme.trim()) {
     console.log('\nReadme is up to date!\n');
   } else if (check) {
     await git(['diff', readmeFile]);
