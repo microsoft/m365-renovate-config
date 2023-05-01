@@ -3,9 +3,11 @@ import jju from 'jju';
 import { readPresets } from '../utils/readPresets.js';
 import { formatFile } from '../utils/formatFile.js';
 import { getLocalPresetFromExtends, setExtendsRef } from '../utils/extends.js';
+import { updateReadme } from '../updateReadme.js';
 
 /**
- * Fix repo references in presets to reflect the new ref (usually a branch name).
+ * Fix repo references in presets to reflect the new ref (usually a branch name)
+ * and update the readme.
  * @param {string} ref
  */
 export async function updateRefs(ref) {
@@ -23,6 +25,9 @@ export async function updateRefs(ref) {
 
   // format the presets (jju uses a different style)
   await formatFile('*.json');
+
+  // update the readme to reflect the new refs
+  await updateReadme();
 }
 
 // // fix repo references in config files to reflect the repo/branch being tested

@@ -10,9 +10,9 @@ import {
 import { formatFileContents } from './utils/formatFile.js';
 import { logError } from './utils/github.js';
 import { git } from './utils/git.js';
+import { pathToFileURL } from 'url';
 
 const readmeFile = 'README.md';
-const check = process.argv.includes('--check');
 
 /**
  * @typedef {{
@@ -95,7 +95,10 @@ function getPresetExtraTexts(presetNames, presetsSection) {
   return presetExtraTexts;
 }
 
-async function updateReadme() {
+/**
+ * @param {boolean} [check] If true, throw if the readme is out of date. Otherwise, update it.
+ */
+export async function updateReadme(check) {
   // read the readme and replace newlines for ease of processing
   const originalReadme = fs.readFileSync(readmeFile, 'utf8').replace(/\r?\n/g, '\n');
 
@@ -207,19 +210,25 @@ ${comments.extra.end}
 
   if (newReadme.trim() === originalReadme.trim()) {
     console.log('\nReadme is up to date!\n');
-  } else if (check) {
-    await git(['diff', readmeFile]);
-    throw new Error(
-      "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes."
-    );
   } else {
     fs.writeFileSync(readmeFile, newReadme);
-    console.log('\nUpdated readme!\n');
+    if (check) {
+      await git(['diff', readmeFile]);
+      throw new Error(
+        "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes."
+      );
+    } else {
+      console.log('\nUpdated readme!\n');
+    }
   }
 }
 
-updateReadme().catch((err) => {
-  console.error(err.stack || err);
-  logError(err.message || err);
-  process.exit(1);
-});
+// ESM version of `if (require.main === module)`
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const check = process.argv.includes('--check');
+  updateReadme(check).catch((err) => {
+    console.error(err.stack || err);
+    logError(err.message || err);
+    process.exit(1);
+  });
+}
