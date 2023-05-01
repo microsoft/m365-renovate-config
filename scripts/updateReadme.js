@@ -201,15 +201,13 @@ ${comments.extra.end}
       .replace(oldToc, newToc)
   );
 
-  if (check) {
-    if (newReadme !== originalReadme) {
-      await git(['diff', readmeFile]);
-      throw new Error(
-        "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes."
-      );
-    } else {
-      console.log('\nReadme is up to date!\n');
-    }
+  if (newReadme === originalReadme) {
+    console.log('\nReadme is up to date!\n');
+  } else if (check) {
+    await git(['diff', readmeFile]);
+    throw new Error(
+      "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes."
+    );
   } else {
     console.log('\nUpdated readme!\n');
   }

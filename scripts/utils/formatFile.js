@@ -1,4 +1,5 @@
-import { format, resolveConfig } from 'prettier';
+// this is a CJS module which causes interop issues
+import prettier from 'prettier';
 import { runBin } from './runBin.js';
 
 /**
@@ -26,10 +27,10 @@ let config;
  */
 export async function formatFileContents(filepath, contents) {
   if (!config) {
-    config = await resolveConfig(filepath);
+    config = await prettier.resolveConfig(filepath);
     if (!config) {
       throw new Error(`Could not resolve prettier config for ${filepath}`);
     }
   }
-  return format(contents, { filepath, ...config });
+  return prettier.format(contents, { filepath, ...config });
 }
