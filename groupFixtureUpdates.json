@@ -33,7 +33,6 @@
       "major": {
         "dependencyDashboardApproval": false
       },
-      "rangeStrategy": "replace",
       "commitMessagePrefix": "[fixtures]",
       "commitMessageExtra": "",
       "automerge": true,

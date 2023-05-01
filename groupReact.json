@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Group React packages and types (except when initially pinning).",
+  "description": "Group React packages and types.",
 
   "packageRules": [
     {

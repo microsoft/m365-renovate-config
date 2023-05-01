@@ -23,18 +23,52 @@ There are a few different ways to reference presets from this repo in your Renov
     "github>microsoft/m365-renovate-config:somePreset",
 
     // Use a specific version of a preset
-    "github>microsoft/m365-renovate-config:somePreset#v1.2.0",
+    "github>microsoft/m365-renovate-config:somePreset#v2.1.0",
 
     // Use a major version of a preset (see note below)
-    "github>microsoft/m365-renovate-config:somePreset#v1"
+    "github>microsoft/m365-renovate-config:somePreset#v2"
   ]
 }
 ```
 
-Note that **semver ranges are not supported for preset versions** because Renovate only supports resolving presets to specific tags or branches. The supported tags and branches are:
+Note that **semver ranges are not supported for preset versions** because Renovate only supports resolving presets to specific refs (tags or branches). The supported refs are:
 
-- Specific versions listed on the [Releases page](https://github.com/microsoft/m365-renovate-config/releases)
-- Major version branches: `v1`
+- Major version branches: `v1`, `v2`
+- Tags listed on the [Releases page](https://github.com/microsoft/m365-renovate-config/releases)
+
+## Version 2 breaking changes
+
+`m365-renovate-config` version 2 makes the default preset a bit more opinionated based on testing, streamlines preset naming, and updates settings to better reflect recent improvements in Renovate.
+
+**These changes have been picked up automatically** unless you specified a ref (e.g. `#v1`) as part of the preset names in your `extends` config.
+
+Note: `<m365>` in preset names referenced below is a shorthand for `github>microsoft/m365-renovate-config`. This is just for readability of the readme and will _**not**_ work in actual configs (you must use the full repo prefix).
+
+### Default preset changes
+
+The default preset (`github>microsoft/m365-renovate-config`) is now a bit more "opinionated" and includes the settings that were previously defined in `<m365>:libraryRecommended`. These settings can be disabled either individually or using the `excludePresets` option.
+
+The dependency version update strategy (`rangeStrategy`) has also changed as described below.
+
+### Major preset changes and deprecations
+
+Deprecated presets still exist for now to avoid immediate breaks in consuming repos, but will be removed in version 3.
+
+- `<m365>:libraryRecommended` is deprecated in favor of this repo's default preset.
+- `<m365>:beachballLibraryRecommended` is renamed to `<m365>:beachball`.
+
+### Dependency version update strategy
+
+Previously, Renovate's `config:base` would pin `devDependencies` and possibly also `dependencies` to exact versions. Pinning `dependencies` is not desirable for libraries, so `v1` of `m365-renovate-config` omitted any pinning behavior in its default preset, and enabled pinning _only_ `devDependencies` in its `<m365>:libraryRecommended` preset.
+
+A [recent Renovate update](https://docs.renovatebot.com/release-notes-for-major-versions/#version-35) included greatly expanded support for doing in-range updates (e.g. updating the installed version for `"foo": "^1.0.0"` from `1.1.0` to `1.2.0`) by changing only the lockfile. Therefore, Renovate's default [`rangeStrategy: "auto"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) was changed to do lockfile-only updates when possible (instead of pinning or replacing versions), and `config:base` no longer includes any pinning of versions.
+
+Since the lockfile-only updates are likely a good strategy for `devDependencies` in most repos, `m365-renovate-config`'s default preset (which supersedes `<m365>:libraryRecommended`) has been updated as follows:
+
+- Use `rangeStrategy: "replace"` for `dependencies` (production) to reduce the chance of breaks for library consumers.
+- Remove overrides (use `rangeStrategy: "auto"`) for other dependency types.
+
+To restore the previous behavior of `<m365>:libraryRecommended`, extend the Renovate preset [`:pinOnlyDevDependencies`](https://docs.renovatebot.com/presets-default/#pinonlydevdependencies).
 
 ## Presets in this repo
 
@@ -50,8 +84,7 @@ In this section, ONLY edit between "extra content" marker comments!
 
 - [Full config presets](#full-config-presets)
   - [default](#default)
-  - [libraryRecommended](#libraryrecommended)
-  - [beachballLibraryRecommended](#beachballlibraryrecommended)
+  - [beachball](#beachball)
 - [Grouping presets](#grouping-presets)
   - [groupMore](#groupmore)
   - [groupD3](#groupd3)
@@ -70,6 +103,7 @@ In this section, ONLY edit between "extra content" marker comments!
 - [Other presets](#other-presets)
   - [automergeDevLock](#automergedevlock)
   - [automergeTypes](#automergetypes)
+  - [beachballPostUpgrade](#beachballpostupgrade)
   - [dependencyDashboardMajor](#dependencydashboardmajor)
   - [keepFresh](#keepfresh)
   - [newConfigWarningIssue](#newconfigwarningissue)
@@ -89,22 +123,28 @@ Recommended config which is intended to be appropriate for most projects.
 ```json
 {
   "extends": [
-    ":ignoreModulesAndTests",
-    ":semanticPrefixFixDepsChoreOthers",
-    "group:monorepos",
-    "group:recommended",
-    "workarounds:all",
+    "config:base",
     "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue"
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue",
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
   ],
-  "dependencyDashboard": true,
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,
   "printConfig": true,
   "timezone": "America/Los_Angeles",
   "vulnerabilityAlerts": {
     "enabled": true
-  }
+  },
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "commitMessageTopic": "devDependency {{{depName}}}"
+    },
+    {
+      "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "replace"
+    }
+  ]
 }
 ```
 
@@ -112,17 +152,28 @@ Recommended config which is intended to be appropriate for most projects.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-This config should be kept somewhat basic. It's similar to Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase) but does _not_ enable any dependency pinning by default and adds a few extra settings.
+This preset extends Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase), which enables the following:
 
-- General extensions:
-  - `:ignoreModulesAndTests`: Ignore packages under `node_modules` or common test/fixture directory names
-  - [`:semanticPrefixFixDepsChoreOthers`](https://docs.renovatebot.com/presets-default/#semanticprefixfixdepschoreothers): If the repo uses semantic commits, Renovate will use `fix` for dependencies and `chore` for others
-  - [`workarounds:all`](https://docs.renovatebot.com/presets-workarounds/#workaroundsall): Workarounds for known problems with packages
-- Package grouping extensions:
-  - [`group:monorepos`](https://docs.renovatebot.com/presets-group/#groupmonorepos): Group known monorepos
-  - [`group:recommended`](https://docs.renovatebot.com/presets-group/#grouprecommended): Other known groupings (mostly not relevant for node)
-  - [`groupReact`](#groupreact) (from this repo): Group React-related packages and types
-- `dependencyDashboard`: Create a dashboard issue showing update status and allowing updates to be manually triggered (GitHub only)
+- [`:ignoreModulesAndTests`](https://docs.renovatebot.com/presets-default/#ignoremodulesandtests): Ignore packages under `node_modules` or common test/fixture directory names
+- [`:semanticPrefixFixDepsChoreOthers`](https://docs.renovatebot.com/presets-default/#semanticprefixfixdepschoreothers): If the repo uses semantic commits, Renovate will use `fix` for dependencies and `chore` for others
+- [`group:monorepos`](https://docs.renovatebot.com/presets-group/#groupmonorepos): Group known monorepos
+- [`group:recommended`](https://docs.renovatebot.com/presets-group/#grouprecommended): Other known groupings (mostly not relevant for node)
+- [`replacements:all`](https://docs.renovatebot.com/presets-replacements/): Replace renamed packages
+- [`workarounds:all`](https://docs.renovatebot.com/presets-workarounds/#workaroundsall): Workarounds for known problems with packages
+
+Extended presets from this repo:
+
+- [`groupReact`](#groupreact): Group React-related packages and types
+- [`newConfigWarningIssue`](#newconfigwarningissue): Create a new issue every time there's a config warning (not supported for Azure DevOps)
+- [`dependencyDashboardMajor`](#dependencydashboardmajor): Require dependency dashboard approval for major upgrades (not supported for Azure DevOps)
+
+Overrides for dependency types:
+
+- For `devDependencies`: Use "devDependencies" in commit messages (instead of the default "dependencies") to be clearer about what is being modified
+- For `dependencies`: set [`rangeStrategy: "replace"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) to replace the semver range even if the new version is in range (instead of just updating the lockfile), e.g. `"foo": "^1.1.0"` is changed to `"foo": "^1.2.0"`. This is because minor dependency versions may introduce new APIs, and if a library starts using those APIs without updating the dep's semver range, it could break consumers.
+
+Other settings:
+
 - PR limits (`prHourlyLimit` and `prConcurrentLimit`): Prevent Renovate from creating an overwhelming number of PRs all at once. It's _highly encouraged_ to adjust these in your repo to fit your team's needs!
 - `printConfig`: Log the final resolved config to make debugging easier
 - `timezone`: Run schedules relative to Pacific time, since many M365 repos are based in that time zone. See the [time zone list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for other options.
@@ -131,9 +182,9 @@ This config should be kept somewhat basic. It's similar to Renovate's [`config:b
 
 ---
 
-#### `libraryRecommended`
+#### `beachball`
 
-Recommended config for a JS library repo or monorepo, including pinning `devDependencies`.
+Recommended config for library repos which use Beachball for publishing.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -141,24 +192,7 @@ Recommended config for a JS library repo or monorepo, including pinning `devDepe
 {
   "extends": [
     "github>microsoft/m365-renovate-config",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
-  ],
-  "rangeStrategy": "replace",
-  "pin": {
-    "group": {
-      "commitMessageTopic": "devDependencies"
-    }
-  },
-  "packageRules": [
-    {
-      "matchDepTypes": ["devDependencies"],
-      "commitMessageTopic": "devDependency {{{depName}}}",
-      "rangeStrategy": "pin"
-    },
-    {
-      "matchDepTypes": ["peerDependencies"],
-      "rangeStrategy": "widen"
-    }
+    "github>microsoft/m365-renovate-config:beachballPostUpgrade"
   ]
 }
 ```
@@ -167,93 +201,12 @@ Recommended config for a JS library repo or monorepo, including pinning `devDepe
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-- Extensions:
-  - This repo's [default config](#default)
-  - Require dependency dashboard approval for major upgrades
-- Set the [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy) for different update types:
-  - Pin `devDependencies` (see below)
-  - Widen ranges when updating `peerDependencies`
-  - For other updates (including `dependencies`), replace the range with a newer one if the new version falls outside it, and update nothing otherwise
-- `commitMessageTopic`: Where appropriate, use "devDependencies" in commit messages (instead of the default "dependencies") to be clearer about what is being modified
+This is a full config preset which extends the [default preset](#default) and adds [`beachballPostUpgrade`](#beachballpostupgrade) to generate appropriate change files after upgrades:
 
-"Dependency pinning" refers to using a specific version of a dependency (`1.2.3`) rather than a range (`^1.2.3`, `~1.2.3`, etc). Pinning has its pros and cons for different situations, some of which are discussed in [this article from Renovate](https://docs.renovatebot.com/dependency-pinning/). This preset's strategy of pinning _only_ `devDependencies` is less aggressive than the "auto" strategy used in Renovate's `config:base` to reduce the risk of creating unnecessary duplicates in library or tool consumer repos.
-
-<!-- end extra content -->
-
----
-
-#### `beachballLibraryRecommended`
-
-Dependency management strategy for library repos, including Beachball change file generation.
-
-<details><summary><b>Show config JSON</b></summary>
-
-```json
-{
-  "extends": ["github>microsoft/m365-renovate-config:libraryRecommended"],
-  "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
-  "postUpgradeTasks": {
-    "commands": [
-      "git add --all",
-      "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
-      "git reset"
-    ],
-    "fileFilters": ["**/*"],
-    "executionMode": "branch"
-  },
-  "pin": {
-    "group": {
-      "postUpgradeTasks": {
-        "commands": [
-          "git add --all",
-          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-          "git reset"
-        ],
-        "fileFilters": ["**/*"],
-        "executionMode": "branch"
-      }
-    }
-  },
-  "lockFileMaintenance": {
-    "postUpgradeTasks": {
-      "commands": [
-        "git add --all",
-        "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-        "git reset"
-      ],
-      "fileFilters": ["**/*"],
-      "executionMode": "branch"
-    }
-  },
-  "packageRules": [
-    {
-      "matchDepTypes": ["devDependencies"],
-      "postUpgradeTasks": {
-        "commands": [
-          "git add --all",
-          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-          "git reset"
-        ],
-        "fileFilters": ["**/*"],
-        "executionMode": "branch"
-      }
-    }
-  ]
-}
-```
-
-</details>
-
-<!-- start extra content (EDITABLE between these comments) -->
-
-This extends the rules from [`libraryRecommended`](#beachballLibraryRecommended) to also generate appropriate change files after upgrades:
-
-- Change type `none` for updating or pinning `devDependencies`
+- Change type `none` for updating `devDependencies`
 - Change type `patch` for all other changes
 
 These change types will be correct the majority of the time, but if a different change type is appropriate, you can always edit the change file in the PR before it merges.
-
-Note that in the GitHub app, commands in [`postUpgradeTasks`](https://docs.renovatebot.com/configuration-options/#postupgradetasks) are limited to a specific set of strings for security reasons. As of writing, only the specific commands used in this config are allowed (though `--no-fetch` can optionally be removed).
 
 <!-- end extra content -->
 
@@ -297,7 +250,7 @@ To use this preset but disable an individual grouping, add its name to the `igno
 
 #### `groupD3`
 
-Group D3 updates (except when initially pinning).
+Group D3 updates.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -306,8 +259,7 @@ Group D3 updates (except when initially pinning).
   "packageRules": [
     {
       "groupName": "D3 packages",
-      "matchPackagePrefixes": ["d3-", "@types/d3-"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+      "matchPackagePrefixes": ["d3-", "@types/d3-"]
     }
   ]
 }
@@ -323,7 +275,7 @@ Group D3 updates (except when initially pinning).
 
 #### `groupEslint`
 
-Group and schedule all eslint-related updates (except when initially pinning).
+Group and schedule all eslint-related updates.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -333,7 +285,6 @@ Group and schedule all eslint-related updates (except when initially pinning).
     {
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
@@ -385,7 +336,6 @@ Group, schedule, and auto-merge all dependency updates in `__fixtures__` sub-fol
       "major": {
         "dependencyDashboardApproval": false
       },
-      "rangeStrategy": "replace",
       "commitMessagePrefix": "[fixtures]",
       "commitMessageExtra": "",
       "automerge": true,
@@ -417,7 +367,7 @@ To customize this rule's behavior for individual packages, you can add entries t
 
 #### `groupFluent`
 
-Group Fluent UI and related package updates (except when initially pinning).
+Group Fluent UI and related package updates.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -427,18 +377,15 @@ Group Fluent UI and related package updates (except when initially pinning).
     {
       "groupName": "Fluent UI React v9 packages",
       "matchPackagePrefixes": ["@fluentui/"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"],
       "matchCurrentVersion": ">=9.0.0-alpha.0"
     },
     {
       "groupName": "Fluent UI React v9 packages",
-      "matchPackagePrefixes": ["@griffel/"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+      "matchPackagePrefixes": ["@griffel/"]
     },
     {
       "groupName": "Fluent UI React v8 packages",
       "matchPackagePrefixes": ["@fluentui/"],
-      "matchUpdateTypes": ["minor", "patch", "bump", "digest"],
       "matchCurrentVersion": "/^[1234568]\\./",
       "excludePackageNames": [
         "@fluentui/eslint-plugin",
@@ -448,13 +395,11 @@ Group Fluent UI and related package updates (except when initially pinning).
     },
     {
       "groupName": "Fluent UI React v8 packages",
-      "matchPackageNames": ["@fluentui/react-cards"],
-      "matchUpdateTypes": ["minor", "patch", "bump", "digest"]
+      "matchPackageNames": ["@fluentui/react-cards"]
     },
     {
       "groupName": "Fluent UI React Northstar packages",
       "matchPackagePrefixes": ["@fluentui/"],
-      "matchUpdateTypes": ["minor", "patch", "bump", "digest"],
       "matchCurrentVersion": "0.x",
       "excludePackageNames": [
         "@fluentui/eslint-plugin",
@@ -465,13 +410,11 @@ Group Fluent UI and related package updates (except when initially pinning).
     },
     {
       "groupName": "Fabric packages",
-      "matchUpdateTypes": ["minor", "patch", "bump", "digest"],
       "matchPackageNames": ["office-ui-fabric-react"],
       "matchPackagePrefixes": ["@uifabric/"]
     },
     {
       "groupName": "Fabric packages",
-      "matchUpdateTypes": ["minor", "patch", "bump", "digest"],
       "matchPackageNames": ["@fluentui/react"],
       "matchCurrentVersion": "^7.0.0"
     }
@@ -498,7 +441,7 @@ If any packages are mis-categorized, please file an issue.
 
 #### `groupJest`
 
-Group and schedule jest, ts-jest, jest types, and related packages (except when initially pinning).
+Group and schedule jest, ts-jest, jest types, and related packages.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -556,7 +499,7 @@ It does NOT work for `actions/setup-node` (GitHub workflows) or `NodeTool` (Azur
 
 #### `groupReact`
 
-Group React packages and types (except when initially pinning).
+Group React packages and types.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -589,7 +532,7 @@ This uses the same name as (and therefore extends) the built-in config [`group:r
 
 #### `groupRollup`
 
-Group all rollup-related updates (except when initially pinning).
+Group all Rollup-related updates.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -599,8 +542,7 @@ Group all rollup-related updates (except when initially pinning).
     {
       "groupName": "rollup packages",
       "matchPackagePrefixes": ["@rollup"],
-      "matchPackagePatterns": ["^rollup"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+      "matchPackagePatterns": ["^rollup"]
     }
   ]
 }
@@ -676,7 +618,7 @@ If you want to exclude a package from this group, add a new `packageRules` entry
 
 #### `groupYargs`
 
-Group yargs, yargs-parser, and their types (except when initially pinning).
+Group yargs, yargs-parser, and their types.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -685,8 +627,7 @@ Group yargs, yargs-parser, and their types (except when initially pinning).
   "packageRules": [
     {
       "groupName": "yargs packages",
-      "matchPackageNames": ["yargs", "yargs-parser", "@types/yargs", "@types/yargs-parser"],
-      "matchUpdateTypes": ["major", "minor", "patch", "bump", "digest"]
+      "matchPackageNames": ["yargs", "yargs-parser", "@types/yargs", "@types/yargs-parser"]
     }
   ]
 }
@@ -849,9 +790,72 @@ Any branch policies will be respected, including required status checks and requ
 
 ---
 
+#### `beachballPostUpgrade`
+
+Run `beachball change` as a post-upgrade task.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
+  "postUpgradeTasks": {
+    "commands": [
+      "git add --all",
+      "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
+      "git reset"
+    ],
+    "fileFilters": ["**/*"],
+    "executionMode": "branch"
+  },
+  "lockFileMaintenance": {
+    "postUpgradeTasks": {
+      "commands": [
+        "git add --all",
+        "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+        "git reset"
+      ],
+      "fileFilters": ["**/*"],
+      "executionMode": "branch"
+    }
+  },
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["**/*"],
+        "executionMode": "branch"
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+Generate appropriate change files after upgrades:
+
+- Change type `none` for updating `devDependencies` or `lockFileMaintenance`
+- Change type `patch` for all other changes
+
+These change types will be correct the majority of the time, but if a different change type is appropriate, you can always edit the change file in the PR before it merges.
+
+Note that in the GitHub app, commands in [`postUpgradeTasks`](https://docs.renovatebot.com/configuration-options/#postupgradetasks) are limited to a specific set of strings for security reasons. As of writing, only the specific commands used in this config are allowed (though `--no-fetch` can optionally be removed).
+
+<!-- end extra content -->
+
+---
+
 #### `dependencyDashboardMajor`
 
-Require dependency dashboard approval for major upgrades (and minor upgrades of deps known not to follow semver).
+Require dependency dashboard approval for major upgrades, 0.x upgrades, and minor upgrades of deps known not to follow semver.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -879,6 +883,8 @@ Require dependency dashboard approval for major upgrades (and minor upgrades of 
 </details>
 
 <!-- start extra content (EDITABLE between these comments) -->
+
+Note: The dependency dashboard feature doesn't work in Azure DevOps as of writing due to [lack of issue creation support](https://github.com/renovatebot/renovate/issues/9592) in Renovate (and lack of markdown checkbox support in Azure DevOps).
 
 Major upgrades of certain dependencies may be disruptive or require extra validation, so to avoid the PRs sitting for a long time, it may be desirable to manually approve upgrades.
 
@@ -944,6 +950,8 @@ Always create a new issue if there's a config problem (for visibility).
 
 <!-- start extra content (EDITABLE between these comments) -->
 
+Note that issue creation is not supported in Azure DevOps as of writing.
+
 <!-- end extra content -->
 
 ---
@@ -990,11 +998,3 @@ provided by the bot. You will only need to do this once across all repos using o
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-## Trademarks
-
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
-trademarks or logos is subject to and must follow
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.

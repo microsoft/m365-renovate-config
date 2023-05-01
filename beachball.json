@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "DEPRECATED; use this repo's `beachball` preset instead.",
+  "description": "Recommended config for library repos which use Beachball for publishing.",
 
   "extends": [
     "github>microsoft/m365-renovate-config",

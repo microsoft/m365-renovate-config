@@ -4,16 +4,11 @@
   "description": ["Recommended config which is intended to be appropriate for most projects."],
 
   "extends": [
-    ":ignoreModulesAndTests",
-    ":semanticPrefixFixDepsChoreOthers",
-    "group:monorepos",
-    "group:recommended",
-    "workarounds:all",
+    "config:base",
     "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue"
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue",
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
   ],
-
-  "dependencyDashboard": true,
 
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,
@@ -24,5 +19,16 @@
 
   "vulnerabilityAlerts": {
     "enabled": true
-  }
+  },
+
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "commitMessageTopic": "devDependency {{{depName}}}"
+    },
+    {
+      "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "replace"
+    }
+  ]
 }

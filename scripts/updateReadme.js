@@ -28,13 +28,17 @@ const check = process.argv.includes('--check');
  * @typedef {{ [presetName: string]: string }} PresetExtraTexts
  */
 
-const excludedPresets = ['beachballLibraryVerbose'];
+const excludedPresets = [
+  'beachballLibraryRecommended',
+  'beachballLibraryVerbose',
+  'libraryRecommended',
+];
 
 /** @type {PresetGroup[]} */
 const presetGroups = [
   {
     name: 'Full config presets',
-    presets: ['default', 'libraryRecommended', 'beachballLibraryRecommended'],
+    presets: ['default', 'beachball'],
   },
   {
     name: 'Grouping presets',

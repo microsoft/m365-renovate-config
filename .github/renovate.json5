@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>microsoft/m365-renovate-config:libraryRecommended",
+    "github>microsoft/m365-renovate-config",
     "github>microsoft/m365-renovate-config:keepFresh"
   ],
 
@@ -16,11 +16,6 @@
     "automerge": true,
     "platformAutomerge": true
   },
-
-  "pin": {
-    "enabled": false
-  },
-  "rangeStrategy": "update-lockfile",
 
   "semanticCommits": "disabled",
 

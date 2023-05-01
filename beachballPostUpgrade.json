@@ -1,14 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Like beachballLibraryRecommended, but with verbose logging for npx (for debugging only).",
+  "description": "Run `beachball change` as a post-upgrade task.",
 
-  "extends": ["github>microsoft/m365-renovate-config:beachballLibraryRecommended"],
+  "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
 
   "postUpgradeTasks": {
     "commands": [
       "git add --all",
-      "npx --verbose beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
+      "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
       "git reset"
     ],
     "fileFilters": ["**/*"],
@@ -19,7 +19,7 @@
     "postUpgradeTasks": {
       "commands": [
         "git add --all",
-        "npx --verbose beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+        "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
         "git reset"
       ],
       "fileFilters": ["**/*"],
@@ -33,7 +33,7 @@
       "postUpgradeTasks": {
         "commands": [
           "git add --all",
-          "npx --verbose beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
           "git reset"
         ],
         "fileFilters": ["**/*"],
