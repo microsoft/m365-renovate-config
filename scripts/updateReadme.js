@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { readPresets } from './utils/readPresets.js';
-import { runBin } from './utils/runBin.js';
 import {
   getComments,
   getHeadingText,
@@ -8,11 +7,14 @@ import {
   slugify,
   splitByHeading,
 } from './utils/markdown.js';
+import { formatFileContents } from './utils/formatFile.js';
+import { logError } from './utils/github.js';
+import { git } from './utils/git.js';
 
 const readmeFile = 'README.md';
+const check = process.argv.includes('--check');
 
 /**
- * @typedef {import('./utils/markdown.js').Comments} Comments
  * @typedef {{
  *   name: string;
  *   nameWithArgs: string;
@@ -192,19 +194,29 @@ ${comments.extra.end}
     .join('\n');
 
   // Update readme and format
-  const newReadme = originalReadme
-    .replace(presetsSection, newPresetGroups.map((g) => g.content).join('\n'))
-    .replace(oldToc, newToc);
-  fs.writeFileSync(readmeFile, newReadme);
-  console.log('\nUpdated readme! Formatting...\n');
+  const newReadme = await formatFileContents(
+    readmeFile,
+    originalReadme
+      .replace(presetsSection, newPresetGroups.map((g) => g.content).join('\n'))
+      .replace(oldToc, newToc)
+  );
 
-  await runBin('prettier', ['--write', 'README.md'], {
-    stdio: ['ignore', 'ignore', 'inherit'],
-    reject: true, // throw on failure
-  });
+  if (check) {
+    if (newReadme !== originalReadme) {
+      await git(['diff', readmeFile]);
+      throw new Error(
+        "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes."
+      );
+    } else {
+      console.log('\nReadme is up to date!\n');
+    }
+  } else {
+    console.log('\nUpdated readme!\n');
+  }
 }
 
 updateReadme().catch((err) => {
   console.error(err.stack || err);
+  logError(err.message || err);
   process.exit(1);
 });

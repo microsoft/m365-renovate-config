@@ -1,3 +1,4 @@
+import { format, resolveConfig } from 'prettier';
 import { runBin } from './runBin.js';
 
 /**
@@ -7,8 +8,28 @@ import { runBin } from './runBin.js';
  */
 export async function formatFile(file, options = {}) {
   await runBin('prettier', ['--write', '--loglevel=warn', file], {
-    stdio: 'pipe',
+    stdio: 'inherit',
     reject: true,
     ...options,
   });
+}
+
+/**
+ * Cached Prettier config. In theory this could vary between files, but in this repo it shouldn't.
+ * @type {import('prettier').Options | null | undefined}
+ */
+let config;
+/**
+ * Format file contents with Prettier
+ * @param {string} filepath
+ * @param {string} contents
+ */
+export async function formatFileContents(filepath, contents) {
+  if (!config) {
+    config = await resolveConfig(filepath);
+    if (!config) {
+      throw new Error(`Could not resolve prettier config for ${filepath}`);
+    }
+  }
+  return format(contents, { filepath, ...config });
 }

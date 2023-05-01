@@ -32,6 +32,9 @@ jobs:
       - name: Check formatting
         run: yarn format:check
 
+      - name: Check readme
+        run: yarn update-readme --check
+
       - name: Type check scripts
         run: yarn build
 
@@ -42,19 +45,9 @@ jobs:
         run: yarn test:basic
 
       - name: Renovate dry run with all presets
+        if: github.event_name == 'push'
         run: |
           yarn check-token "$TOKEN"
           yarn test:full
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
-
-      - name: Update readme
-        run: |
-          yarn update-readme
-          if [[ `git status --porcelain` ]]; then
-            git config user.name "GitHub Workflow"
-            git config user.email "not provided"
-            git add README.md
-            git commit -m 'chore: update generated readme section'
-            git push
-          fi
