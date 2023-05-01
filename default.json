@@ -5,9 +5,9 @@
 
   "extends": [
     "config:base",
-    "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
+    "github>microsoft/m365-renovate-config:groupReact#v2.0.0",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue#v2.0.0",
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#v2.0.0"
   ],
 
   "prConcurrentLimit": 10,
