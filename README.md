@@ -907,7 +907,7 @@ Require dependency dashboard approval for major upgrades, 0.x upgrades, and mino
       "dependencyDashboardApproval": true
     },
     {
-      "matchCurrentVersion": "0.x",
+      "matchCurrentVersion": ">=0.1.0 <1.0.0-0",
       "matchUpdateTypes": ["minor"],
       "dependencyDashboardApproval": true
     }
