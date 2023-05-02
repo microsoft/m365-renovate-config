@@ -5,6 +5,7 @@
 
   "lockFileMaintenance": {
     "enabled": true,
+    "rebaseWhen": "behind-base-branch",
     "schedule": ["before 5am on the 1st and 15th day of the month"]
   },
 
