@@ -68,7 +68,11 @@ Since the lockfile-only updates are likely a good strategy for `devDependencies`
 - Use `rangeStrategy: "replace"` for `dependencies` (production) to reduce the chance of breaks for library consumers.
 - Remove overrides (use `rangeStrategy: "auto"`) for other dependency types.
 
-To restore the previous behavior of `<m365>:libraryRecommended`, extend the Renovate preset [`:pinOnlyDevDependencies`](https://docs.renovatebot.com/presets-default/#pinonlydevdependencies).
+Notes on pinning behavior:
+
+- For any versions that are currently pinned or that you manually pin, Renovate updates will bump to a new pinned version.
+  - If you'd like to unpin your dev deps, use [`better-deps`](https://www.npmjs.com/package/better-deps): `npx better-deps unpin-dev-deps`
+- If you prefer to restore the previous behavior of pinning _all_ `devDependencies`, extend the Renovate preset [`:pinOnlyDevDependencies`](https://docs.renovatebot.com/presets-default/#pinonlydevdependencies).
 
 ## Presets in this repo
 
@@ -913,6 +917,7 @@ Keep locally-used dependency versions deduplicated and updated.
 {
   "lockFileMaintenance": {
     "enabled": true,
+    "rebaseWhen": "behind-base-branch",
     "schedule": ["before 5am on the 1st and 15th day of the month"]
   },
   "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
@@ -923,7 +928,8 @@ Keep locally-used dependency versions deduplicated and updated.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-- [`lockFileMaintenance`](https://docs.renovatebot.com/configuration-options/#lockfilemaintenance): Completely re-create lock files every Monday. This will update direct and indirect dependency versions used _only within the repo_ to the latest versions that satisfy semver.
+- [`lockFileMaintenance`](https://docs.renovatebot.com/configuration-options/#lockfilemaintenance): Completely re-create lock files twice a month. This will update direct and indirect dependency versions used _only within the repo_ to the latest versions that satisfy semver.
+  - [`rebaseWhen`](https://docs.renovatebot.com/configuration-options/#rebasewhen): If the lock file maintenance PR gets out of date, rebase it even if there aren't conflicts.
 - [`postUpdateOptions`](https://docs.renovatebot.com/configuration-options/#postupdateoptions):
   - `yarnDedupeFewer`: If using yarn, run `yarn-deduplicate --strategy fewer` after updates.
   - `npmDedupe`: If using npm, run `npm dedupe` after updates. WARNING: This may slow down Renovate runs significantly.
