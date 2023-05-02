@@ -65,7 +65,7 @@ A [recent Renovate update](https://docs.renovatebot.com/release-notes-for-major-
 
 Since the lockfile-only updates are likely a good strategy for `devDependencies` in most repos, `m365-renovate-config`'s default preset (which supersedes `<m365>:libraryRecommended`) has been updated as follows:
 
-- Use `rangeStrategy: "replace"` for `dependencies` (production) to reduce the chance of breaks for library consumers.
+- Use `rangeStrategy: "bump"` for `dependencies` (production) to reduce the chance of breaks for library consumers.
 - Remove overrides (use `rangeStrategy: "auto"`) for other dependency types.
 
 Notes on pinning behavior:
@@ -146,7 +146,7 @@ Recommended config which is intended to be appropriate for most projects.
     },
     {
       "matchDepTypes": ["dependencies"],
-      "rangeStrategy": "replace"
+      "rangeStrategy": "bump"
     }
   ]
 }
@@ -174,7 +174,7 @@ Extended presets from this repo:
 Overrides for dependency types:
 
 - For `devDependencies`: Use "devDependencies" in commit messages (instead of the default "dependencies") to be clearer about what is being modified
-- For `dependencies`: set [`rangeStrategy: "replace"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) to replace the semver range even if the new version is in range (instead of just updating the lockfile), e.g. `"foo": "^1.1.0"` is changed to `"foo": "^1.2.0"`. This is because minor dependency versions may introduce new APIs, and if a library starts using those APIs without updating the dep's semver range, it could break consumers.
+- For `dependencies`: set [`rangeStrategy: "bump"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) to replace the semver range even if the new version is in range (instead of just updating the lockfile), e.g. `"foo": "^1.1.0"` is changed to `"foo": "^1.2.0"`. This is because minor dependency versions may introduce new APIs, and if a library starts using those APIs without updating the dep's semver range, it could break consumers.
 
 Other settings:
 
