@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.0.2
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.0.1...v2.0.2) - May 1, 2023, 8:46 PM PDT
+
+### Patch Changes
+
+- [`5f11999`](https://github.com/microsoft/m365-renovate-config/commit/5f11999564f3f372d20beca930d1c40415b99548) - **default**: Use "bump" instead of "replace" for `dependencies` (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.0.1
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.0.0...v2.0.1) - May 1, 2023, 8:33 PM PDT
