@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.0.1
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.0.0...v2.0.1) - May 1, 2023, 8:33 PM PDT
+
+### Patch Changes
+
+- [`f6f77e3`](https://github.com/microsoft/m365-renovate-config/commit/f6f77e35fdf8b44fb1755ef47f91443c42eefc8d) - keepFresh: For lockFileMaintenance, rebase when behind the base branch (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.0.0
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v1.8.13...v2.0.0) - May 1, 2023, 3:44 PM PDT
