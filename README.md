@@ -96,6 +96,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [groupFixtureUpdates](#groupfixtureupdates)
   - [groupFluent](#groupfluent)
   - [groupJest](#groupjest)
+  - [groupLageBackfill](#grouplagebackfill)
   - [groupNodeMajor](#groupnodemajor)
   - [groupReact](#groupreact)
   - [groupRollup](#grouprollup)
@@ -229,15 +230,16 @@ Apply all the groupings from this repo (except groupTypes).
   "extends": [
     "group:monorepos",
     "group:recommended",
-    "github>microsoft/m365-renovate-config:groupD3#v2",
-    "github>microsoft/m365-renovate-config:groupEslint#v2",
-    "github>microsoft/m365-renovate-config:groupFixtureUpdates#v2",
-    "github>microsoft/m365-renovate-config:groupFluent#v2",
-    "github>microsoft/m365-renovate-config:groupJest#v2",
-    "github>microsoft/m365-renovate-config:groupNodeMajor#v2",
-    "github>microsoft/m365-renovate-config:groupReact#v2",
-    "github>microsoft/m365-renovate-config:groupRollup#v2",
-    "github>microsoft/m365-renovate-config:groupYargs#v2"
+    "github>microsoft/m365-renovate-config:groupD3",
+    "github>microsoft/m365-renovate-config:groupEslint",
+    "github>microsoft/m365-renovate-config:groupFixtureUpdates",
+    "github>microsoft/m365-renovate-config:groupFluent",
+    "github>microsoft/m365-renovate-config:groupJest",
+    "github>microsoft/m365-renovate-config:groupLageBackfill",
+    "github>microsoft/m365-renovate-config:groupNodeMajor",
+    "github>microsoft/m365-renovate-config:groupReact",
+    "github>microsoft/m365-renovate-config:groupRollup",
+    "github>microsoft/m365-renovate-config:groupYargs"
   ]
 }
 ```
@@ -466,6 +468,35 @@ Group and schedule jest, ts-jest, jest types, and related packages.
 <!-- start extra content (EDITABLE between these comments) -->
 
 This uses the same name as (and therefore extends) the built-in configs [`group:jestMonorepo`](https://docs.renovatebot.com/presets-group/#groupjestmonorepo), [`group:jestPlusTSJest`](https://docs.renovatebot.com/presets-group/#groupjestplustsjest), and [`group:jestPlusTypes`](https://docs.renovatebot.com/presets-group/#groupjestplustypes).
+
+<!-- end extra content -->
+
+---
+
+#### `groupLageBackfill`
+
+Group Lage and Backfill packages (separate group for each).
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "groupName": "lage monorepo",
+      "matchSourceUrls": ["https://github.com/microsoft/lage"]
+    },
+    {
+      "groupName": "backfill monorepo",
+      "matchSourceUrls": ["https://github.com/microsoft/backfill"]
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
 
 <!-- end extra content -->
 
@@ -876,7 +907,7 @@ Require dependency dashboard approval for major upgrades, 0.x upgrades, and mino
       "dependencyDashboardApproval": true
     },
     {
-      "matchCurrentVersion": "0.x",
+      "matchCurrentVersion": ">=0.1.0 <1.0.0-0",
       "matchUpdateTypes": ["minor"],
       "dependencyDashboardApproval": true
     }
