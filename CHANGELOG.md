@@ -1,5 +1,17 @@
 # @microsoft/m365-renovate-config
 
+## 2.1.0
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.0.2...v2.1.0) - May 2, 2023, 3:36 PM PDT
+
+### Minor Changes
+
+- [`3384bbe`](https://github.com/microsoft/m365-renovate-config/commit/3384bbefebd5d9429a9cbe35b05ecae8fe874f99) - Add groupLageBackfill preset (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
+### Patch Changes
+
+- [`a54b42d`](https://github.com/microsoft/m365-renovate-config/commit/a54b42d8a28f75215eb7c93f6af499484553b344) - dependencyDashboardMajor: correctly specify 0.x versions (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.0.2
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.0.1...v2.0.2) - May 1, 2023, 8:46 PM PDT
