@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.2.0
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.1.0...v2.2.0) - May 2, 2023, 6:03 PM PDT
+
+### Minor Changes
+
+- [`10807ea`](https://github.com/microsoft/m365-renovate-config/commit/10807ea632787854e5fd30cf7c9a8d09292e18c0) - Remove `rangeStrategy: "bump"` for dependencies from default preset. This is more similar to the v1 behavior. (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.1.0
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.0.2...v2.1.0) - May 2, 2023, 3:36 PM PDT

@@ -2,7 +2,7 @@ import fs from 'fs';
 import jju from 'jju';
 import { readPresets } from '../utils/readPresets.js';
 import { formatFile } from '../utils/formatFile.js';
-import { getLocalPresetFromExtends, setExtendsRef } from '../utils/extends.js';
+import { setExtendsRefs } from '../utils/extends.js';
 import { updateReadme } from '../updateReadme.js';
 
 /**
@@ -15,10 +15,10 @@ export async function updateRefs(ref) {
 
   for (const { json, content, absolutePath } of presets) {
     if (json.extends) {
-      json.extends = /** @type {string[]} */ (json.extends).map((preset) =>
-        // if it's a preset in this repo, either add the ref to the end or replace the existing ref
-        getLocalPresetFromExtends(preset) ? setExtendsRef(preset, ref) : preset
-      );
+      json.extends = setExtendsRefs(json.extends, ref);
+    }
+    if (json.ignorePresets) {
+      json.ignorePresets = setExtendsRefs(json.ignorePresets, ref);
     }
     fs.writeFileSync(absolutePath, jju.update(content, json, { indent: 2 }));
   }

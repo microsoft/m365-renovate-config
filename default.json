@@ -25,10 +25,6 @@
     {
       "matchDepTypes": ["devDependencies"],
       "commitMessageTopic": "devDependency {{{depName}}}"
-    },
-    {
-      "matchDepTypes": ["dependencies"],
-      "rangeStrategy": "bump"
     }
   ]
 }
