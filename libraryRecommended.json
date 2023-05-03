@@ -3,5 +3,5 @@
 
   "description": "DEPRECATED; use the repo's base preset instead.",
 
-  "extends": ["github>microsoft/m365-renovate-config#v2"]
+  "extends": ["github>microsoft/m365-renovate-config#v2.2.0"]
 }
