@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.2.1
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.2.0...v2.2.1) - May 2, 2023, 6:18 PM PDT
+
+### Patch Changes
+
+- [`c61116a`](https://github.com/microsoft/m365-renovate-config/commit/c61116a1c90201a7cfba03aa51757c1e17b54329) - groupJest: include more packages and disable related built-in presets (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.2.0
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.1.0...v2.2.0) - May 2, 2023, 6:03 PM PDT
