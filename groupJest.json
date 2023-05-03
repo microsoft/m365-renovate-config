@@ -3,10 +3,23 @@
 
   "description": "Group and schedule jest, ts-jest, jest types, and related packages.",
 
+  "ignorePresets": [
+    "monorepo:jest",
+    "group:jestMonorepo",
+    "group:jestPlusTypes",
+    "group:jestPlusTsJest"
+  ],
+
   "packageRules": [
     {
-      "groupName": "jest monorepo",
+      "groupName": "Jest packages",
+      "matchSourceUrls": ["https://github.com/facebook/jest"],
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
+    },
+    {
+      "groupName": "Jest packages",
       "matchPackagePrefixes": ["@types/jest-", "jest-"],
+      "matchPackageNames": ["@types/jest", "ts-jest"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]

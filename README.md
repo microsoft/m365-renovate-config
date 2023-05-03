@@ -442,10 +442,22 @@ Group and schedule jest, ts-jest, jest types, and related packages.
 
 ```json
 {
+  "ignorePresets": [
+    "monorepo:jest",
+    "group:jestMonorepo",
+    "group:jestPlusTypes",
+    "group:jestPlusTsJest"
+  ],
   "packageRules": [
     {
-      "groupName": "jest monorepo",
+      "groupName": "Jest packages",
+      "matchSourceUrls": ["https://github.com/facebook/jest"],
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
+    },
+    {
+      "groupName": "Jest packages",
       "matchPackagePrefixes": ["@types/jest-", "jest-"],
+      "matchPackageNames": ["@types/jest", "ts-jest"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
@@ -456,7 +468,7 @@ Group and schedule jest, ts-jest, jest types, and related packages.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-This uses the same name as (and therefore extends) the built-in configs [`group:jestMonorepo`](https://docs.renovatebot.com/presets-group/#groupjestmonorepo), [`group:jestPlusTSJest`](https://docs.renovatebot.com/presets-group/#groupjestplustsjest), and [`group:jestPlusTypes`](https://docs.renovatebot.com/presets-group/#groupjestplustypes).
+This replaces the built-in presets [`group:jestMonorepo`](https://docs.renovatebot.com/presets-group/#groupjestmonorepo), [`group:jestPlusTSJest`](https://docs.renovatebot.com/presets-group/#groupjestplustsjest), and [`group:jestPlusTypes`](https://docs.renovatebot.com/presets-group/#groupjestplustypes) with a group which catches more related dependencies.
 
 <!-- end extra content -->
 
