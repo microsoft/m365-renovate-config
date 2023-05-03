@@ -24,8 +24,20 @@ export function getLocalPresetFromExtends(extendsStr) {
  * @param {string} extendsStr
  * @param {string} ref
  */
-export function setExtendsRef(extendsStr, ref) {
+function setExtendsRef(extendsStr, ref) {
   return extendsStr.replace(/($|#.*)/, `#${ref}`);
+}
+
+/**
+ * For any local presets in `presets`, add `ref` to the end, replacing any existing ref.
+ * @param {string[]} presets
+ * @param {string} ref
+ */
+export function setExtendsRefs(presets, ref) {
+  return presets.map((preset) =>
+    // if it's a preset in this repo, either add the ref to the end or replace the existing ref
+    getLocalPresetFromExtends(preset) ? setExtendsRef(preset, ref) : preset
+  );
 }
 
 /**

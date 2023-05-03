@@ -34,6 +34,7 @@ export type RenovateLog = {
 
 export type RenovatePreset = {
   extends?: string[];
+  ignorePresets?: string[];
   // add more as needed
   [key: string]: any;
 };
