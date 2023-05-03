@@ -46,7 +46,7 @@ Note: `<m365>` in preset names referenced below is a shorthand for `github>micro
 
 ### Default preset changes
 
-The default preset (`github>microsoft/m365-renovate-config`) is now a bit more "opinionated" and includes the settings that were previously defined in `<m365>:libraryRecommended`. These settings can be disabled either individually or using the `excludePresets` option.
+The default preset (`github>microsoft/m365-renovate-config`) is now a bit more "opinionated" and includes most settings that were previously defined in `<m365>:libraryRecommended`. These settings can be disabled either individually or using the `excludePresets` option.
 
 The dependency version update strategy (`rangeStrategy`) has also changed as described below.
 
@@ -59,14 +59,11 @@ Deprecated presets still exist for now to avoid immediate breaks in consuming re
 
 ### Dependency version update strategy
 
-Previously, Renovate's `config:base` would pin `devDependencies` and possibly also `dependencies` to exact versions. Pinning `dependencies` is not desirable for libraries, so `v1` of `m365-renovate-config` omitted any pinning behavior in its default preset, and enabled pinning _only_ `devDependencies` in its `<m365>:libraryRecommended` preset.
+Previously, Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase) would pin `devDependencies` and possibly also `dependencies` to exact versions. Pinning `dependencies` is usually not desirable for libraries, so `v1` of `m365-renovate-config` omitted any pinning behavior in its default preset, and enabled pinning _only_ `devDependencies` in its `<m365>:libraryRecommended` preset.
 
 A [recent Renovate update](https://docs.renovatebot.com/release-notes-for-major-versions/#version-35) included greatly expanded support for doing in-range updates (e.g. updating the installed version for `"foo": "^1.0.0"` from `1.1.0` to `1.2.0`) by changing only the lockfile. Therefore, Renovate's default [`rangeStrategy: "auto"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) was changed to do lockfile-only updates when possible (instead of pinning or replacing versions), and `config:base` no longer includes any pinning of versions.
 
-Since the lockfile-only updates are likely a good strategy for `devDependencies` in most repos, `m365-renovate-config`'s default preset (which supersedes `<m365>:libraryRecommended`) has been updated as follows:
-
-- Use `rangeStrategy: "bump"` for `dependencies` (production) to reduce the chance of breaks for library consumers.
-- Remove overrides (use `rangeStrategy: "auto"`) for other dependency types.
+Since the lockfile-only updates are likely a good strategy in many cases, `m365-renovate-config`'s default preset (which supersedes `<m365>:libraryRecommended`) has been updated to remove `rangeStrategy` overrides and extend `config:base`.
 
 Notes on pinning behavior:
 
@@ -144,10 +141,6 @@ Recommended config which is intended to be appropriate for most projects.
     {
       "matchDepTypes": ["devDependencies"],
       "commitMessageTopic": "devDependency {{{depName}}}"
-    },
-    {
-      "matchDepTypes": ["dependencies"],
-      "rangeStrategy": "bump"
     }
   ]
 }
@@ -172,17 +165,13 @@ Extended presets from this repo:
 - [`newConfigWarningIssue`](#newconfigwarningissue): Create a new issue every time there's a config warning (not supported for Azure DevOps)
 - [`dependencyDashboardMajor`](#dependencydashboardmajor): Require dependency dashboard approval for major upgrades (not supported for Azure DevOps)
 
-Overrides for dependency types:
-
-- For `devDependencies`: Use "devDependencies" in commit messages (instead of the default "dependencies") to be clearer about what is being modified
-- For `dependencies`: set [`rangeStrategy: "bump"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) to replace the semver range even if the new version is in range (instead of just updating the lockfile), e.g. `"foo": "^1.1.0"` is changed to `"foo": "^1.2.0"`. This is because minor dependency versions may introduce new APIs, and if a library starts using those APIs without updating the dep's semver range, it could break consumers.
-
 Other settings:
 
 - PR limits (`prHourlyLimit` and `prConcurrentLimit`): Prevent Renovate from creating an overwhelming number of PRs all at once. It's _highly encouraged_ to adjust these in your repo to fit your team's needs!
 - `printConfig`: Log the final resolved config to make debugging easier
 - `timezone`: Run schedules relative to Pacific time, since many M365 repos are based in that time zone. See the [time zone list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for other options.
 - `vulnerabilityAlerts`: Enable PRs to address security vulnerabilities. Note that this **only** works for GitHub and currently is **only** able to update direct dependencies (except in repos using `npm` 6 or older).
+- For `devDependencies`: Use "devDependencies" in commit messages (instead of the default "dependencies") to be clearer about what is being modified
 <!-- end extra content -->
 
 ---
