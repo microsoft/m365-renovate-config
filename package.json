@@ -33,7 +33,7 @@
     "jju": "^1.4.0",
     "node-fetch": "^3.3.1",
     "prettier": "^2.8.7",
-    "renovate": "35.144.0",
+    "renovate": "36.9.1",
     "typescript": "^5.0.3"
   }
 }
