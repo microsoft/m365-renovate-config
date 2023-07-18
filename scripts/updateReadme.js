@@ -65,7 +65,7 @@ const comments = {
   extra: getComments('extra content', 'EDITABLE between these comments'),
 };
 const requiredComments = /** @type {string[]} */ ([]).concat(
-  ...[comments.main, comments.toc].map(({ start, end }) => [start, end])
+  ...[comments.main, comments.toc].map(({ start, end }) => [start, end]),
 );
 
 /**
@@ -105,7 +105,7 @@ export async function updateReadme(check) {
   const missingComments = requiredComments.filter((comment) => !originalReadme.includes(comment));
   if (missingComments.length) {
     console.error(
-      `Readme is missing section marker comment(s):\n  ${missingComments.join('  \n')}`
+      `Readme is missing section marker comment(s):\n  ${missingComments.join('  \n')}`,
     );
     process.exit(1);
   }
@@ -196,7 +196,7 @@ ${comments.extra.end}
       [
         `- [${group.name}](#${slugify(group.name)})`,
         ...group.presets.map((p) => `  - [${p.name}](#${slugify(p.nameWithArgs)})`),
-      ].join('\n')
+      ].join('\n'),
     )
     .join('\n');
 
@@ -205,7 +205,7 @@ ${comments.extra.end}
     readmeFile,
     originalReadme
       .replace(presetsSection, newPresetGroups.map((g) => g.content).join('\n'))
-      .replace(oldToc, newToc)
+      .replace(oldToc, newToc),
   );
 
   if (newReadme.trim() === originalReadme.trim()) {
@@ -215,7 +215,7 @@ ${comments.extra.end}
     if (check) {
       await git(['diff', readmeFile]);
       throw new Error(
-        "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes."
+        "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes.",
       );
     } else {
       console.log('\nUpdated readme!\n');

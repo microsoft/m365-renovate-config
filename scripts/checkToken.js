@@ -26,7 +26,7 @@ export async function checkToken(token) {
 
   if (!result.ok) {
     throw new Error(
-      `GitHub token appears to be expired or invalid (received ${result.status} ${result.statusText})`
+      `GitHub token appears to be expired or invalid (received ${result.status} ${result.statusText})`,
     );
   }
 }
