@@ -59,11 +59,11 @@ Deprecated presets still exist for now to avoid immediate breaks in consuming re
 
 ### Dependency version update strategy
 
-Previously, Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase) would pin `devDependencies` and possibly also `dependencies` to exact versions. Pinning `dependencies` is usually not desirable for libraries, so `v1` of `m365-renovate-config` omitted any pinning behavior in its default preset, and enabled pinning _only_ `devDependencies` in its `<m365>:libraryRecommended` preset.
+Previously, Renovate's `config:base` ([now `config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended)) would pin `devDependencies` and possibly also `dependencies` to exact versions. Pinning `dependencies` is usually not desirable for libraries, so `v1` of `m365-renovate-config` omitted any pinning behavior in its default preset, and enabled pinning _only_ `devDependencies` in its `<m365>:libraryRecommended` preset.
 
-A [recent Renovate update](https://docs.renovatebot.com/release-notes-for-major-versions/#version-35) included greatly expanded support for doing in-range updates (e.g. updating the installed version for `"foo": "^1.0.0"` from `1.1.0` to `1.2.0`) by changing only the lockfile. Therefore, Renovate's default [`rangeStrategy: "auto"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) was changed to do lockfile-only updates when possible (instead of pinning or replacing versions), and `config:base` no longer includes any pinning of versions.
+A [recent Renovate update](https://docs.renovatebot.com/release-notes-for-major-versions/#version-35) included greatly expanded support for doing in-range updates (e.g. updating the installed version for `"foo": "^1.0.0"` from `1.1.0` to `1.2.0`) by changing only the lockfile. Therefore, Renovate's default [`rangeStrategy: "auto"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) was changed to do lockfile-only updates when possible (instead of pinning or replacing versions), and `config:recommended` no longer includes any pinning of versions.
 
-Since the lockfile-only updates are likely a good strategy in many cases, `m365-renovate-config`'s default preset (which supersedes `<m365>:libraryRecommended`) has been updated to remove `rangeStrategy` overrides and extend `config:base`.
+Since the lockfile-only updates are likely a good strategy in many cases, `m365-renovate-config`'s default preset (which supersedes `<m365>:libraryRecommended`) has been updated to remove `rangeStrategy` overrides and extend `config:recommended`.
 
 Notes on pinning behavior:
 
@@ -125,7 +125,7 @@ Recommended config which is intended to be appropriate for most projects.
 ```json
 {
   "extends": [
-    "config:base",
+    "config:recommended",
     "github>microsoft/m365-renovate-config:groupReact",
     "github>microsoft/m365-renovate-config:newConfigWarningIssue",
     "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
@@ -150,7 +150,7 @@ Recommended config which is intended to be appropriate for most projects.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-This preset extends Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase), which enables the following:
+This preset extends Renovate's [`config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended), which enables the following:
 
 - [`:ignoreModulesAndTests`](https://docs.renovatebot.com/presets-default/#ignoremodulesandtests): Ignore packages under `node_modules` or common test/fixture directory names
 - [`:semanticPrefixFixDepsChoreOthers`](https://docs.renovatebot.com/presets-default/#semanticprefixfixdepschoreothers): If the repo uses semantic commits, Renovate will use `fix` for dependencies and `chore` for others
@@ -316,7 +316,7 @@ Group, schedule, and auto-merge all dependency updates in `__fixtures__` sub-fol
     {
       "groupName": "fixture dependencies",
       "schedule": ["before 5am on the 1st and 15th day of the month"],
-      "matchPaths": ["**/__fixtures__/**"],
+      "matchFileNames": ["**/__fixtures__/**"],
       "matchPackagePatterns": ["*"],
       "matchDepTypes": [
         "dependencies",
