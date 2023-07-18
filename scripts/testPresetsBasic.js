@@ -95,7 +95,7 @@ async function checkPreset(preset, hasInvalidRepoConfig) {
     logError(
       `❌ Found errors in ${filename}:\n` +
         [...errorMessages].map((msg) => `    - ${msg}`).join('\n'),
-      filename
+      filename,
     );
     return 'error';
   }
@@ -109,7 +109,7 @@ async function checkPreset(preset, hasInvalidRepoConfig) {
         'warning',
         `Validation exited non-0, but this was probably due to repo config errors. ` +
           'See logs for details.',
-        filename
+        filename,
       );
       return 'unknown';
     }
@@ -152,7 +152,7 @@ async function migrateConfig(preset, migratedConfig) {
           ? 'This will be done locally in CI so the other presets can be validated, but you '
           : 'You ') +
         'must update this config by either running this test locally or manually copying the following content.',
-      filename
+      filename,
     );
     console.log(migratedContent);
   }
@@ -195,7 +195,7 @@ function checkExtends(preset, presetNames) {
     logError(
       `❌ ${filename} includes references to presets from this repo which don't exist locally:\n` +
         invalidExtends.map((e) => `    - ${e}`).join('\n'),
-      filename
+      filename,
     );
     return 'error';
   }
@@ -210,7 +210,7 @@ async function runTests() {
   // always include it in the other configs
   assert(
     presets[0].filename === repoRenovateConfigPath,
-    'Repo config must be first in the list returned by readPresets'
+    'Repo config must be first in the list returned by readPresets',
   );
 
   const presetNames = presets.slice(1).map((p) => p.name);
@@ -237,14 +237,14 @@ async function runTests() {
     logOther(
       'warning',
       'Validating the following preset(s) failed, but this may be due to errors in the repo config:\n' +
-        maybeFailedPresets.map((p) => `    - ${p}`).join('\n')
+        maybeFailedPresets.map((p) => `    - ${p}`).join('\n'),
     );
   }
 
   if (failedPresets.length) {
     logError(
       '❌ Validating the following preset(s) failed (see logs above for details):\n' +
-        failedPresets.map((p) => `    - ${p}`).join('\n')
+        failedPresets.map((p) => `    - ${p}`).join('\n'),
     );
   }
 
