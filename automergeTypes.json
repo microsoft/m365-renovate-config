@@ -6,6 +6,7 @@
   "packageRules": [
     {
       "matchPackagePrefixes": ["@types/"],
+      "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "excludePackageNames": ["@types/react", "@types/react-dom"],

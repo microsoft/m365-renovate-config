@@ -7,6 +7,7 @@
     {
       "groupName": "@types devDependencies",
       "schedule": ["before 5am on the 1st and 15th day of the month"],
+      "matchManagers": ["npm"],
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
@@ -25,6 +26,7 @@
     },
     {
       "groupName": "@types devDependencies",
+      "matchManagers": ["npm"],
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch"],
