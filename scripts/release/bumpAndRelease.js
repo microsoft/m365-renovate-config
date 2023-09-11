@@ -65,12 +65,12 @@ export async function amendChangelog(prevVersion, newVersion) {
 
   const amendedEntry = changelogEntry.replace(
     heading,
-    `${heading}\n\n${compareLink} - ${releaseDate}`
+    `${heading}\n\n${compareLink} - ${releaseDate}`,
   );
 
   const formattedContent = await formatFileContents(
     changelogFile,
-    changelog.replace(changelogEntry, amendedEntry)
+    changelog.replace(changelogEntry, amendedEntry),
   );
   fs.writeFileSync(changelogFile, formattedContent);
 

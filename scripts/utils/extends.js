@@ -3,7 +3,7 @@ import path from 'path';
 import { defaultRepo } from './github.js';
 
 export const repoPresetRegex = new RegExp(
-  `^github>${defaultRepo}(?::(\\w+)(?:\\(.*?\\))?)?(?:#.*)?$`
+  `^github>${defaultRepo}(?::(\\w+)(?:\\(.*?\\))?)?(?:#.*)?$`,
 );
 
 // run quick tests on module load to verify the regex didn't break
@@ -36,7 +36,7 @@ function setExtendsRef(extendsStr, ref) {
 export function setExtendsRefs(presets, ref) {
   return presets.map((preset) =>
     // if it's a preset in this repo, either add the ref to the end or replace the existing ref
-    getLocalPresetFromExtends(preset) ? setExtendsRef(preset, ref) : preset
+    getLocalPresetFromExtends(preset) ? setExtendsRef(preset, ref) : preset,
   );
 }
 
@@ -67,7 +67,7 @@ function runTests() {
     assert.strictEqual(
       res1,
       preset,
-      `Expected getLocalPresetFromExtends("${extnds}") to return "${preset}". Got: ${resStr}`
+      `Expected getLocalPresetFromExtends("${extnds}") to return "${preset}". Got: ${resStr}`,
     );
 
     const res2 = setExtendsRef(extnds, 'v456');
@@ -75,7 +75,7 @@ function runTests() {
     assert.strictEqual(
       res2,
       withRef,
-      `Expected setExtendsRef("${extnds}", "v456") to return "${withRef}". Got: "${res2}"`
+      `Expected setExtendsRef("${extnds}", "v456") to return "${withRef}". Got: "${res2}"`,
     );
   }
 }

@@ -29,6 +29,7 @@
 
   "packageRules": [
     {
+      "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "postUpgradeTasks": {
         "commands": [

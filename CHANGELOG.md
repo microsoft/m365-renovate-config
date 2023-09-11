@@ -1,5 +1,19 @@
 # @microsoft/m365-renovate-config
 
+## 2.3.0
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.2.1...v2.3.0) - September 11, 2023 at 4:46 PM PDT
+
+### Minor Changes
+
+- [#138](https://github.com/microsoft/m365-renovate-config/pull/138) [`280a87d`](https://github.com/microsoft/m365-renovate-config/commit/280a87d5b18d6b0a1f8e8aa13abb424a8957b702) - `keepFresh`: Reduce noise from unnecessary lock file-only dep updates (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
+- [#138](https://github.com/microsoft/m365-renovate-config/pull/138) [`280a87d`](https://github.com/microsoft/m365-renovate-config/commit/280a87d5b18d6b0a1f8e8aa13abb424a8957b702) - `restrictNode`: enable `constraintsFiltering` to prevent installing deps with incompatible `engines.node` (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
+### Patch Changes
+
+- [#138](https://github.com/microsoft/m365-renovate-config/pull/138) [`280a87d`](https://github.com/microsoft/m365-renovate-config/commit/280a87d5b18d6b0a1f8e8aa13abb424a8957b702) - Restrict npm package-specific presets to only apply to npm deps (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.2.1
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.2.0...v2.2.1) - May 2, 2023, 6:18 PM PDT

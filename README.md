@@ -59,11 +59,11 @@ Deprecated presets still exist for now to avoid immediate breaks in consuming re
 
 ### Dependency version update strategy
 
-Previously, Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase) would pin `devDependencies` and possibly also `dependencies` to exact versions. Pinning `dependencies` is usually not desirable for libraries, so `v1` of `m365-renovate-config` omitted any pinning behavior in its default preset, and enabled pinning _only_ `devDependencies` in its `<m365>:libraryRecommended` preset.
+Previously, Renovate's `config:base` ([now `config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended)) would pin `devDependencies` and possibly also `dependencies` to exact versions. Pinning `dependencies` is usually not desirable for libraries, so `v1` of `m365-renovate-config` omitted any pinning behavior in its default preset, and enabled pinning _only_ `devDependencies` in its `<m365>:libraryRecommended` preset.
 
-A [recent Renovate update](https://docs.renovatebot.com/release-notes-for-major-versions/#version-35) included greatly expanded support for doing in-range updates (e.g. updating the installed version for `"foo": "^1.0.0"` from `1.1.0` to `1.2.0`) by changing only the lockfile. Therefore, Renovate's default [`rangeStrategy: "auto"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) was changed to do lockfile-only updates when possible (instead of pinning or replacing versions), and `config:base` no longer includes any pinning of versions.
+A [recent Renovate update](https://docs.renovatebot.com/release-notes-for-major-versions/#version-35) included greatly expanded support for doing in-range updates (e.g. updating the installed version for `"foo": "^1.0.0"` from `1.1.0` to `1.2.0`) by changing only the lockfile. Therefore, Renovate's default [`rangeStrategy: "auto"`](https://docs.renovatebot.com/configuration-options/#rangestrategy) was changed to do lockfile-only updates when possible (instead of pinning or replacing versions), and `config:recommended` no longer includes any pinning of versions.
 
-Since the lockfile-only updates are likely a good strategy in many cases, `m365-renovate-config`'s default preset (which supersedes `<m365>:libraryRecommended`) has been updated to remove `rangeStrategy` overrides and extend `config:base`.
+Since the lockfile-only updates are likely a good strategy in many cases, `m365-renovate-config`'s default preset (which supersedes `<m365>:libraryRecommended`) has been updated to remove `rangeStrategy` overrides and extend `config:recommended`.
 
 Notes on pinning behavior:
 
@@ -102,14 +102,16 @@ In this section, ONLY edit between "extra content" marker comments!
 - [Compatibility presets](#compatibility-presets)
   - [disableEsmVersions](#disableesmversions)
   - [restrictNode](#restrictnodearg0)
+- [Freshness and noise reduction presets](#freshness-and-noise-reduction-presets)
+  - [keepFresh](#keepfresh)
+  - [minorDependencyUpdates](#minordependencyupdates)
+  - [scheduleNoisy](#schedulenoisy)
 - [Other presets](#other-presets)
   - [automergeDevLock](#automergedevlock)
   - [automergeTypes](#automergetypes)
   - [beachballPostUpgrade](#beachballpostupgrade)
   - [dependencyDashboardMajor](#dependencydashboardmajor)
-  - [keepFresh](#keepfresh)
   - [newConfigWarningIssue](#newconfigwarningissue)
-  - [scheduleNoisy](#schedulenoisy)
   <!-- end presets TOC -->
 
 <!-- start presets -->
@@ -125,10 +127,10 @@ Recommended config which is intended to be appropriate for most projects.
 ```json
 {
   "extends": [
-    "config:base",
-    "github>microsoft/m365-renovate-config:groupReact#v2",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue#v2",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#v2"
+    "config:recommended",
+    "github>microsoft/m365-renovate-config:groupReact",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue",
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor"
   ],
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,
@@ -150,7 +152,7 @@ Recommended config which is intended to be appropriate for most projects.
 
 <!-- start extra content (EDITABLE between these comments) -->
 
-This preset extends Renovate's [`config:base`](https://docs.renovatebot.com/presets-config/#configbase), which enables the following:
+This preset extends Renovate's [`config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended), which enables the following:
 
 - [`:ignoreModulesAndTests`](https://docs.renovatebot.com/presets-default/#ignoremodulesandtests): Ignore packages under `node_modules` or common test/fixture directory names
 - [`:semanticPrefixFixDepsChoreOthers`](https://docs.renovatebot.com/presets-default/#semanticprefixfixdepschoreothers): If the repo uses semantic commits, Renovate will use `fix` for dependencies and `chore` for others
@@ -316,7 +318,7 @@ Group, schedule, and auto-merge all dependency updates in `__fixtures__` sub-fol
     {
       "groupName": "fixture dependencies",
       "schedule": ["before 5am on the 1st and 15th day of the month"],
-      "matchPaths": ["**/__fixtures__/**"],
+      "matchFileNames": ["**/__fixtures__/**"],
       "matchPackagePatterns": ["*"],
       "matchDepTypes": [
         "dependencies",
@@ -604,6 +606,7 @@ Group minor and patch updates to `@types` `devDependencies`.
     {
       "groupName": "@types devDependencies",
       "schedule": ["before 5am on the 1st and 15th day of the month"],
+      "matchManagers": ["npm"],
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
@@ -622,6 +625,7 @@ Group minor and patch updates to `@types` `devDependencies`.
     },
     {
       "groupName": "@types devDependencies",
+      "matchManagers": ["npm"],
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch"],
@@ -726,7 +730,7 @@ While ES modules are the new standard, migrating immediately may not be practica
 
 #### `restrictNode(<arg0>)`
 
-Restrict Node version to the range `arg0`.
+Restrict Node version to the range `arg0` and ignore updates incompatible with your repo's `engines.node`.
 
 <details><summary><b>Show config JSON</b></summary>
 
@@ -736,6 +740,10 @@ Restrict Node version to the range `arg0`.
     {
       "matchPackageNames": ["@types/node", "node", "nodejs/node"],
       "allowedVersions": "{{arg0}}"
+    },
+    {
+      "matchManagers": ["npm"],
+      "constraintsFiltering": "strict"
     }
   ]
 }
@@ -751,6 +759,137 @@ It does NOT work for `actions/setup-node` (GitHub workflows) or `NodeTool` (Azur
 
 - Specify `engines.node` in `package.json` and specify `node-version-file: package.json` in the action, or
 - Create a `.nvmrc` file and specify `node-version-file: .nvmrc` in the action
+
+The preset also enables [`constraintsFiltering: "strict"`](https://docs.renovatebot.com/configuration-options/#constraintsfiltering) to prevent installing deps that are incompatible with your repo's `engines.node` setting.
+
+<!-- end extra content -->
+
+---
+
+### Freshness and noise reduction presets
+
+#### `keepFresh`
+
+Keep locally-used dependency versions updated and deduplicated.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "extends": ["github>microsoft/m365-renovate-config:minorDependencyUpdates"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "rebaseWhen": "behind-base-branch",
+    "schedule": ["before 5am on the 1st and 15th day of the month"]
+  },
+  "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"],
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "rangeStrategy": "replace"
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+- [`lockFileMaintenance`](https://docs.renovatebot.com/configuration-options/#lockfilemaintenance): Completely re-create lock files twice a month. This will update direct and indirect dependency versions used _only within the repo_ to the latest versions that satisfy semver.
+  - [`rebaseWhen`](https://docs.renovatebot.com/configuration-options/#rebasewhen): If the lock file maintenance PR gets out of date, rebase it even if there aren't conflicts.
+- [`postUpdateOptions`](https://docs.renovatebot.com/configuration-options/#postupdateoptions):
+  - `yarnDedupeFewer`: If using yarn, run `yarn-deduplicate --strategy fewer` after updates.
+  - `npmDedupe`: If using npm, run `npm dedupe` after updates. WARNING: This may slow down Renovate runs significantly.
+- Extend [`<m365>:minorDependencyUpdates`](#minordependencyupdates) and set the [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy) for `npm` `devDependencies` to `replace` (see below for details).
+
+With `dependencies` and/or `devDependencies` specified as ranges (unpinned), by default Renovate will make individual lockfile-only update PRs for in-range updates. These PRs are redundant when `lockFileMaintenance` is also enabled, so the the `<m365>:minorDependencyUpdates` preset and the `packageRules` rule for `devDependencies` here help reduce unnecessary PRs.
+
+(To unpin your `devDependencies` that Renovate previously pinned, run `npx better-deps unpin-dev-deps`.)
+
+It's **highly recommended** to manually run the deduplication command (`npx yarn-deduplicate --strategy fewer` or `npm dedupe`) before enabling this preset. In a large repo that hasn't been regularly deduplicated or had its lock file refreshed, it's likely that initial deduplication will cause build breaks due to implicit reliance on subtle interactions between particular old versions.
+
+<!-- end extra content -->
+
+---
+
+#### `minorDependencyUpdates`
+
+For dependencies, explicitly pick up minor updates, and ignore patch updates if in-range.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "matchCurrentValue": "/^[~^][1-9]/",
+      "matchUpdateTypes": ["minor"],
+      "schedule": ["before 5am on Tuesday"]
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "matchCurrentVersion": "0.x",
+      "matchUpdateTypes": ["patch"],
+      "schedule": ["before 5am on Tuesday"]
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "matchCurrentValue": "/^[~^][1-9]/",
+      "matchUpdateTypes": ["patch"],
+      "enabled": false
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+This preset is mainly useful if `lockFileMaintenance` is enabled and some or all dependencies are specified as ranges. Note that it only applies to `npm` `dependencies`.
+
+- For all `npm` `dependencies`, set the [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy) to `bump`: bump the range even if the new version satisfies the existing range, e.g. `^1.0.0 -> ^1.1.0`.
+- For `^` or `~` `dependencies`:
+  - For versions > `0.x`, explicitly pick up minor updates once a week in case of API changes, and disable explicit patch updates.
+  - For `0.x` versions, explicitly pick up patch updates once a week in case of API changes.
+  <!-- end extra content -->
+
+---
+
+#### `scheduleNoisy`
+
+Update "noisy" (frequently-updating) packages once every other week.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchPackagePrefixes": ["@microsoft/api-extractor"],
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+Certain packages tend to publish updates multiple times per week, and getting a PR for every one of those updates can be annoying. This rule includes a list of packages known to update frequently and spreads them out throughout the week (to avoid attempting to create too many PRs at once and being rate limited).
+
 <!-- end extra content -->
 
 ---
@@ -806,6 +945,7 @@ Auto-merge minor and patch updates to `@types` `devDependencies` (if the build p
   "packageRules": [
     {
       "matchPackagePrefixes": ["@types/"],
+      "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "excludePackageNames": ["@types/react", "@types/react-dom"],
@@ -857,6 +997,7 @@ Run `beachball change` as a post-upgrade task.
   },
   "packageRules": [
     {
+      "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "postUpgradeTasks": {
         "commands": [
@@ -939,39 +1080,6 @@ Some alternative strategies which would need to be configured per repo (see [Ren
 
 ---
 
-#### `keepFresh`
-
-Keep locally-used dependency versions deduplicated and updated.
-
-<details><summary><b>Show config JSON</b></summary>
-
-```json
-{
-  "lockFileMaintenance": {
-    "enabled": true,
-    "rebaseWhen": "behind-base-branch",
-    "schedule": ["before 5am on the 1st and 15th day of the month"]
-  },
-  "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
-}
-```
-
-</details>
-
-<!-- start extra content (EDITABLE between these comments) -->
-
-- [`lockFileMaintenance`](https://docs.renovatebot.com/configuration-options/#lockfilemaintenance): Completely re-create lock files twice a month. This will update direct and indirect dependency versions used _only within the repo_ to the latest versions that satisfy semver.
-  - [`rebaseWhen`](https://docs.renovatebot.com/configuration-options/#rebasewhen): If the lock file maintenance PR gets out of date, rebase it even if there aren't conflicts.
-- [`postUpdateOptions`](https://docs.renovatebot.com/configuration-options/#postupdateoptions):
-  - `yarnDedupeFewer`: If using yarn, run `yarn-deduplicate --strategy fewer` after updates.
-  - `npmDedupe`: If using npm, run `npm dedupe` after updates. WARNING: This may slow down Renovate runs significantly.
-
-It's **highly recommended** to manually run the deduplication command before enabling this preset. In a large repo that hasn't been regularly deduplicated (or had its lock file refreshed), it's likely that initial deduplication will cause build breaks due to implicit reliance on subtle interactions between particular old versions.
-
-<!-- end extra content -->
-
----
-
 #### `newConfigWarningIssue`
 
 Always create a new issue if there's a config problem (for visibility).
@@ -989,33 +1097,6 @@ Always create a new issue if there's a config problem (for visibility).
 <!-- start extra content (EDITABLE between these comments) -->
 
 Note that issue creation is not supported in Azure DevOps as of writing.
-
-<!-- end extra content -->
-
----
-
-#### `scheduleNoisy`
-
-Update "noisy" (frequently-updating) packages once every other week.
-
-<details><summary><b>Show config JSON</b></summary>
-
-```json
-{
-  "packageRules": [
-    {
-      "matchPackagePrefixes": ["@microsoft/api-extractor"],
-      "schedule": ["before 5am on the 8th and 22nd day of the month"]
-    }
-  ]
-}
-```
-
-</details>
-
-<!-- start extra content (EDITABLE between these comments) -->
-
-Certain packages tend to publish updates multiple times per week, and getting a PR for every one of those updates can be annoying. This rule includes a list of packages known to update frequently and spreads them out throughout the week (to avoid attempting to create too many PRs at once and being rate limited).
 
 <!-- end extra content -->
 
