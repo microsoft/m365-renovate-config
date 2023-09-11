@@ -1,7 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  "description": "Keep locally-used dependency versions deduplicated and updated.",
+  "description": "Keep locally-used dependency versions updated and deduplicated.",
+
+  "extends": ["github>microsoft/m365-renovate-config:minorDependencyUpdates"],
 
   "lockFileMaintenance": {
     "enabled": true,
@@ -9,5 +11,13 @@
     "schedule": ["before 5am on the 1st and 15th day of the month"]
   },
 
-  "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"]
+  "postUpdateOptions": ["yarnDedupeFewer", "npmDedupe"],
+
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "rangeStrategy": "replace"
+    }
+  ]
 }

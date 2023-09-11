@@ -49,6 +49,10 @@ const presetGroups = [
     presets: ['disableEsmVersions', 'restrictNode'],
   },
   {
+    name: 'Freshness and noise reduction presets',
+    presets: ['keepFresh', 'minorDependencyUpdates', 'scheduleNoisy'],
+  },
+  {
     // This group MUST be last!
     name: 'Other presets',
     presets: [],
