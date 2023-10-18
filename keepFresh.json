@@ -3,7 +3,7 @@
 
   "description": "Keep locally-used dependency versions updated and deduplicated.",
 
-  "extends": ["github>microsoft/m365-renovate-config:minorDependencyUpdates#v2"],
+  "extends": ["github>microsoft/m365-renovate-config:minorDependencyUpdates#v2.3.1"],
 
   "lockFileMaintenance": {
     "enabled": true,
