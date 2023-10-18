@@ -707,6 +707,10 @@ Disable upgrades to package versions that have been converted to ES modules.
       "allowedVersions": "<6.0.0"
     },
     {
+      "matchPackageNames": ["strip-ansi"],
+      "allowedVersions": "<7.0.0"
+    },
+    {
       "matchPackageNames": ["supports-color"],
       "allowedVersions": "<9.0.0"
     },

@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.3.1
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.3.0...v2.3.1) - October 18, 2023 at 3:43 PM PDT
+
+### Patch Changes
+
+- [`157ab35`](https://github.com/microsoft/m365-renovate-config/commit/157ab35575c16156fbd10aaf742a387799d70e51) - disableEsmVersions: add strip-ansi (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.3.0
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.2.1...v2.3.0) - September 11, 2023 at 4:46 PM PDT
