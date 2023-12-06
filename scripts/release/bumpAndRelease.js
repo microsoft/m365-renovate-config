@@ -1,4 +1,4 @@
-import changesetsReadModule from '@changesets/read';
+import readChangesets from '@changesets/read';
 import fs from 'fs';
 import path from 'path';
 import * as git from '../utils/git.js';
@@ -17,8 +17,6 @@ import { formatFileContents } from '../utils/formatFile.js';
 import { readPackageJson } from '../utils/readPackageJson.js';
 import { getReleaseBranchFromVersion } from '../utils/getReleaseBranches.js';
 import { checkToken } from '../checkToken.js';
-
-const { default: readChangesets } = changesetsReadModule;
 
 const changelogFile = path.join(root, 'CHANGELOG.md');
 const headingLevel = 2;
