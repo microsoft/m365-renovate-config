@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.4.0
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.3.1...v2.4.0) - December 28, 2023 at 12:38 PM PST
+
+### Minor Changes
+
+- [`cfc530c`](https://github.com/microsoft/m365-renovate-config/commit/cfc530c4a83f81ef8f97c2fff2ff2297f1fe7d32) - groupEslint: don't group typescript-eslint with other eslint packages (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.3.1
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.3.0...v2.3.1) - October 18, 2023 at 3:43 PM PDT

@@ -31,7 +31,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           cache: yarn
           node-version-file: .nvmrc
@@ -39,7 +39,7 @@ jobs:
       - run: yarn --frozen-lockfile
 
       - name: Check if release is needed
-        uses: ecraig12345/beachball-actions/should-release@v1
+        uses: ecraig12345/beachball-actions/should-release@v2
         id: shouldRelease
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -49,7 +49,7 @@ jobs:
 
       - name: Release
         if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           # Used by changesets and when pushing updates
           GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
