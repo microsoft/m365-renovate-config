@@ -282,6 +282,12 @@ Group and schedule all eslint-related updates.
     {
       "groupName": "eslint packages",
       "matchPackagePatterns": ["eslint"],
+      "excludePackagePrefixes": ["@typecript-eslint/"],
+      "schedule": ["before 5am on the 8th and 22nd day of the month"]
+    },
+    {
+      "groupName": "typescript-eslint monorepo",
+      "matchSourceUrls": ["https://github.com/typescript-eslint/typescript-eslint"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
