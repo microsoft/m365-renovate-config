@@ -26,8 +26,8 @@ There are a few different ways to reference presets from this repo in your Renov
     "github>microsoft/m365-renovate-config:somePreset#v2.1.0",
 
     // Use a major version of a preset (see note below)
-    "github>microsoft/m365-renovate-config:somePreset#v2"
-  ]
+    "github>microsoft/m365-renovate-config:somePreset#v2",
+  ],
 }
 ```
 
