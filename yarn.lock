@@ -1646,10 +1646,10 @@
   resolved "https://registry.yarnpkg.com/@redis/bloom/-/bloom-1.2.0.tgz#d3fd6d3c0af3ef92f26767b56414a370c7b63b71"
   integrity sha512-HG2DFjYKbpNmVXsa0keLHp/3leGJz1mjh09f2RLGGLQZzSHpkmZWuwJbAvo3QcRY8p80m5+ZdXZdYOSBLlp7Cg==
 
-"@redis/client@1.5.13":
-  version "1.5.13"
-  resolved "https://registry.yarnpkg.com/@redis/client/-/client-1.5.13.tgz#78786218fc1632ee4b5f7d73b8d456c95880e086"
-  integrity sha512-epkUM9D0Sdmt93/8Ozk43PNjLi36RZzG+d/T1Gdu5AI8jvghonTeLYV69WVWdilvFo+PYxbP0TZ0saMvr6nscQ==
+"@redis/client@1.5.14":
+  version "1.5.14"
+  resolved "https://registry.yarnpkg.com/@redis/client/-/client-1.5.14.tgz#1107893464d092f140d77c468b018a6ed306a180"
+  integrity sha512-YGn0GqsRBFUQxklhY7v562VMOP0DcmlrHHs3IV1mFE3cbxe31IITUkqhBcIhVSI/2JqtWAJXg5mjV4aU+zD0HA==
   dependencies:
     cluster-key-slot "1.1.2"
     generic-pool "3.9.0"
@@ -1675,30 +1675,30 @@
   resolved "https://registry.yarnpkg.com/@redis/time-series/-/time-series-1.0.5.tgz#a6d70ef7a0e71e083ea09b967df0a0ed742bc6ad"
   integrity sha512-IFjIgTusQym2B5IZJG3XKr5llka7ey84fw/NOYqESP5WUfQs9zz1ww/9+qoz4ka/S6KcGBodzlCeZ5UImKbscg==
 
-"@renovatebot/osv-offline-db@1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@renovatebot/osv-offline-db/-/osv-offline-db-1.5.1.tgz#0a2ab4867100e3d16f6f0b388518ac4cfc4be417"
-  integrity sha512-I356SDDjbCu58j58TC1qiGQ4dwhSd9nQjl9bVbWNPjDY91S4tH5OfR6I5eV4bXxZgp0dxMWRakyFlbTbOjPpfw==
+"@renovatebot/osv-offline-db@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@renovatebot/osv-offline-db/-/osv-offline-db-1.6.0.tgz#03298fc77fd086aed649b4497b31fcc95e81b6f6"
+  integrity sha512-cEOCTyd3+/7gPDmBn0pyJtF01+f9e/dJ1mOoML+v5AsP8GIPAzhtQUuIB5FiCxS4IsbP0qm34anYUZHGJldNJA==
   dependencies:
     "@seald-io/nedb" "^4.0.4"
 
-"@renovatebot/osv-offline@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@renovatebot/osv-offline/-/osv-offline-1.5.0.tgz#d46b17b4779b0c832d9cfa6970a227e342c8cd0b"
-  integrity sha512-IQK1b0uCugooaK+miCNcaKUf+pBIK8uICFRZY2QyG1DuAFm2MfPYF3asMtO1ebD317QZGxaI4q08+V66T3K8HA==
+"@renovatebot/osv-offline@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@renovatebot/osv-offline/-/osv-offline-1.5.1.tgz#50d2c02605f0917157e860952e80a5d235e20162"
+  integrity sha512-NQT7ikG+uA2M9IrGEY/f43FNXWQrFbIKSKk4kFxcOJL+Y3mYJF6EpVcqxfp2ExIrwu50r2rBbzdX9jgbuhiwwQ==
   dependencies:
     "@octokit/rest" "^20.0.2"
-    "@renovatebot/osv-offline-db" "1.5.1"
+    "@renovatebot/osv-offline-db" "1.6.0"
     adm-zip "~0.5.10"
     fs-extra "^11.2.0"
     got "^11.8.6"
     luxon "^3.4.4"
     node-fetch "^2.7.0"
 
-"@renovatebot/pep440@3.0.17":
-  version "3.0.17"
-  resolved "https://registry.yarnpkg.com/@renovatebot/pep440/-/pep440-3.0.17.tgz#4ffeca9b7019fe973aedcc24970382468a04f3fd"
-  integrity sha512-pmXfRIoai7Ba4RcRqw9sEEo/fWPVKNPPHSQgSCvMGnfKKmn0rgyQBZAB1XeXEgb6h4dwMJkvU0p7rWgTSmXXNw==
+"@renovatebot/pep440@3.0.19":
+  version "3.0.19"
+  resolved "https://registry.yarnpkg.com/@renovatebot/pep440/-/pep440-3.0.19.tgz#a3bd7d6f15b17314e442fd5763c9304a8965192b"
+  integrity sha512-Y5/rKFwQUPZJOEMmCLqQ1TFJ1v/lN88wGLPzcwKxzgiBWZUVZD47sppV9aObguSmeOni1uEg3wz0I/jqHSP+XA==
 
 "@renovatebot/ruby-semver@3.0.23":
   version "3.0.23"
@@ -2593,10 +2593,10 @@ better-path-resolve@1.0.0:
   dependencies:
     is-windows "^1.0.0"
 
-better-sqlite3@9.4.0:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-9.4.0.tgz#f3e70ceab8e5950dd45516977c0ff7cf167f8455"
-  integrity sha512-5kynxekMxSjCMiFyUBLHggFcJkCmiZi6fUkiGz/B5GZOvdRWQJD0klqCx5/Y+bm2AKP7I/DHbSFx26AxjruWNg==
+better-sqlite3@9.4.1:
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-9.4.1.tgz#006bc6a899a69166c5fe89c9cff64509295d12b2"
+  integrity sha512-QpqiQeMI4WkE+dQ68zTMX5OzlPGc7lXIDP1iKUt4Omt9PdaVgzKYxHIJRIzt1E+RUBQoFmkip/IbvzyrxehAIg==
   dependencies:
     bindings "^1.5.0"
     prebuild-install "^7.1.1"
@@ -2923,7 +2923,12 @@ color-name@~1.1.4:
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
-commander@11.1.0, commander@^11.0.0:
+commander@12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-12.0.0.tgz#b929db6df8546080adfd004ab215ed48cf6f2592"
+  integrity sha512-MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==
+
+commander@^11.0.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-11.1.0.tgz#62fdce76006a68e5c1ab3314dc92e800eb83d906"
   integrity sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==
@@ -3857,10 +3862,10 @@ git-up@^7.0.0:
     is-ssh "^1.4.0"
     parse-url "^8.1.0"
 
-git-url-parse@13.1.1:
-  version "13.1.1"
-  resolved "https://registry.yarnpkg.com/git-url-parse/-/git-url-parse-13.1.1.tgz#664bddf0857c6a75b3c1f0ae6239abb08a1486d4"
-  integrity sha512-PCFJyeSSdtnbfhSNRw9Wk96dDCNx+sogTe4YNXeXSJxt7xz5hvXekuRn9JX7m+Mf4OscCu8h+mtAl3+h5Fo8lQ==
+git-url-parse@14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/git-url-parse/-/git-url-parse-14.0.0.tgz#18ce834726d5fbca0c25a4555101aa277017418f"
+  integrity sha512-NnLweV+2A4nCvn4U/m2AoYu0pPKlsmhK9cknG7IMwsjFY1S2jxM+mAhsDxyxfCIGfGaD+dozsyX4b6vkYc83yQ==
   dependencies:
     git-up "^7.0.0"
 
@@ -3970,10 +3975,10 @@ good-enough-parser@1.1.23:
     klona "2.0.6"
     moo "0.5.2"
 
-google-auth-library@9.6.2:
-  version "9.6.2"
-  resolved "https://registry.yarnpkg.com/google-auth-library/-/google-auth-library-9.6.2.tgz#c615b9186ee1871eab4703a9d07206c8c73d46a7"
-  integrity sha512-8G5i+uELrRE244PGnTc9UxiWZ2FMWD5jiIe9P2XSxCvXv/0ip/phjeHSE4bhJnLBdJb+Bu/Gj9Lr33TmDnbAiw==
+google-auth-library@9.6.3:
+  version "9.6.3"
+  resolved "https://registry.yarnpkg.com/google-auth-library/-/google-auth-library-9.6.3.tgz#add8935bc5b842a8e80f84fef2b5ed9febb41d48"
+  integrity sha512-4CacM29MLC2eT9Cey5GDVK4Q8t+MMp8+OEdOaqD9MG6b0dOyLORaaeJMPQ7EESVgm/+z5EKYyFLxgzBJlJgyHQ==
   dependencies:
     base64-js "^1.3.0"
     ecdsa-sig-formatter "^1.0.11"
@@ -5282,10 +5287,10 @@ onetime@^6.0.0:
   dependencies:
     mimic-fn "^4.0.0"
 
-openpgp@5.11.0:
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/openpgp/-/openpgp-5.11.0.tgz#cec5b285d188148f7b5201b9aceb53850cc286a2"
-  integrity sha512-hytHsxIPtRhuh6uAmoBUThHSwHSX3imLu7x4453T+xkVqIw49rl22MRD4KQIAQdCDoVdouejzYgcuLmMA/2OAA==
+openpgp@5.11.1:
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/openpgp/-/openpgp-5.11.1.tgz#97f3a1dfb3d3573a0a73fe2efb29e6b1f8fefb1c"
+  integrity sha512-TynUBPuaSI7dN0gP+A38CjNRLxkOkkptefNanalDQ71BFAKKm+dLbksymSW5bUrB7RcAneMySL/Y+r/TbLpOnQ==
   dependencies:
     asn1.js "^5.0.0"
 
@@ -5543,10 +5548,10 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-prettier@3.2.2, prettier@^3.0.0:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.2.2.tgz#96e580f7ca9c96090ad054616c0c4597e2844b65"
-  integrity sha512-HTByuKZzw7utPiDO523Tt2pLtEyK7OibUD9suEJQrPUCYQqrHr74GGX6VidMrovbf/I50mPqr8j/II6oBAuc5A==
+prettier@3.2.5, prettier@^3.0.0:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.2.5.tgz#e52bc3090586e824964a8813b09aba6233b28368"
+  integrity sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==
 
 prettier@^2.7.1:
   version "2.8.8"
@@ -5702,13 +5707,13 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redis@4.6.12:
-  version "4.6.12"
-  resolved "https://registry.yarnpkg.com/redis/-/redis-4.6.12.tgz#b607c93e9b0dd09e641f837092e9a68cc6ac6570"
-  integrity sha512-41Xuuko6P4uH4VPe5nE3BqXHB7a9lkFL0J29AlxKaIfD6eWO8VO/5PDF9ad2oS+mswMsfFxaM5DlE3tnXT+P8Q==
+redis@4.6.13:
+  version "4.6.13"
+  resolved "https://registry.yarnpkg.com/redis/-/redis-4.6.13.tgz#e247267c5f3ba35ab8277b57343d3a56acb2f0a6"
+  integrity sha512-MHgkS4B+sPjCXpf+HfdetBwbRz6vCtsceTmw1pHNYJAsYxrfpOP6dz+piJWGos8wqG7qb3vj/Rrc5qOlmInUuA==
   dependencies:
     "@redis/bloom" "1.2.0"
-    "@redis/client" "1.5.13"
+    "@redis/client" "1.5.14"
     "@redis/graph" "1.1.1"
     "@redis/json" "1.0.6"
     "@redis/search" "1.1.6"
@@ -5761,10 +5766,10 @@ remark@13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
-renovate@37.181.11:
-  version "37.181.11"
-  resolved "https://registry.yarnpkg.com/renovate/-/renovate-37.181.11.tgz#8f01380b00307ca9d1f99be12341d37dbb77f0f1"
-  integrity sha512-BzF34nwn0L1TNsVHjlsWFaQNjIJmtyY3ztPW5UQ7exB40hghvmP3NGIoAFWSgKGfL5U0ATD6L+eMjc2ScI8Lpw==
+renovate@37.214.1:
+  version "37.214.1"
+  resolved "https://registry.yarnpkg.com/renovate/-/renovate-37.214.1.tgz#0fffbe0bc1399147243f9d3d3a6e8df4a1507814"
+  integrity sha512-B+Kecpv5Z9t7vAXunjaCZis5KGUAEd/PiI/Is4L0TMMEMALQnqcEF3OuxDPaczL3/MzyFyRU+7O1W21/WF1jVQ==
   dependencies:
     "@aws-sdk/client-codecommit" "3.363.0"
     "@aws-sdk/client-ec2" "3.363.0"
@@ -5785,8 +5790,8 @@ renovate@37.181.11:
     "@opentelemetry/sdk-trace-node" "1.21.0"
     "@opentelemetry/semantic-conventions" "1.21.0"
     "@qnighy/marshal" "0.1.3"
-    "@renovatebot/osv-offline" "1.5.0"
-    "@renovatebot/pep440" "3.0.17"
+    "@renovatebot/osv-offline" "1.5.1"
+    "@renovatebot/pep440" "3.0.19"
     "@renovatebot/ruby-semver" "3.0.23"
     "@sindresorhus/is" "4.6.0"
     "@types/better-sqlite3" "7.6.9"
@@ -5799,14 +5804,14 @@ renovate@37.181.11:
     auth-header "1.0.0"
     aws4 "1.12.0"
     azure-devops-node-api "12.4.0"
-    better-sqlite3 "9.4.0"
+    better-sqlite3 "9.4.1"
     bunyan "1.8.15"
     cacache "18.0.2"
     cacheable-lookup "5.0.4"
     chalk "4.1.2"
     changelog-filename-regex "2.0.1"
     clean-git-ref "2.0.1"
-    commander "11.1.0"
+    commander "12.0.0"
     conventional-commits-detector "1.0.3"
     cron-parser "4.9.0"
     deepmerge "4.3.1"
@@ -5821,12 +5826,12 @@ renovate@37.181.11:
     find-packages "10.0.4"
     find-up "5.0.0"
     fs-extra "11.2.0"
-    git-url-parse "13.1.1"
+    git-url-parse "14.0.0"
     github-url-from-git "1.5.0"
     glob "10.3.10"
     global-agent "3.0.0"
     good-enough-parser "1.1.23"
-    google-auth-library "9.6.2"
+    google-auth-library "9.6.3"
     got "11.8.6"
     graph-data-structure "3.5.0"
     handlebars "4.7.8"
@@ -5847,14 +5852,14 @@ renovate@37.181.11:
     ms "2.1.3"
     nanoid "3.3.7"
     node-html-parser "6.1.12"
-    openpgp "5.11.0"
+    openpgp "5.11.1"
     p-all "3.0.0"
     p-map "4.0.0"
     p-queue "6.6.2"
     p-throttle "4.1.1"
     parse-link-header "2.0.0"
-    prettier "3.2.2"
-    redis "4.6.12"
+    prettier "3.2.5"
+    redis "4.6.13"
     remark "13.0.0"
     remark-github "10.1.0"
     safe-stable-stringify "2.4.3"
