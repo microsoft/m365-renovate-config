@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.5.0
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.4.0...v2.5.0) - February 27, 2024 at 2:16 PM PST
+
+### Minor Changes
+
+- [`30d65c3`](https://github.com/microsoft/m365-renovate-config/commit/30d65c339391f09e57a79937f03d91dd76a7516d) - Disable minorDependencyUpdates by default and set rangeStrategy to "replace" for all npm dependencies (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.4.0
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.3.1...v2.4.0) - December 28, 2023 at 12:38 PM PST
