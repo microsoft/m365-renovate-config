@@ -6,9 +6,11 @@
     {
       // format .json5 files as jsonc for VS Code support
       "files": ["*.json5"],
-      "options": {
-        "parser": "json"
-      }
+      "options": { "parser": "json", "trailingComma": "none" }
+    },
+    {
+      "files": "*.json",
+      "options": { "trailingComma": "none" }
     }
   ]
 }

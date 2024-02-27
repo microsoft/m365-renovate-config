@@ -26,8 +26,8 @@ There are a few different ways to reference presets from this repo in your Renov
     "github>microsoft/m365-renovate-config:somePreset#v2.1.0",
 
     // Use a major version of a preset (see note below)
-    "github>microsoft/m365-renovate-config:somePreset#v2"
-  ]
+    "github>microsoft/m365-renovate-config:somePreset#v2",
+  ],
 }
 ```
 
@@ -786,7 +786,6 @@ Keep locally-used dependency versions updated and deduplicated.
 
 ```json
 {
-  "extends": ["github>microsoft/m365-renovate-config:minorDependencyUpdates#v2"],
   "lockFileMaintenance": {
     "enabled": true,
     "rebaseWhen": "behind-base-branch",
@@ -796,7 +795,6 @@ Keep locally-used dependency versions updated and deduplicated.
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "matchDepTypes": ["devDependencies"],
       "rangeStrategy": "replace"
     }
   ]
@@ -812,9 +810,11 @@ Keep locally-used dependency versions updated and deduplicated.
 - [`postUpdateOptions`](https://docs.renovatebot.com/configuration-options/#postupdateoptions):
   - `yarnDedupeFewer`: If using yarn, run `yarn-deduplicate --strategy fewer` after updates.
   - `npmDedupe`: If using npm, run `npm dedupe` after updates. WARNING: This may slow down Renovate runs significantly.
-- Extend [`<m365>:minorDependencyUpdates`](#minordependencyupdates) and set the [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy) for `npm` `devDependencies` to `replace` (see below for details).
+- ~~Extend [`<m365>:minorDependencyUpdates`](#minordependencyupdates) and set the [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy) for `npm` `devDependencies` to `replace` (see below for details).~~
+  - `minorDependencyUpdates` was removed from the default config due to causing problematic duplication for consumer.
+  - `rangeStrategy: "replace"` is now set for all `npm` dependencies.
 
-With `dependencies` and/or `devDependencies` specified as ranges (unpinned), by default Renovate will make individual lockfile-only update PRs for in-range updates. These PRs are redundant when `lockFileMaintenance` is also enabled, so the the `<m365>:minorDependencyUpdates` preset and the `packageRules` rule for `devDependencies` here help reduce unnecessary PRs.
+With `dependencies` and/or `devDependencies` specified as ranges (unpinned), by default Renovate will make individual lockfile-only update PRs for in-range updates. These PRs are redundant when `lockFileMaintenance` is also enabled, so setting `rangeStrategy` to `replace` will reduce unnecessary PRs.
 
 (To unpin your `devDependencies` that Renovate previously pinned, run `npx better-deps unpin-dev-deps`.)
 
