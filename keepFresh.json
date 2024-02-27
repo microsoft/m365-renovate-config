@@ -3,8 +3,6 @@
 
   "description": "Keep locally-used dependency versions updated and deduplicated.",
 
-  "extends": ["github>microsoft/m365-renovate-config:minorDependencyUpdates"],
-
   "lockFileMaintenance": {
     "enabled": true,
     "rebaseWhen": "behind-base-branch",
@@ -16,7 +14,6 @@
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "matchDepTypes": ["devDependencies"],
       "rangeStrategy": "replace"
     }
   ]
