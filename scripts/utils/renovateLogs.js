@@ -40,7 +40,7 @@ export function readRenovateLogs(logFile) {
     .map((str) => {
       try {
         return JSON.parse(str);
-      } catch (err) {
+      } catch {
         // ignore
       }
     })
