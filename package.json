@@ -26,7 +26,6 @@
     "@changesets/types": "^6.0.0",
     "@types/jju": "^1.4.2",
     "@types/node": "^20.0.0",
-    "@types/prettier": "^3.0.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^9.0.0",
     "execa": "^8.0.0",
