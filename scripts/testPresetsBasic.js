@@ -56,7 +56,7 @@ async function checkPreset(preset, hasInvalidRepoConfig) {
       let logJson;
       try {
         logJson = JSON.parse(chunk.toString());
-      } catch (err) {
+      } catch {
         callback(null, chunk.toString());
       }
 
