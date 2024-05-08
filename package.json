@@ -29,7 +29,7 @@
     "@types/node": "^20.0.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
-    "execa": "^8.0.0",
+    "execa": "^9.0.0",
     "globals": "^15.0.0",
     "jju": "^1.4.0",
     "node-fetch": "^3.3.1",
