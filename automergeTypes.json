@@ -5,11 +5,10 @@
 
   "packageRules": [
     {
-      "matchPackagePrefixes": ["@types/"],
+      "matchPackageNames": ["@types/*", "!@types/react", "!@types/react-dom"],
       "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
-      "excludePackageNames": ["@types/react", "@types/react-dom"],
       "automerge": true,
       "platformAutomerge": true
     }

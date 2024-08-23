@@ -15,7 +15,7 @@
       "automerge": true,
       "platformAutomerge": true,
       "internalChecksFilter": "strict",
-      "excludePackageNames": ["typescript"],
+      "matchPackageNames": ["!typescript"],
       "minimumReleaseAge": "2 days"
     }
   ]

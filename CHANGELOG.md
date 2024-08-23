@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.6.0
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.5.0...v2.6.0) - August 22, 2024 at 9:55 PM PDT
+
+### Minor Changes
+
+- [#178](https://github.com/microsoft/m365-renovate-config/pull/178) [`ee3ecd0`](https://github.com/microsoft/m365-renovate-config/commit/ee3ecd054ba6aa03704ecd912e34adef017702fc) - Migrate configs for Renovate v38 (Thanks [@renovate](https://github.com/apps/renovate)!)
+
 ## 2.5.0
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.4.0...v2.5.0) - February 27, 2024 at 2:16 PM PST

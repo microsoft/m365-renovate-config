@@ -6,21 +6,21 @@
   "packageRules": [
     {
       "groupName": "Fluent UI React v9 packages",
-      "matchPackagePrefixes": ["@fluentui/"],
+      "matchPackageNames": ["@fluentui/*"],
       "matchCurrentVersion": ">=9.0.0-alpha.0"
     },
     {
       "groupName": "Fluent UI React v9 packages",
-      "matchPackagePrefixes": ["@griffel/"]
+      "matchPackageNames": ["@griffel/*"]
     },
     {
       "groupName": "Fluent UI React v8 packages",
-      "matchPackagePrefixes": ["@fluentui/"],
       "matchCurrentVersion": "/^[1234568]\\./",
-      "excludePackageNames": [
-        "@fluentui/eslint-plugin",
-        "@fluentui/react-conformance",
-        "@fluentui/react-teams"
+      "matchPackageNames": [
+        "@fluentui/*",
+        "!@fluentui/eslint-plugin",
+        "!@fluentui/react-conformance",
+        "!@fluentui/react-teams"
       ]
     },
     {
@@ -29,19 +29,18 @@
     },
     {
       "groupName": "Fluent UI React Northstar packages",
-      "matchPackagePrefixes": ["@fluentui/"],
       "matchCurrentVersion": "0.x",
-      "excludePackageNames": [
-        "@fluentui/eslint-plugin",
-        "@fluentui/react-cards",
-        "@fluentui/react-conformance",
-        "@fluentui/public-docsite-setup"
+      "matchPackageNames": [
+        "@fluentui/*",
+        "!@fluentui/eslint-plugin",
+        "!@fluentui/react-cards",
+        "!@fluentui/react-conformance",
+        "!@fluentui/public-docsite-setup"
       ]
     },
     {
       "groupName": "Fabric packages",
-      "matchPackageNames": ["office-ui-fabric-react"],
-      "matchPackagePrefixes": ["@uifabric/"]
+      "matchPackageNames": ["office-ui-fabric-react", "@uifabric/*"]
     },
     {
       "groupName": "Fabric packages",
