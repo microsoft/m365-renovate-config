@@ -8,26 +8,27 @@
       "groupName": "@types devDependencies",
       "schedule": ["before 5am on the 1st and 15th day of the month"],
       "matchManagers": ["npm"],
-      "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": ">1.0.0",
-      "excludePackagePrefixes": ["@types/d3-", "@types/jest-"],
-      "excludePackageNames": [
-        "@types/jest",
-        "@types/react",
-        "@types/react-dom",
-        "@types/react-is",
-        "@types/react-test-renderer",
-        "@types/scheduler",
-        "@types/yargs",
-        "@types/yargs-parser"
+      "matchPackageNames": [
+        "@types/*",
+        "!@types/d3-*",
+        "!@types/jest-*",
+        "!@types/jest",
+        "!@types/react",
+        "!@types/react-dom",
+        "!@types/react-is",
+        "!@types/react-test-renderer",
+        "!@types/scheduler",
+        "!@types/yargs",
+        "!@types/yargs-parser"
       ]
     },
     {
       "groupName": "@types devDependencies",
       "matchManagers": ["npm"],
-      "matchPackagePrefixes": ["@types/"],
+      "matchPackageNames": ["@types/*"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch"],
       "matchCurrentVersion": "0.x"

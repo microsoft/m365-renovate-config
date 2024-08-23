@@ -23,9 +23,9 @@
     {
       // Group updates of all deps except Renovate.
       "groupName": "devDependencies",
-      "matchPackagePatterns": ["*"],
+      "matchPackageNames": ["*"],
       "matchUpdateTypes": ["minor", "patch"],
-      "excludeDepNames": ["renovate"],
+      "matchDepNames": ["!renovate"],
       "schedule": ["before 5am on the 5th and 20th day of the month"]
     },
     {

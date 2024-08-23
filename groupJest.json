@@ -18,8 +18,7 @@
     },
     {
       "groupName": "Jest packages",
-      "matchPackagePrefixes": ["@types/jest-", "jest-"],
-      "matchPackageNames": ["@types/jest", "ts-jest"],
+      "matchPackageNames": ["@types/jest", "ts-jest", "@types/jest-*", "jest-*"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
