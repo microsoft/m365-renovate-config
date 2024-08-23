@@ -256,7 +256,7 @@ Group D3 updates.
   "packageRules": [
     {
       "groupName": "D3 packages",
-      "matchPackagePrefixes": ["d3-", "@types/d3-"]
+      "matchPackageNames": ["d3-*", "@types/d3-*"]
     }
   ]
 }
@@ -281,8 +281,7 @@ Group and schedule all eslint-related updates.
   "packageRules": [
     {
       "groupName": "eslint packages",
-      "matchPackagePatterns": ["eslint"],
-      "excludePackagePrefixes": ["@typecript-eslint/"],
+      "matchPackageNames": ["/eslint/", "!@typecript-eslint/*"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     },
     {
@@ -325,7 +324,7 @@ Group, schedule, and auto-merge all dependency updates in `__fixtures__` sub-fol
       "groupName": "fixture dependencies",
       "schedule": ["before 5am on the 1st and 15th day of the month"],
       "matchFileNames": ["**/__fixtures__/**"],
-      "matchPackagePatterns": ["*"],
+      "matchPackageNames": ["*"],
       "matchDepTypes": [
         "dependencies",
         "devDependencies",
@@ -362,7 +361,7 @@ Note that this will still make separate PRs for major and non-major updates unle
 
 To customize this rule's behavior for individual packages, you can add entries to `packageRules` in your repo. For example:
 
-- Exclude individual packages: `{ "groupName": "fixture dependencies", "excludePackageNames": ["foo"] }` (or other [exclusion options](https://docs.renovatebot.com/configuration-options/#excludepackagenames))
+- Exclude individual packages: `{ "groupName": "fixture dependencies", "matchPackageNames": ["!foo"] }` (or other [exclusion options](https://docs.renovatebot.com/configuration-options/#matchrepositories))
 - Limit the allowed versions for a specific package: `{ "matchPackageNames": ["foo"], "allowedVersions": "<6.0.0 }`
 <!-- end extra content -->
 
@@ -379,21 +378,21 @@ Group Fluent UI and related package updates.
   "packageRules": [
     {
       "groupName": "Fluent UI React v9 packages",
-      "matchPackagePrefixes": ["@fluentui/"],
+      "matchPackageNames": ["@fluentui/*"],
       "matchCurrentVersion": ">=9.0.0-alpha.0"
     },
     {
       "groupName": "Fluent UI React v9 packages",
-      "matchPackagePrefixes": ["@griffel/"]
+      "matchPackageNames": ["@griffel/*"]
     },
     {
       "groupName": "Fluent UI React v8 packages",
-      "matchPackagePrefixes": ["@fluentui/"],
       "matchCurrentVersion": "/^[1234568]\\./",
-      "excludePackageNames": [
-        "@fluentui/eslint-plugin",
-        "@fluentui/react-conformance",
-        "@fluentui/react-teams"
+      "matchPackageNames": [
+        "@fluentui/*",
+        "!@fluentui/eslint-plugin",
+        "!@fluentui/react-conformance",
+        "!@fluentui/react-teams"
       ]
     },
     {
@@ -402,19 +401,18 @@ Group Fluent UI and related package updates.
     },
     {
       "groupName": "Fluent UI React Northstar packages",
-      "matchPackagePrefixes": ["@fluentui/"],
       "matchCurrentVersion": "0.x",
-      "excludePackageNames": [
-        "@fluentui/eslint-plugin",
-        "@fluentui/react-cards",
-        "@fluentui/react-conformance",
-        "@fluentui/public-docsite-setup"
+      "matchPackageNames": [
+        "@fluentui/*",
+        "!@fluentui/eslint-plugin",
+        "!@fluentui/react-cards",
+        "!@fluentui/react-conformance",
+        "!@fluentui/public-docsite-setup"
       ]
     },
     {
       "groupName": "Fabric packages",
-      "matchPackageNames": ["office-ui-fabric-react"],
-      "matchPackagePrefixes": ["@uifabric/"]
+      "matchPackageNames": ["office-ui-fabric-react", "@uifabric/*"]
     },
     {
       "groupName": "Fabric packages",
@@ -464,8 +462,7 @@ Group and schedule jest, ts-jest, jest types, and related packages.
     },
     {
       "groupName": "Jest packages",
-      "matchPackagePrefixes": ["@types/jest-", "jest-"],
-      "matchPackageNames": ["@types/jest", "ts-jest"],
+      "matchPackageNames": ["@types/jest", "ts-jest", "@types/jest-*", "jest-*"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
@@ -585,8 +582,7 @@ Group all Rollup-related updates.
   "packageRules": [
     {
       "groupName": "rollup packages",
-      "matchPackagePrefixes": ["@rollup"],
-      "matchPackagePatterns": ["^rollup"]
+      "matchPackageNames": ["/^@?rollup/"]
     }
   ]
 }
@@ -613,26 +609,27 @@ Group minor and patch updates to `@types` `devDependencies`.
       "groupName": "@types devDependencies",
       "schedule": ["before 5am on the 1st and 15th day of the month"],
       "matchManagers": ["npm"],
-      "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": ">1.0.0",
-      "excludePackagePrefixes": ["@types/d3-", "@types/jest-"],
-      "excludePackageNames": [
-        "@types/jest",
-        "@types/react",
-        "@types/react-dom",
-        "@types/react-is",
-        "@types/react-test-renderer",
-        "@types/scheduler",
-        "@types/yargs",
-        "@types/yargs-parser"
+      "matchPackageNames": [
+        "@types/*",
+        "!@types/d3-*",
+        "!@types/jest-*",
+        "!@types/jest",
+        "!@types/react",
+        "!@types/react-dom",
+        "!@types/react-is",
+        "!@types/react-test-renderer",
+        "!@types/scheduler",
+        "!@types/yargs",
+        "!@types/yargs-parser"
       ]
     },
     {
       "groupName": "@types devDependencies",
       "matchManagers": ["npm"],
-      "matchPackagePrefixes": ["@types/"],
+      "matchPackageNames": ["@types/*"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch"],
       "matchCurrentVersion": "0.x"
@@ -654,7 +651,7 @@ If you want to exclude a package from this group, add a new `packageRules` entry
 ```json
 {
   "groupName": "@types devDependencies",
-  "excludePackageNames": ["some-package"]
+  "matchPackageNames": ["!@types/some-package"]
 }
 ```
 
@@ -887,7 +884,7 @@ Update "noisy" (frequently-updating) packages once every other week.
 {
   "packageRules": [
     {
-      "matchPackagePrefixes": ["@microsoft/api-extractor"],
+      "matchPackageNames": ["@microsoft/api-extractor*"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
@@ -925,7 +922,7 @@ Auto-merge minor and patch updates to `devDependencies` and lock file maintenanc
       "automerge": true,
       "platformAutomerge": true,
       "internalChecksFilter": "strict",
-      "excludePackageNames": ["typescript"],
+      "matchPackageNames": ["!typescript"],
       "minimumReleaseAge": "2 days"
     }
   ]
@@ -954,11 +951,10 @@ Auto-merge minor and patch updates to `@types` `devDependencies` (if the build p
 {
   "packageRules": [
     {
-      "matchPackagePrefixes": ["@types/"],
+      "matchPackageNames": ["@types/*", "!@types/react", "!@types/react-dom"],
       "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
-      "excludePackageNames": ["@types/react", "@types/react-dom"],
       "automerge": true,
       "platformAutomerge": true
     }
