@@ -18,7 +18,10 @@ export async function checkToken(token) {
   let result;
   try {
     result = await fetch('https://api.github.com/repos/microsoft/m365-renovate-config/branches', {
-      headers: { Authorization: `token ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+      },
     });
   } catch (err) {
     throw new Error('Error checking GitHub token: ' + err);
