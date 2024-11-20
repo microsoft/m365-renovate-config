@@ -17,7 +17,7 @@ export async function checkToken(token) {
   /** @type {import('node-fetch').Response} */
   let result;
   try {
-    result = await fetch('https://api.github.com/', {
+    result = await fetch('https://api.github.com/repos/microsoft/m365-renovate-config/branches', {
       headers: { Authorization: `token ${token}` },
     });
   } catch (err) {
