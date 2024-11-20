@@ -29,6 +29,12 @@ jobs:
 
       - run: yarn --frozen-lockfile
 
+      - name: Check token
+        if: github.event_name == 'push'
+        run: yarn check-token "$TOKEN"
+        env:
+          TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
+
       - name: Check formatting
         run: yarn format:check
 

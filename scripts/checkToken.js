@@ -17,8 +17,8 @@ export async function checkToken(token) {
   /** @type {import('node-fetch').Response} */
   let result;
   try {
-    result = await fetch('https://api.github.com/', {
-      headers: { Authorization: `token ${token}` },
+    result = await fetch('https://api.github.com', {
+      headers: { Authorization: `Bearer ${token}` },
     });
   } catch (err) {
     throw new Error('Error checking GitHub token: ' + err);
