@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.6.1
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.6.0...v2.6.1) - November 19, 2024 at 5:37 PM PST
+
+### Patch Changes
+
+- [#180](https://github.com/microsoft/m365-renovate-config/pull/180) [`acb126b`](https://github.com/microsoft/m365-renovate-config/commit/acb126b3b1964ae50a20c35cc8328729b21bedbe) - Lock file maintenance (Thanks [@renovate](https://github.com/apps/renovate)!)
+
 ## 2.6.0
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.5.0...v2.6.0) - August 22, 2024 at 9:55 PM PDT
