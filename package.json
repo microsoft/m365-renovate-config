@@ -28,7 +28,7 @@
     "@types/jju": "^1.4.2",
     "@types/node": "^22.0.0",
     "eslint": "^9.0.0",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
     "execa": "^9.0.0",
     "globals": "^15.0.0",
     "jju": "^1.4.0",
