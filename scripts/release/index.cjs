@@ -3,7 +3,7 @@
 /**
  * Entry point called from `release.yml`. Must be CJS so the `actions/github-script`
  * `require()` wrapper can be used for proper path resolution.
- * @param {import('@octokit/rest').Octokit} github
+ * @param {import('@octokit/rest', { with: { 'resolution-mode': 'require' } }).Octokit} github
  */
 module.exports = async function release(github) {
   try {

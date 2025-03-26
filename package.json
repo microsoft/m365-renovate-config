@@ -14,7 +14,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . && node ./scripts/lintPresets.js",
-    "release": "node ./scripts/release/index.js",
     "test:basic": "node ./scripts/testPresetsBasic.js",
     "test:full": "node ./scripts/testPresetsFull.js",
     "update-readme": "node ./scripts/updateReadme.js"
@@ -25,6 +24,7 @@
     "@changesets/read": "^0.6.0",
     "@changesets/types": "^6.0.0",
     "@eslint/js": "^9.0.0",
+    "@octokit/rest": "*",
     "@types/jju": "^1.4.2",
     "@types/node": "^22.0.0",
     "eslint": "^9.0.0",
