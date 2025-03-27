@@ -1121,12 +1121,14 @@ Pin action versions.
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
-      "pinDigest": true
+      "pinDigest": {
+        "enabled": true
+      }
     },
     {
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["pinDigest"],
-      "pullRequestTitle": "Pin GitHub Actions versions"
+      "commitMessageTopic": "GitHub Actions versions"
     }
   ]
 }

@@ -1,10 +1,7 @@
+/** @import { RenovateLog, RenovateLogLevel } from './types.js' */
+
 import fs from 'fs';
 import { logEndGroup, logGroup } from './github.js';
-
-/**
- * @typedef {import('./types.js').RenovateLog} RenovateLog
- * @typedef {import('./types.js').RenovateLogLevel} RenovateLogLevel
- */
 
 /**
  * Renovate log level values
