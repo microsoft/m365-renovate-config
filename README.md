@@ -129,10 +129,10 @@ Recommended config which is intended to be appropriate for most projects.
 {
   "extends": [
     "config:recommended",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupReact#v2.7.1",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue#v2.7.1",
-    "github>microsoft/m365-renovate-config:pinActions#v2.7.1"
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#v2",
+    "github>microsoft/m365-renovate-config:groupReact#v2",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue#v2",
+    "github>microsoft/m365-renovate-config:pinActions#v2"
   ],
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,
@@ -189,8 +189,8 @@ Recommended config for library repos which use Beachball for publishing.
 ```json
 {
   "extends": [
-    "github>microsoft/m365-renovate-config#v2.7.1",
-    "github>microsoft/m365-renovate-config:beachballPostUpgrade#v2.7.1"
+    "github>microsoft/m365-renovate-config#v2",
+    "github>microsoft/m365-renovate-config:beachballPostUpgrade#v2"
   ]
 }
 ```
@@ -223,16 +223,16 @@ Apply all the groupings from this repo (except groupTypes).
   "extends": [
     "group:monorepos",
     "group:recommended",
-    "github>microsoft/m365-renovate-config:groupD3#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupEslint#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupFixtureUpdates#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupFluent#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupJest#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupLageBackfill#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupNodeMajor#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupReact#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupRollup#v2.7.1",
-    "github>microsoft/m365-renovate-config:groupYargs#v2.7.1"
+    "github>microsoft/m365-renovate-config:groupD3#v2",
+    "github>microsoft/m365-renovate-config:groupEslint#v2",
+    "github>microsoft/m365-renovate-config:groupFixtureUpdates#v2",
+    "github>microsoft/m365-renovate-config:groupFluent#v2",
+    "github>microsoft/m365-renovate-config:groupJest#v2",
+    "github>microsoft/m365-renovate-config:groupLageBackfill#v2",
+    "github>microsoft/m365-renovate-config:groupNodeMajor#v2",
+    "github>microsoft/m365-renovate-config:groupReact#v2",
+    "github>microsoft/m365-renovate-config:groupRollup#v2",
+    "github>microsoft/m365-renovate-config:groupYargs#v2"
   ]
 }
 ```
