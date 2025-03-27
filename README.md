@@ -1120,13 +1120,17 @@ Pin action versions.
 {
   "packageRules": [
     {
-      "matchManagers": ["github-actions"],
+      "matchDepTypes": ["action"],
       "pinDigests": true
     },
     {
-      "matchManagers": ["github-actions"],
+      "groupName": "Pin GitHub Actions versions",
+      "matchDepTypes": ["action"],
       "matchUpdateTypes": ["pin", "pinDigest"],
-      "commitMessageTopic": "GitHub Actions versions"
+      "group": {
+        "commitMessageTopic": "GitHub Actions versions",
+        "commitMessageExtra": ""
+      }
     }
   ]
 }
