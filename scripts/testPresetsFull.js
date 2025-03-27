@@ -1,3 +1,5 @@
+/** @import { RenovateLog } from './utils/types.js' */
+
 import fs from 'fs';
 import path from 'path';
 import { getExtendsForLocalPreset } from './utils/extends.js';
@@ -15,6 +17,9 @@ import { root } from './utils/paths.js';
 import { readPresets } from './utils/readPresets.js';
 import { logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.js';
 import { runBin } from './utils/runBin.js';
+
+/** @typedef {RenovateLog & { preset: string }} RenovatePresetDebugLog */
+/** */
 
 async function runTests() {
   const ref = getEnv('GITHUB_REF', isGithub);
@@ -100,10 +105,6 @@ async function runTests() {
 
 /** @param {string} logFile */
 function logRenovateError(logFile) {
-  /**
-   * @typedef {import('./utils/types.js').RenovateLog} RenovateLog
-   * @typedef {RenovateLog & { preset: string }} RenovatePresetDebugLog
-   */
   const logs = readRenovateLogs(logFile);
 
   const invalidPresetLog = logs.find((l) => !!l.err && l.msg === 'config-presets-invalid');
