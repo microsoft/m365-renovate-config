@@ -1125,7 +1125,7 @@ Pin action versions.
     },
     {
       "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["pinDigest"],
+      "matchUpdateTypes": ["pin", "pinDigest"],
       "commitMessageTopic": "GitHub Actions versions"
     }
   ]

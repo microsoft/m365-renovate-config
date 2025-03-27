@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.7.2
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.1...v2.7.2) - March 27, 2025 at 11:34 AM PDT
+
+### Patch Changes
+
+- [#196](https://github.com/microsoft/m365-renovate-config/pull/196) [`a53dcdb`](https://github.com/microsoft/m365-renovate-config/commit/a53dcdb88b684db7a3d2ae62cca83b917b876806) - Try again with pinActions message... (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.7.1
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.0...v2.7.1) - March 27, 2025 at 11:29 AM PDT
