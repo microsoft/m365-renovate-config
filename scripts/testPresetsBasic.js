@@ -19,7 +19,10 @@ import { readPresets } from './utils/readPresets.js';
 import { formatRenovateLog } from './utils/renovateLogs.js';
 import { runBin } from './utils/runBin.js';
 
-const presetArg = process.argv.find((arg) => arg.startsWith('--preset='))?.split('=')[1];
+const presetArg = process.argv
+  .find((arg) => arg.startsWith('--preset='))
+  ?.split('=')[1]
+  .replace(/^(['"])(.*)\1$/, '$2');
 
 /** @typedef {'error'|'unknown'|'ok'} Result */
 /** */
@@ -207,7 +210,13 @@ async function runTests() {
     'Repo config must be first in the list returned by readPresets',
   );
 
-  const presetNames = presets.slice(1).map((p) => p.name);
+  const allPresetNames = presets.map((p) => p.name);
+  if (presetArg && !allPresetNames.includes(presetArg)) {
+    logError(`Invalid preset name "${presetArg}"`);
+    process.exit(1);
+  }
+
+  const presetNames = allPresetNames.slice(1);
 
   const maybeFailedPresets = /** @type {string[]} */ ([]);
   const failedPresets = /** @type {string[]} */ ([]);
