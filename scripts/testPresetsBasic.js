@@ -1,3 +1,5 @@
+/** @import { LocalPresetData, RenovateLog } from './utils/types.js' */
+
 import assert from 'assert';
 import fs from 'fs';
 import jju from 'jju';
@@ -17,13 +19,9 @@ import { readPresets } from './utils/readPresets.js';
 import { formatRenovateLog } from './utils/renovateLogs.js';
 import { runBin } from './utils/runBin.js';
 
-/**
- * @typedef {import('./utils/types.js').LocalPresetData} LocalPresetData
- * @typedef {import('./utils/types.js').RenovateLog} RenovateLog
- * @typedef {import('./utils/types.js').RenovatePreset} RenovatePreset
- *
- * @typedef {'error'|'unknown'|'ok'} Result
- */
+const presetArg = process.argv.find((arg) => arg.startsWith('--preset='))?.split('=')[1];
+
+/** @typedef {'error'|'unknown'|'ok'} Result */
 /** */
 
 /**
@@ -70,14 +68,10 @@ async function checkPreset(preset, hasInvalidRepoConfig) {
         newConfig = logJson.newConfig;
         callback(null, '');
       } else if (logJson.errors?.[0]?.message) {
-        // If the repo config has errors, those will be echoed for the presets.
-        // In that case msg (currently) looks like ".github/renovate.json5 contains errors"
-        if (logJson.msg.includes(filename)) {
-          // The errors are from this preset/config, so save them to log later
-          // (for the repo config it logs the same errors twice, so use a set)
-          for (const error of logJson.errors) {
-            errorMessages.add(error.message);
-          }
+        // The errors are from this preset/config, so save them to log later
+        // (for the repo config it logs the same errors twice, so use a set)
+        for (const error of logJson.errors) {
+          errorMessages.add(error.message);
         }
         callback(null, '');
       } else {
@@ -218,7 +212,12 @@ async function runTests() {
   const maybeFailedPresets = /** @type {string[]} */ ([]);
   const failedPresets = /** @type {string[]} */ ([]);
 
-  for (const preset of presets) {
+  for (let i = 0; i < presets.length; i++) {
+    const preset = presets[i];
+    if (presetArg && preset.name !== presetArg) {
+      continue;
+    }
+
     logGroup(`Validating ${preset.filename}`);
 
     const configResult = await checkPreset(preset, failedPresets.includes(repoRenovateConfigPath));
@@ -228,6 +227,11 @@ async function runTests() {
       failedPresets.push(preset.filename);
     } else if (configResult === 'unknown') {
       maybeFailedPresets.push(preset.filename);
+    }
+
+    if (i === 0 && (configResult !== 'ok' || extendsResult !== 'ok')) {
+      console.error('The repo config is invalid, so skipping the other presets.');
+      break;
     }
 
     logEndGroup();

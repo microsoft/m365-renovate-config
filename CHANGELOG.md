@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.7.0
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.6.1...v2.7.0) - March 27, 2025 at 11:05 AM PDT
+
+### Minor Changes
+
+- [#192](https://github.com/microsoft/m365-renovate-config/pull/192) [`c202612`](https://github.com/microsoft/m365-renovate-config/commit/c202612ccb8c2afb83bf46ef6072526b8905320c) - Pin actions to specific commits by default (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.6.1
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.6.0...v2.6.1) - November 19, 2024 at 5:37 PM PST

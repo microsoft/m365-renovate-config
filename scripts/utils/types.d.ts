@@ -32,7 +32,7 @@ export type RenovateLog = {
   [key: string]: any;
 };
 
-export type RenovatePreset = {
+type RenovatePreset = {
   extends?: string[];
   ignorePresets?: string[];
   // add more as needed

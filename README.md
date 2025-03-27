@@ -112,6 +112,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [beachballPostUpgrade](#beachballpostupgrade)
   - [dependencyDashboardMajor](#dependencydashboardmajor)
   - [newConfigWarningIssue](#newconfigwarningissue)
+  - [pinActions](#pinactions)
   <!-- end presets TOC -->
 
 <!-- start presets -->
@@ -128,9 +129,10 @@ Recommended config which is intended to be appropriate for most projects.
 {
   "extends": [
     "config:recommended",
-    "github>microsoft/m365-renovate-config:groupReact#v2",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue#v2",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#v2"
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor",
+    "github>microsoft/m365-renovate-config:groupReact",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue",
+    "github>microsoft/m365-renovate-config:pinActions"
   ],
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,
@@ -1103,6 +1105,40 @@ Always create a new issue if there's a config problem (for visibility).
 <!-- start extra content (EDITABLE between these comments) -->
 
 Note that issue creation is not supported in Azure DevOps as of writing.
+
+<!-- end extra content -->
+
+---
+
+#### `pinActions`
+
+Pin action versions.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "pinDigest": {
+        "enabled": true
+      }
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["pinDigest"],
+      "commitMessageTopic": "GitHub Actions versions"
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
+
+Actions should be pinned to a specific immutable commit hash for security.
 
 <!-- end extra content -->
 

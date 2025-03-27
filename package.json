@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/m365-renovate-config",
-  "version": "2.6.1",
+  "version": "2.7.0",
   "private": true,
   "type": "module",
   "repository": {
@@ -14,7 +14,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . && node ./scripts/lintPresets.js",
-    "release": "node ./scripts/release/index.js",
     "test:basic": "node ./scripts/testPresetsBasic.js",
     "test:full": "node ./scripts/testPresetsFull.js",
     "update-readme": "node ./scripts/updateReadme.js"
@@ -25,16 +24,17 @@
     "@changesets/read": "^0.6.0",
     "@changesets/types": "^6.0.0",
     "@eslint/js": "^9.0.0",
+    "@octokit/rest": "*",
     "@types/jju": "^1.4.2",
-    "@types/node": "^20.0.0",
+    "@types/node": "^22.0.0",
     "eslint": "^9.0.0",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
     "execa": "^9.0.0",
-    "globals": "^15.0.0",
+    "globals": "^16.0.0",
     "jju": "^1.4.0",
     "node-fetch": "^3.3.1",
     "prettier": "^3.0.0",
-    "renovate": "39.20.5",
+    "renovate": "39.216.1",
     "typescript": "^5.0.3"
   }
 }
