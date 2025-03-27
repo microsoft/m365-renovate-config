@@ -3,8 +3,9 @@
     "checkJs": true,
     "noEmit": true,
     "module": "NodeNext",
-    "lib": ["ES2021"],
+    "lib": ["ES2022"],
     "skipLibCheck": true,
+    "esModuleInterop": true,
     "types": ["node"]
   },
   "include": ["scripts"],
