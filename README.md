@@ -1121,9 +1121,7 @@ Pin action versions.
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
-      "pinDigest": {
-        "enabled": true
-      }
+      "pinDigests": true
     },
     {
       "matchManagers": ["github-actions"],
