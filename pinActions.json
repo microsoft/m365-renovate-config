@@ -11,7 +11,7 @@
     {
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["pin", "pinDigest"],
-      "commitMessageTopic": "GitHub Actions versions"
+      "commitMessage": "GitHub Actions versions"
     }
   ]
 }
