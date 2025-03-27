@@ -39,7 +39,7 @@ jobs:
       - run: yarn --frozen-lockfile
 
       - name: Check if release is needed
-        uses: ecraig12345/beachball-actions/should-release@1efe39b3d3f845f8714a6ef1d9d31e14562c225c # v2
+        uses: ecraig12345/beachball-actions/should-release@5005180036994c8d893c4677f5d453d164a0ad90 # v2
         id: shouldRelease
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
