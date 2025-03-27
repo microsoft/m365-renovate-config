@@ -23,7 +23,8 @@
     {
       "groupName": "Pin GitHub Actions versions",
       "matchUpdateTypes": ["pinDigest"],
-      "matchManagers": ["github-actions"]
+      "matchManagers": ["github-actions"],
+      "commitMessageTopic": "GitHub Actions versions"
     },
     {
       // Group updates of all deps except Renovate.
