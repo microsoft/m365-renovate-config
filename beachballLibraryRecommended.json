@@ -4,7 +4,7 @@
   "description": "DEPRECATED; use this repo's `beachball` preset instead.",
 
   "extends": [
-    "github>microsoft/m365-renovate-config#v2.7.0",
-    "github>microsoft/m365-renovate-config:beachballPostUpgrade#v2.7.0"
+    "github>microsoft/m365-renovate-config#v2",
+    "github>microsoft/m365-renovate-config:beachballPostUpgrade#v2"
   ]
 }
