@@ -5,10 +5,10 @@
 
   "extends": [
     "config:recommended",
-    "github>microsoft/m365-renovate-config:dependencyDashboardMajor",
-    "github>microsoft/m365-renovate-config:groupReact",
-    "github>microsoft/m365-renovate-config:newConfigWarningIssue",
-    "github>microsoft/m365-renovate-config:pinActions"
+    "github>microsoft/m365-renovate-config:dependencyDashboardMajor#v2.7.0",
+    "github>microsoft/m365-renovate-config:groupReact#v2.7.0",
+    "github>microsoft/m365-renovate-config:newConfigWarningIssue#v2.7.0",
+    "github>microsoft/m365-renovate-config:pinActions#v2.7.0"
   ],
 
   "prConcurrentLimit": 10,
