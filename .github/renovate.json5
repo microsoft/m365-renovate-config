@@ -21,6 +21,11 @@
 
   "packageRules": [
     {
+      "groupName": "Pin GitHub Actions versions",
+      "matchUpdateTypes": ["pinDigest"],
+      "matchManagers": ["github-actions"]
+    },
+    {
       // Group updates of all deps except Renovate.
       "groupName": "devDependencies",
       "matchPackageNames": ["*"],

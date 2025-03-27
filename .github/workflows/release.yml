@@ -24,14 +24,14 @@ jobs:
     environment: release
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Don't save creds in the git config (so it's easier to override later)
           persist-credentials: false
 
       - name: Set up Node
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4
+        uses: actions/setup-node@v4
         with:
           cache: yarn
           node-version-file: .nvmrc
@@ -39,7 +39,7 @@ jobs:
       - run: yarn --frozen-lockfile
 
       - name: Check if release is needed
-        uses: ecraig12345/beachball-actions/should-release@1efe39b3d3f845f8714a6ef1d9d31e14562c225c # v2
+        uses: ecraig12345/beachball-actions/should-release@v2
         id: shouldRelease
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -49,7 +49,7 @@ jobs:
 
       - name: Release
         if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        uses: actions/github-script@v7
         env:
           # Used by changesets and when pushing updates
           GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
