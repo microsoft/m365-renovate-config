@@ -11,7 +11,7 @@
       "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
       "git reset"
     ],
-    "fileFilters": ["**/*"],
+    "fileFilters": ["**/package.json"],
     "executionMode": "branch"
   },
 
@@ -22,7 +22,7 @@
         "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
         "git reset"
       ],
-      "fileFilters": ["**/*"],
+      "fileFilters": ["**/package.json"],
       "executionMode": "branch"
     }
   },
@@ -37,7 +37,7 @@
           "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
           "git reset"
         ],
-        "fileFilters": ["**/*"],
+        "fileFilters": ["**/package.json"],
         "executionMode": "branch"
       }
     }
