@@ -989,7 +989,7 @@ Run `beachball change` as a post-upgrade task.
       "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
       "git reset"
     ],
-    "fileFilters": ["**/*"],
+    "fileFilters": ["**/package.json"],
     "executionMode": "branch"
   },
   "lockFileMaintenance": {
@@ -999,7 +999,7 @@ Run `beachball change` as a post-upgrade task.
         "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
         "git reset"
       ],
-      "fileFilters": ["**/*"],
+      "fileFilters": ["**/package.json"],
       "executionMode": "branch"
     }
   },
@@ -1013,7 +1013,7 @@ Run `beachball change` as a post-upgrade task.
           "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
           "git reset"
         ],
-        "fileFilters": ["**/*"],
+        "fileFilters": ["**/package.json"],
         "executionMode": "branch"
       }
     }

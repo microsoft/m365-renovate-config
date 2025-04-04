@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/m365-renovate-config",
-  "version": "2.7.3",
+  "version": "2.7.4",
   "private": true,
   "type": "module",
   "repository": {
