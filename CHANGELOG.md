@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.7.4
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.3...v2.7.4) - April 4, 2025 at 12:03 PM PDT
+
+### Patch Changes
+
+- [#202](https://github.com/microsoft/m365-renovate-config/pull/202) [`181aa5a`](https://github.com/microsoft/m365-renovate-config/commit/181aa5a07a7a0962472e1032a67bced06ec80457) - Only run beachball post-upgrade tasks on package.json changes (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.7.3
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.2...v2.7.3) - March 27, 2025 at 12:30 PM PDT
