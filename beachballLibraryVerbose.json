@@ -5,30 +5,35 @@
 
   "extends": ["github>microsoft/m365-renovate-config:beachballLibraryRecommended#v2"],
 
-  "postUpgradeTasks": {
-    "commands": [
-      "git add --all",
-      "npx --verbose beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
-      "git reset"
-    ],
-    "fileFilters": ["**/*"],
-    "executionMode": "branch"
-  },
-
-  "lockFileMaintenance": {
-    "postUpgradeTasks": {
-      "commands": [
-        "git add --all",
-        "npx --verbose beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-        "git reset"
-      ],
-      "fileFilters": ["**/*"],
-      "executionMode": "branch"
-    }
-  },
-
   "packageRules": [
     {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["!lockFileMaintenance"],
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx --verbose beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["change/*"],
+        "executionMode": "branch"
+      }
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["lockFileMaintenance"],
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx --verbose beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["change/*"],
+        "executionMode": "branch"
+      }
+    },
+    {
+      "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "postUpgradeTasks": {
         "commands": [
@@ -36,7 +41,7 @@
           "npx --verbose beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
           "git reset"
         ],
-        "fileFilters": ["**/*"],
+        "fileFilters": ["change/*"],
         "executionMode": "branch"
       }
     }

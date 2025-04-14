@@ -983,27 +983,33 @@ Run `beachball change` as a post-upgrade task.
 ```json
 {
   "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
-  "postUpgradeTasks": {
-    "commands": [
-      "git add --all",
-      "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
-      "git reset"
-    ],
-    "fileFilters": ["**/package.json"],
-    "executionMode": "branch"
-  },
-  "lockFileMaintenance": {
-    "postUpgradeTasks": {
-      "commands": [
-        "git add --all",
-        "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-        "git reset"
-      ],
-      "fileFilters": ["**/package.json"],
-      "executionMode": "branch"
-    }
-  },
   "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["!lockFileMaintenance"],
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["change/*"],
+        "executionMode": "branch"
+      }
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["lockFileMaintenance"],
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["change/*"],
+        "executionMode": "branch"
+      }
+    },
     {
       "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
@@ -1013,7 +1019,7 @@ Run `beachball change` as a post-upgrade task.
           "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
           "git reset"
         ],
-        "fileFilters": ["**/package.json"],
+        "fileFilters": ["change/*"],
         "executionMode": "branch"
       }
     }

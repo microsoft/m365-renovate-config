@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.7.5
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.4...v2.7.5) - April 14, 2025 at 11:19 AM PDT
+
+### Patch Changes
+
+- [#206](https://github.com/microsoft/m365-renovate-config/pull/206) [`125fafd`](https://github.com/microsoft/m365-renovate-config/commit/125fafd4754bb0050da11a6ea6d50191b8b6f67a) - Fix method for only using beachball post-upgrade with npm (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.7.4
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.3...v2.7.4) - April 4, 2025 at 12:03 PM PDT
