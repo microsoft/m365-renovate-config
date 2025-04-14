@@ -1568,7 +1568,7 @@ __metadata:
     jju: "npm:^1.4.0"
     node-fetch: "npm:^3.3.1"
     prettier: "npm:^3.0.0"
-    renovate: "npm:39.241.2"
+    renovate: "npm:39.242.0"
     typescript: "npm:^5.0.3"
   languageName: unknown
   linkType: soft
@@ -7700,9 +7700,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:39.241.2":
-  version: 39.241.2
-  resolution: "renovate@npm:39.241.2"
+"renovate@npm:39.242.0":
+  version: 39.242.0
+  resolution: "renovate@npm:39.242.0"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.777.0"
     "@aws-sdk/client-ec2": "npm:3.779.0"
@@ -7829,7 +7829,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/c547a0f32b8df3d5f18b4ab5fb69d82da30fa36a5c7e092810a8f5f379f6014fbe5f03c2b8b34e57f029e6597abc4941aee2aa1dca522a377cfe1ef43f708275
+  checksum: 10c0/4b35c9ce1edece7bc30042d1b0613f5950fcebb85a4b4f05c279d17fde32c8c94e9ed4f108422e465bc28b461e70b38434df5e44f6f89a61fc720b9a4be62955
   languageName: node
   linkType: hard
 
