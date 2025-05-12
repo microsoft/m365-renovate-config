@@ -34,7 +34,7 @@
     "jju": "^1.4.0",
     "node-fetch": "^3.3.1",
     "prettier": "^3.0.0",
-    "renovate": "39.241.2",
+    "renovate": "40.11.8",
     "typescript": "^5.0.3"
   },
   "packageManager": "yarn@4.9.1"
