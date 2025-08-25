@@ -1604,7 +1604,7 @@ __metadata:
     jju: "npm:^1.4.0"
     node-fetch: "npm:^3.3.1"
     prettier: "npm:^3.0.0"
-    renovate: "npm:41.81.5"
+    renovate: "npm:41.83.2"
     typescript: "npm:^5.0.3"
   languageName: unknown
   linkType: soft
@@ -3783,9 +3783,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cacache@npm:20.0.0":
-  version: 20.0.0
-  resolution: "cacache@npm:20.0.0"
+"cacache@npm:20.0.1":
+  version: 20.0.1
+  resolution: "cacache@npm:20.0.1"
   dependencies:
     "@npmcli/fs": "npm:^4.0.0"
     fs-minipass: "npm:^3.0.0"
@@ -3797,9 +3797,8 @@ __metadata:
     minipass-pipeline: "npm:^1.2.4"
     p-map: "npm:^7.0.2"
     ssri: "npm:^12.0.0"
-    tar: "npm:^7.4.3"
     unique-filename: "npm:^4.0.0"
-  checksum: 10c0/0f42eccf529a23d8e139a79ecea37c290aab90d135b0385e245305b106f31fab529b288a188135f1d0f2436c5fdbd27b8c56043ac872a272326925fbcb3e779c
+  checksum: 10c0/e3efcf3af1c984e6e59e03372d9289861736a572e6e05b620606b87a67e71d04cff6dbc99607801cb21bcaae1fb4fb84d4cc8e3fda725e95881329ef03dac602
   languageName: node
   linkType: hard
 
@@ -3909,10 +3908,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:5.5.0":
-  version: 5.5.0
-  resolution: "chalk@npm:5.5.0"
-  checksum: 10c0/23063b544f7c2fe57d25ff814807de561f8adfff72e4f0051051eaa606f772586470507ccd38d89166300eeaadb0164acde8bb8a0716a0f2d56ccdf3761d5e4f
+"chalk@npm:5.6.0":
+  version: 5.6.0
+  resolution: "chalk@npm:5.6.0"
+  checksum: 10c0/f8558fc12fd9805f167611803b325b0098bbccdc9f1d3bafead41c9bac61f263357f3c0df0cbe28bc2fd5fca3edcf618b01d6771a5a776b4c15d061482a72b23
   languageName: node
   linkType: hard
 
@@ -7861,27 +7860,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:7.5.3":
-  version: 7.5.3
-  resolution: "protobufjs@npm:7.5.3"
-  dependencies:
-    "@protobufjs/aspromise": "npm:^1.1.2"
-    "@protobufjs/base64": "npm:^1.1.2"
-    "@protobufjs/codegen": "npm:^2.0.4"
-    "@protobufjs/eventemitter": "npm:^1.1.0"
-    "@protobufjs/fetch": "npm:^1.1.0"
-    "@protobufjs/float": "npm:^1.0.2"
-    "@protobufjs/inquire": "npm:^1.1.0"
-    "@protobufjs/path": "npm:^1.1.2"
-    "@protobufjs/pool": "npm:^1.1.0"
-    "@protobufjs/utf8": "npm:^1.1.0"
-    "@types/node": "npm:>=13.7.0"
-    long: "npm:^5.0.0"
-  checksum: 10c0/9dc131a7e7a610b8291a0b0033b313f8754ef419b57c44d27874dd4edf1afc2a9a77d7a5bc2df9a744cba014de67c92756759c73200b702a11f13360e907b0dd
-  languageName: node
-  linkType: hard
-
-"protobufjs@npm:^7.3.0":
+"protobufjs@npm:7.5.4, protobufjs@npm:^7.3.0":
   version: 7.5.4
   resolution: "protobufjs@npm:7.5.4"
   dependencies:
@@ -8159,9 +8138,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:41.81.5":
-  version: 41.81.5
-  resolution: "renovate@npm:41.81.5"
+"renovate@npm:41.83.2":
+  version: 41.83.2
+  resolution: "renovate@npm:41.83.2"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.858.0"
     "@aws-sdk/client-ec2": "npm:3.858.0"
@@ -8204,8 +8183,8 @@ __metadata:
     azure-devops-node-api: "npm:15.1.1"
     better-sqlite3: "npm:12.2.0"
     bunyan: "npm:1.8.15"
-    cacache: "npm:20.0.0"
-    chalk: "npm:5.5.0"
+    cacache: "npm:20.0.1"
+    chalk: "npm:5.6.0"
     changelog-filename-regex: "npm:2.0.1"
     clean-git-ref: "npm:2.0.1"
     commander: "npm:14.0.0"
@@ -8258,7 +8237,7 @@ __metadata:
     p-throttle: "npm:7.0.0"
     parse-link-header: "npm:2.0.0"
     prettier: "npm:3.6.2"
-    protobufjs: "npm:7.5.3"
+    protobufjs: "npm:7.5.4"
     punycode: "npm:2.3.1"
     re2: "npm:1.22.1"
     redis: "npm:4.7.1"
@@ -8294,7 +8273,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/5853a1a0d777367cfc9946dc40622a03b548ba6894b93213a863ebc55937b75d860a959043f963cfbd67332ce44b4fdd32bf9feeba74a48ee1c3768421d0fe77
+  checksum: 10c0/45d659ed4ad69ae67a54d96d971411d6881ca1f3d678c47decd4fae567d23d2715948dda3a2fa139a116022ab67a4b9ae97945fa1b0f54b79bf69c2f04471baa
   languageName: node
   linkType: hard
 
