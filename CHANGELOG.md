@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.7.6
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.5...v2.7.6) - September 22, 2025 at 12:30 PM PDT
+
+### Patch Changes
+
+- [#230](https://github.com/microsoft/m365-renovate-config/pull/230) [`899bbeb`](https://github.com/microsoft/m365-renovate-config/commit/899bbeba64ec7f1eed918078742227ea71aa4801) - Wait 3 days to pick up new releases (note this doesn't apply to implicit dep updates in lock file) (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.7.5
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.4...v2.7.5) - April 14, 2025 at 11:19 AM PDT
