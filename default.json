@@ -14,6 +14,8 @@
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,
 
+  "minimumReleaseAge": "3 days",
+
   "printConfig": true,
 
   "timezone": "America/Los_Angeles",
