@@ -136,6 +136,7 @@ Recommended config which is intended to be appropriate for most projects.
   ],
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,
+  "minimumReleaseAge": "3 days",
   "printConfig": true,
   "timezone": "America/Los_Angeles",
   "vulnerabilityAlerts": {
@@ -172,6 +173,7 @@ Extended presets from this repo:
 Other settings:
 
 - PR limits (`prHourlyLimit` and `prConcurrentLimit`): Prevent Renovate from creating an overwhelming number of PRs all at once. It's _highly encouraged_ to adjust these in your repo to fit your team's needs!
+- `minimumReleaseAge`: Wait 3 days to auto-create PRs for new releases (they'll be shown on the dependency dashboard earlier), mainly in case of security issues. Though note that this doesn't mitigate the more likely issue of bad packages pulled in by lock file updates.
 - `printConfig`: Log the final resolved config to make debugging easier
 - `timezone`: Run schedules relative to Pacific time, since many M365 repos are based in that time zone. See the [time zone list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for other options.
 - `vulnerabilityAlerts`: Enable PRs to address security vulnerabilities. Note that this **only** works for GitHub and currently is **only** able to update direct dependencies (except in repos using `npm` 6 or older).

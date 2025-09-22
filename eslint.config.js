@@ -3,7 +3,7 @@ import js from '@eslint/js';
 import prettierConfig from 'eslint-config-prettier';
 import globals from 'globals';
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
+/** @type {import('eslint').Linter.Config[]} */
 const config = [
   js.configs.recommended,
   prettierConfig,
