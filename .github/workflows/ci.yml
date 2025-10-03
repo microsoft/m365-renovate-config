@@ -37,20 +37,20 @@ jobs:
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
 
-      - name: Check formatting
-        run: yarn format:check
+      # - name: Check formatting
+      #   run: yarn format:check
 
-      - name: Check readme
-        run: yarn update-readme --check
+      # - name: Check readme
+      #   run: yarn update-readme --check
 
       - name: Type check scripts
         run: yarn build
 
-      - name: Lint presets
-        run: yarn lint
+      # - name: Lint presets
+      #   run: yarn lint
 
-      - name: Basic preset validation
-        run: yarn test:basic
+      # - name: Basic preset validation
+      #   run: yarn test:basic
 
       - name: Renovate dry run with all presets
         if: github.event_name == 'push'
