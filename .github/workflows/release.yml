@@ -36,7 +36,7 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
 
-      - run: yarn --frozen-lockfile
+      - run: yarn --immutable
 
       - name: Check if release is needed
         uses: ecraig12345/beachball-actions/should-release@27312284362c35e986a171b871edee5f32afe782 # v2
