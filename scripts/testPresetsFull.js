@@ -21,13 +21,13 @@ const configFilePath = path.join(import.meta.dirname, 'serverConfig.js');
 
 async function runTests() {
   const repository = getEnv('GITHUB_REPOSITORY', isGithub);
-  const eventName = getEnv('GITHUB_EVENT_NAME', isGithub);
+  // const eventName = getEnv('GITHUB_EVENT_NAME', isGithub);
 
   if (
     !isGithub ||
-    !githubBranchName ||
-    !primaryBranches.includes(githubBranchName) ||
-    eventName !== 'push' ||
+    // !githubBranchName ||
+    // !primaryBranches.includes(githubBranchName) ||
+    // eventName !== 'push' ||
     repository !== defaultRepo
   ) {
     // This would be possible but complex to test when running against a github branch, and likely
@@ -39,7 +39,9 @@ async function runTests() {
     //     changes pushed to a tag in the main repo
     // - Run the test
     // - Delete the tag
-    console.log('Skipping full Renovate test run (only meaningful after configs are checked in)');
+    console.log(
+      '::warn::Skipping full Renovate test run (only meaningful after configs are checked in)',
+    );
     process.exit(0);
   }
 
