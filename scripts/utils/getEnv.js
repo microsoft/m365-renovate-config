@@ -3,7 +3,7 @@ import { logError } from './github.js';
 /**
  * @param {string} envName name of value from `process.env`
  * @param {boolean} [required]
- * @returns the value
+ * @returns {string|undefined} the value
  */
 export function getEnv(envName, required) {
   const env = process.env[envName];

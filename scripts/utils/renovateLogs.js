@@ -3,17 +3,7 @@
 import fs from 'fs';
 import { logEndGroup, logGroup } from './github.js';
 
-/**
- * Renovate log level values
- */
-export const RENOVATE_LOG_LEVELS = /** @type {const} */ ({
-  trace: 10,
-  debug: 20,
-  info: 30,
-  warn: 40,
-  error: 50,
-  fatal: 60,
-});
+/** @type {Record<RenovateLogLevel, string>} */
 const logLevelStrings = {
   10: 'TRACE',
   20: 'DEBUG',
@@ -90,3 +80,14 @@ export function formatRenovateLog(log, all) {
   }
   return res;
 }
+
+// export function findInvalidPresetLog
+
+// /**
+//  * Find the debug log entry for a specific preset.
+//  * @param {RenovateLog[]} logs
+//  * @param {string} presetName
+//  */
+// export function findPresetDebugLog(logs, presetName) {
+//   return logs.find((log) => log.level === 20 && log.preset === presetName);
+// }

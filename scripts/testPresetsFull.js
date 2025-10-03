@@ -1,12 +1,11 @@
-/** @import { RenovateLog } from './utils/types.js' */
+/** @import { RenovatePresetDebugLog } from './utils/types.js' */
 
 import fs from 'fs';
 import path from 'path';
-import { getExtendsForLocalPreset } from './utils/extends.js';
 import { getEnv } from './utils/getEnv.js';
 import {
-  defaultBranch,
   defaultRepo,
+  githubBranchName,
   isGithub,
   logEndGroup,
   logError,
@@ -14,23 +13,20 @@ import {
   primaryBranches,
 } from './utils/github.js';
 import { root } from './utils/paths.js';
-import { readPresets } from './utils/readPresets.js';
 import { logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.js';
 import { runBin } from './utils/runBin.js';
+import serverConfig from './serverConfig.js';
 
-/** @typedef {RenovateLog & { preset: string }} RenovatePresetDebugLog */
-/** */
+const configFilePath = path.join(import.meta.dirname, 'serverConfig.js');
 
 async function runTests() {
-  const ref = getEnv('GITHUB_REF', isGithub);
-  const branchName = ref.replace('refs/heads/', '');
   const repository = getEnv('GITHUB_REPOSITORY', isGithub);
   const eventName = getEnv('GITHUB_EVENT_NAME', isGithub);
-  const token = getEnv('TOKEN', isGithub);
 
   if (
     !isGithub ||
-    !primaryBranches.includes(branchName) ||
+    !githubBranchName ||
+    !primaryBranches.includes(githubBranchName) ||
     eventName !== 'push' ||
     repository !== defaultRepo
   ) {
@@ -47,42 +43,11 @@ async function runTests() {
     process.exit(0);
   }
 
-  const presets = readPresets();
-  // add a reference to the branch if not testing main
-  const branchRef = branchName === defaultBranch ? '' : branchName;
-
   const logFile = path.join(root, 'renovate.log');
   fs.writeFileSync(logFile, ''); // Renovate wants this to exist already
 
-  // https://docs.renovatebot.com/self-hosted-configuration/
-  const selfHostedConfig = {
-    // All we really need here is the config validation, so do the shortest type of dry run
-    // https://docs.renovatebot.com/self-hosted-configuration/#dryrun
-    dryRun: 'extract',
-    repositories: [defaultRepo],
-    hostRules: [{ abortOnError: true }],
-    token,
-    force: {
-      printConfig: true,
-      // force an "extends" config with all the presets from this repo
-      extends: presets.map((p) => getExtendsForLocalPreset(p.name, branchRef)),
-      // also use the current branch as the base
-      ...(branchName !== defaultBranch && {
-        baseBranchPatterns: [branchName],
-        useBaseBranchConfig: 'merge',
-      }),
-    },
-  };
-  // Normally the Renovate server config would be JS, but Renovate seems to have trouble importing
-  // the JS config due to this package having type: module (and fails with a misleading error).
-  // So write the config to JSON instead.
-  // Also, use .json5 to ensure it's not interpreted as a preset by any other steps.
-  const configFile = path.join(root, 'renovate-config.json5');
-  const configContent = JSON.stringify(selfHostedConfig, null, 2);
-  fs.writeFileSync(configFile, configContent);
-
   logGroup('Renovate server config:');
-  console.log(configContent);
+  console.log(JSON.stringify(serverConfig, null, 2));
   logEndGroup();
 
   logGroup('Running Renovate');
@@ -92,8 +57,7 @@ async function runTests() {
       LOG_LEVEL: 'info',
       LOG_FILE: logFile,
       LOG_FILE_LEVEL: 'debug',
-      LOG_FORMAT: 'json',
-      RENOVATE_CONFIG_FILE: configFile,
+      RENOVATE_CONFIG_FILE: configFilePath,
     },
   });
   logEndGroup();
@@ -101,9 +65,6 @@ async function runTests() {
   if (result.failed) {
     logRenovateError(logFile);
     process.exit(1);
-  } else {
-    // clean up temporary server config
-    fs.unlinkSync(configFile);
   }
 }
 

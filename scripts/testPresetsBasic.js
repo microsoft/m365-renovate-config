@@ -58,7 +58,7 @@ async function checkPreset(preset, hasInvalidRepoConfig) {
       try {
         logJson = JSON.parse(chunk.toString());
       } catch {
-        callback(null, chunk.toString());
+        return callback(null, chunk.toString());
       }
 
       if (logJson.migratedConfig) {
@@ -85,7 +85,7 @@ async function checkPreset(preset, hasInvalidRepoConfig) {
   });
 
   // Redirect formatted logs to stdout, and wait for the process
-  configProcess.all.pipe(logTransform).pipe(process.stdout);
+  configProcess.all?.pipe(logTransform).pipe(process.stdout);
   const processFailed = (await configProcess).failed;
 
   if (errorMessages.size > 0) {

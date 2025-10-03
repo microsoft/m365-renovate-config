@@ -1,3 +1,7 @@
+import type { RenovateConfig } from 'renovate/dist/config/types.js';
+
+export type { RenovateConfig };
+
 /**
  * - 10 = trace
  * - 20 = debug
@@ -32,12 +36,8 @@ export type RenovateLog = {
   [key: string]: any;
 };
 
-type RenovatePreset = {
-  extends?: string[];
-  ignorePresets?: string[];
-  // add more as needed
-  [key: string]: any;
-};
+/** Renovate log file entry for preset validation */
+export type RenovatePresetDebugLog = RenovateLog & { preset: string };
 
 export type LocalPresetData = {
   /** Absolute path to the preset file */
@@ -49,5 +49,5 @@ export type LocalPresetData = {
   /** Content of the preset file */
   content: string;
   /** Parsed content of the preset file */
-  json: RenovatePreset;
+  json: RenovateConfig;
 };

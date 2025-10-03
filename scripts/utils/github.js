@@ -1,23 +1,27 @@
 import path from 'path';
 import { getReleaseBranches } from './getReleaseBranches.js';
+import { getEnv } from './getEnv.js';
 
 export const defaultRepoDetails = { owner: 'microsoft', repo: 'm365-renovate-config' };
 export const defaultRepo = `${defaultRepoDetails.owner}/${defaultRepoDetails.repo}`;
 export const defaultBranch = 'main';
 export const primaryBranches = [defaultBranch, ...getReleaseBranches()];
 export const isGithub = !!process.env.CI;
+/** Branch name if running on github (via `GITHUB_REF`) */
+export const githubBranchName = getEnv('GITHUB_REF', isGithub)?.replace('refs/heads/', '');
+
 /** Relative path to the repo renovate config */
 export const repoRenovateConfigPath = '.github/renovate.json5';
 
 /**
  * In CI, log an error with the github workflow command format so it shows up in the summary
  * and possibly pointing to the specific file. Logs normally in local runs.
- * @param {string} err Error text
+ * @param {unknown} err Error
  * @param {string} [file] Source file. If provided with no extension, ".json" will be appended.
  * @see {@link https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions}
  */
 export function logError(err, file) {
-  logOther('error', err, file);
+  logOther('error', /** @type {Error} */ (err).stack || String(err), file);
 }
 
 /**

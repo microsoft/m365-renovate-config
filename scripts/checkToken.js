@@ -1,9 +1,13 @@
 import fetch from 'node-fetch';
 import { pathToFileURL } from 'url';
-import { logError } from './utils/github.js';
+import { isGithub, logError } from './utils/github.js';
+import { getEnv } from './utils/getEnv.js';
 
 // Renovate tends to fail silently on invalid tokens in some cases, so this script checks the token.
 // It's also good for detecting if an invalid secret name was used.
+
+/** TOKEN environment variable, if set */
+export const tokenEnv = getEnv('TOKEN', isGithub);
 
 /** @param {string} token */
 export async function checkToken(token) {

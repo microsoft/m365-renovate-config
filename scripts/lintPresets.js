@@ -9,7 +9,7 @@ const requiredAttributes = {
 const presets = readPresets();
 
 for (const { name: presetName, filename, json } of presets) {
-  const logIssue = (message) => {
+  const logIssue = (/** @type {*} */ message) => {
     logError(`${presetName}: ${message}`, filename);
     process.exitCode = 1;
   };
