@@ -61,8 +61,6 @@ async function runTests() {
     dryRun: 'extract',
     repositories: [defaultRepo],
     hostRules: [{ abortOnError: true }],
-    logFile,
-    logFileLevel: 'debug',
     token,
     force: {
       printConfig: true,
@@ -70,7 +68,7 @@ async function runTests() {
       extends: presets.map((p) => getExtendsForLocalPreset(p.name, branchRef)),
       // also use the current branch as the base
       ...(branchName !== defaultBranch && {
-        baseBranches: [branchName],
+        baseBranchPatterns: [branchName],
         useBaseBranchConfig: 'merge',
       }),
     },
@@ -90,7 +88,13 @@ async function runTests() {
   logGroup('Running Renovate');
   const result = await runBin('renovate', [], {
     stdio: 'inherit',
-    env: { LOG_LEVEL: 'info', RENOVATE_CONFIG_FILE: configFile },
+    env: {
+      LOG_LEVEL: 'info',
+      LOG_FILE: logFile,
+      LOG_FILE_LEVEL: 'debug',
+      LOG_FORMAT: 'json',
+      RENOVATE_CONFIG_FILE: configFile,
+    },
   });
   logEndGroup();
 
