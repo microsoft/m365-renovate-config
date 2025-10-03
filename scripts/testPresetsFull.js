@@ -5,31 +5,24 @@ import path from 'path';
 import { getEnv } from './utils/getEnv.js';
 import {
   defaultRepo,
-  githubBranchName,
   isGithub,
   logEndGroup,
   logError,
   logGroup,
-  primaryBranches,
+  logOther,
 } from './utils/github.js';
 import { root } from './utils/paths.js';
 import { logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.js';
 import { runBin } from './utils/runBin.js';
 import serverConfig from './serverConfig.js';
+import { checkToken } from './checkToken.js';
 
 const configFilePath = path.join(import.meta.dirname, 'serverConfig.js');
 
 async function runTests() {
   const repository = getEnv('GITHUB_REPOSITORY', isGithub);
-  // const eventName = getEnv('GITHUB_EVENT_NAME', isGithub);
 
-  if (
-    !isGithub ||
-    // !githubBranchName ||
-    // !primaryBranches.includes(githubBranchName) ||
-    // eventName !== 'push' ||
-    repository !== defaultRepo
-  ) {
+  if (!isGithub || repository !== defaultRepo) {
     // This would be possible but complex to test when running against a github branch, and likely
     // not possible to completely test locally. Steps for testing against a github branch:
     // - Modify the config files to point to a temporary generated tag name
@@ -39,11 +32,15 @@ async function runTests() {
     //     changes pushed to a tag in the main repo
     // - Run the test
     // - Delete the tag
-    console.log(
-      '::warn::Skipping full Renovate test run (only meaningful after configs are checked in)',
+    logOther(
+      'warning',
+      'Skipping full Renovate test run (only works after configs are checked in ' +
+        'or for branches in the main repo)',
     );
     process.exit(0);
   }
+
+  checkToken();
 
   const logFile = path.join(root, 'renovate.log');
   fs.writeFileSync(logFile, ''); // Renovate wants this to exist already

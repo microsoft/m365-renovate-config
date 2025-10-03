@@ -9,8 +9,7 @@ import { getEnv } from './utils/getEnv.js';
 /** TOKEN environment variable, if set */
 export const tokenEnv = getEnv('TOKEN', isGithub);
 
-/** @param {string} token */
-export async function checkToken(token) {
+export async function checkToken(token = tokenEnv) {
   if (!token) {
     throw new Error('GitHub token not provided (is the variable name valid?)');
   }

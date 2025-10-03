@@ -53,9 +53,6 @@ jobs:
       #   run: yarn test:basic
 
       - name: Renovate dry run with all presets
-        continue-on-error: ${{ github.event_name != 'push' }}
-        run: |
-          yarn check-token "$TOKEN"
-          yarn test:full
+        run: yarn test:full
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
