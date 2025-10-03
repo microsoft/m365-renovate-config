@@ -54,5 +54,13 @@ jobs:
 
       - name: Renovate dry run with all presets
         run: yarn test:full
+        id: renovate
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
+
+      - name: Upload dry run results on failure
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: ${{ steps.renovate.outcome == 'failure' }}
+        with:
+          path: renovate.log
+          name: renovate-dry-run-log
