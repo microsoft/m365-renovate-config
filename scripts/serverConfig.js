@@ -23,7 +23,7 @@ const config = {
   force: {
     printConfig: true,
     // force an "extends" config with all the presets from this repo
-    extends: [...presets, { name: 'oops' }].map((p) => getExtendsForLocalPreset(p.name, branchRef)),
+    extends: presets.map((p) => getExtendsForLocalPreset(p.name, branchRef)),
     // also use the current branch as the base
     ...(githubBranchName &&
       githubBranchName !== defaultBranch && {
