@@ -10,7 +10,6 @@
     "github>microsoft/m365-renovate-config:newConfigWarningIssue",
     "github>microsoft/m365-renovate-config:pinActions"
   ],
-  "asdf": 3,
 
   "prConcurrentLimit": 10,
   "prHourlyLimit": 2,

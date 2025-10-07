@@ -32,28 +32,32 @@ jobs:
       - run: yarn --immutable
 
       - name: Check token
-        if: github.event_name == 'push'
-        run: yarn check-token "$TOKEN"
+        run: |
+          if [[ -n "$TOKEN" || "$GITHUB_EVENT_NAME" -eq "push" ]]; then
+            yarn check-token "$TOKEN"
+          else
+            echo "Skipping token check"
+          fi
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
 
-      # - name: Check formatting
-      #   run: yarn format:check
+      - name: Check formatting
+        run: yarn format:check
 
-      # - name: Check readme
-      #   run: yarn update-readme --check
+      - name: Check readme
+        run: yarn update-readme --check
 
       - name: Type check scripts
         run: yarn build
 
-      # - name: Lint presets
-      #   run: yarn lint
+      - name: Lint presets
+        run: yarn lint
 
       - name: Basic preset validation
         run: yarn test:basic
         id: validate
 
-      - name: Upload dry run results
+      - name: Upload validation logs
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: ${{ always() && steps.validate.outcome != 'skipped' }}
         with:
@@ -67,7 +71,7 @@ jobs:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
           TOKEN_REQUIRED: 1
 
-      - name: Upload dry run results
+      - name: Upload dry run logs
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: ${{ always() && steps.dryRun.outcome != 'skipped' }}
         with:

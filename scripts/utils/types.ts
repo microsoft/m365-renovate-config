@@ -42,6 +42,8 @@ export type RenovateLog = {
   // properties for some log types
   migratedConfig?: any;
   newConfig?: any; // seems equivalent to migratedConfig
+  /** Config file path or config type for certain logs */
+  configType?: string;
   /** Errors in config validation logs (for general caught exceptions, see `err`) */
   errors?: Array<{ topic: string; message: string }>;
   /** Errors while running renovate */
