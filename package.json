@@ -10,7 +10,6 @@
   "scripts": {
     "build": "tsc",
     "change": "changeset",
-    "check-token": "node ./scripts/checkToken.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . && node ./scripts/lintPresets.js",

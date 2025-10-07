@@ -2,7 +2,7 @@
 // https://docs.renovatebot.com/self-hosted-configuration/
 
 /** @import { RenovateConfig } from './utils/types.js' */
-import { tokenEnv } from './checkToken.js';
+import { getToken } from './checkToken.js';
 import { getExtendsForLocalPreset } from './utils/extends.js';
 import { defaultBranch, defaultRepo, githubBranchName } from './utils/github.js';
 import { readPresets } from './utils/readPresets.js';
@@ -18,7 +18,8 @@ const config = {
   dryRun: 'extract',
   repositories: [defaultRepo],
   hostRules: [{ abortOnError: true }],
-  token: tokenEnv,
+  // For the basic config test to pass, the token must be a string
+  token: getToken() || '',
   force: {
     printConfig: true,
     // force an "extends" config with all the presets from this repo

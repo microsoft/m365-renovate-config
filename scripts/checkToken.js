@@ -1,15 +1,18 @@
 import fetch from 'node-fetch';
-import { pathToFileURL } from 'url';
-import { isGithub, logError } from './utils/github.js';
 import { getEnv } from './utils/getEnv.js';
 
 // Renovate tends to fail silently on invalid tokens in some cases, so this script checks the token.
 // It's also good for detecting if an invalid secret name was used.
 
-/** TOKEN environment variable, if set */
-export const tokenEnv = getEnv('TOKEN', isGithub);
+/**
+ * Get the TOKEN environment variable, if set. The CI pipeline sets another variable TOKEN_REQUIRED
+ * which will cause accessing this to throw if the token isn't present.
+ */
+export function getToken() {
+  return getEnv('TOKEN', !!process.env.TOKEN_REQUIRED);
+}
 
-export async function checkToken(token = tokenEnv) {
+export async function checkToken(token = getToken()) {
   if (!token) {
     throw new Error('GitHub token not provided (is the variable name valid?)');
   }
@@ -32,15 +35,4 @@ export async function checkToken(token = tokenEnv) {
       `GitHub token appears to be expired or invalid (received ${result.status} ${result.statusText})`,
     );
   }
-}
-
-// ESM version of `if (require.main === module)`
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  (async () => {
-    await checkToken(process.argv[2]);
-    console.log('Token is valid');
-  })().catch((err) => {
-    logError(err);
-    process.exit(1);
-  });
 }
