@@ -29,7 +29,7 @@ export function readPresets({ exclude: excludePresets = [] } = {}) {
   }
 
   return presetFiles
-    .filter((f) => !excludePresets.includes(f))
+    .filter((f) => !excludePresets.includes(path.basename(f, '.json')))
     .map((preset) => {
       const presetName = path.basename(preset, '.json');
       const presetPath = path.join(paths.root, preset);
