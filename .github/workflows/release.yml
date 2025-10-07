@@ -39,7 +39,7 @@ jobs:
       - run: yarn --immutable
 
       - name: Check if release is needed
-        uses: ecraig12345/beachball-actions/should-release@27312284362c35e986a171b871edee5f32afe782 # v2
+        uses: ecraig12345/beachball-actions/should-release@336d3a84a5c452f5264803f4c62c6c34b4a51fbe # v2
         id: shouldRelease
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
