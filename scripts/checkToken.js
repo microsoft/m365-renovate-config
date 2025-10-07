@@ -1,5 +1,7 @@
 import fetch from 'node-fetch';
+import { pathToFileURL } from 'url';
 import { getEnv } from './utils/getEnv.js';
+import { logError } from './utils/github.js';
 
 // Renovate tends to fail silently on invalid tokens in some cases, so this script checks the token.
 // It's also good for detecting if an invalid secret name was used.
@@ -35,4 +37,15 @@ export async function checkToken(token = getToken()) {
       `GitHub token appears to be expired or invalid (received ${result.status} ${result.statusText})`,
     );
   }
+}
+
+// ESM version of `if (require.main === module)`
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  (async () => {
+    await checkToken(process.argv[2]);
+    console.log('Token is valid');
+  })().catch((err) => {
+    logError(err);
+    process.exit(1);
+  });
 }
