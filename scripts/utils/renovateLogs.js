@@ -1,17 +1,46 @@
-/** @import { RenovateLog, RenovateLogLevel } from './types.js' */
+/** @import { RenovateLog, RenovateLogLevelName, RenovateLogLevelValue } from './types.js' */
 
 import fs from 'fs';
 import { logEndGroup, logGroup } from './github.js';
 
-/** @type {Record<RenovateLogLevel, string>} */
+/** @type {Record<RenovateLogLevelValue, string>} */
 const logLevelStrings = {
-  10: 'TRACE',
-  20: 'DEBUG',
-  30: 'INFO',
-  40: 'WARN',
-  50: 'ERROR',
-  60: 'FATAL',
+  10: 'trace',
+  20: 'debug',
+  30: 'info',
+  40: 'warn',
+  50: 'error',
+  60: 'fatal',
 };
+
+/**
+ *
+ * @param {object} params
+ * @param {RenovateLogLevelName} [params.logLevel] Log level for console output (default info)
+ * @param {'json'|'pretty'} [params.logFormat] Log format for console output (default pretty)
+ * @param {string} [params.logFile] Path to a log file
+ * @param {RenovateLogLevelName} [params.logFileLevel] Log level for the log file
+ * @param {'json'|'pretty'} [params.logFileFormat] Log format for the log file (default json)
+ * @param {string} [params.configFile] Path to the config file
+ * @returns {Record<string, string>} Environment variables to set for Renovate
+ */
+export function getRenovateEnv({
+  logLevel,
+  logFormat,
+  logFile,
+  logFileLevel,
+  logFileFormat,
+  configFile,
+}) {
+  return {
+    ...(logLevel && { LOG_LEVEL: logLevel }),
+    ...(logFormat && { LOG_FORMAT: logFormat }),
+    ...(logFile && { LOG_FILE: logFile }),
+    ...(logFileLevel && { LOG_FILE_LEVEL: logFileLevel }),
+    ...(logFileFormat && { LOG_FILE_FORMAT: logFileFormat }),
+    ...(configFile && { RENOVATE_CONFIG_FILE: configFile }),
+  };
+}
 
 /**
  * Read a Renovate log file, which has entries in JSON format.
@@ -80,14 +109,3 @@ export function formatRenovateLog(log, all) {
   }
   return res;
 }
-
-// export function findInvalidPresetLog
-
-// /**
-//  * Find the debug log entry for a specific preset.
-//  * @param {RenovateLog[]} logs
-//  * @param {string} presetName
-//  */
-// export function findPresetDebugLog(logs, presetName) {
-//   return logs.find((log) => log.level === 20 && log.preset === presetName);
-// }

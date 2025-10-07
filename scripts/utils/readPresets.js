@@ -2,13 +2,10 @@
 import fs from 'fs';
 import jju from 'jju';
 import path from 'path';
-import { logError, repoRenovateConfigPath } from './github.js';
-import { root } from './paths.js';
+import { logError } from './github.js';
+import { paths } from './paths.js';
 
 const excludeFiles = ['tsconfig.json', 'package.json'];
-const repoConfigAbsPath = path.join(root, repoRenovateConfigPath);
-const serverConfigPath = 'scripts/serverConfig.js';
-const serverConfigAbsPath = path.join(root, serverConfigPath);
 
 export const specialConfigNames = {
   serverConfig: 'server config',
@@ -23,11 +20,11 @@ export const specialConfigNames = {
  */
 export function readPresets({ exclude: excludePresets = [] } = {}) {
   const presetFiles = fs
-    .readdirSync(root)
+    .readdirSync(paths.root)
     .filter((file) => /^[^.].*\.json$/.test(file) && !excludeFiles.includes(file));
 
   if (!presetFiles.length) {
-    logError('No presets found under ' + root);
+    logError('No presets found under ' + paths.root);
     process.exit(1);
   }
 
@@ -35,7 +32,7 @@ export function readPresets({ exclude: excludePresets = [] } = {}) {
     .filter((f) => !excludePresets.includes(f))
     .map((preset) => {
       const presetName = path.basename(preset, '.json');
-      const presetPath = path.join(root, preset);
+      const presetPath = path.join(paths.root, preset);
       const content = fs.readFileSync(presetPath, 'utf8');
       return {
         absolutePath: presetPath,
@@ -55,12 +52,12 @@ export function readPresets({ exclude: excludePresets = [] } = {}) {
  * The contents are omitted from the server config since it's JS.
  */
 export function readPresetsAndConfigs() {
-  const repoConfigContent = fs.readFileSync(repoConfigAbsPath, 'utf8');
+  const repoConfigContent = fs.readFileSync(paths.repoRenovateConfig, 'utf8');
   return [
     {
       // repo config
-      absolutePath: repoConfigAbsPath,
-      filename: repoRenovateConfigPath,
+      absolutePath: paths.repoRenovateConfig,
+      filename: paths.repoRenovateConfigRel,
       content: repoConfigContent,
       json: jju.parse(repoConfigContent),
       name: specialConfigNames.repoConfig,
@@ -68,9 +65,9 @@ export function readPresetsAndConfigs() {
     ...readPresets(),
     {
       // server config (omit contents)
-      absolutePath: serverConfigAbsPath,
+      absolutePath: paths.serverConfig,
       name: specialConfigNames.serverConfig,
-      filename: serverConfigPath,
+      filename: paths.serverConfigRel,
     },
   ];
 }

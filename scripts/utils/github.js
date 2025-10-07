@@ -8,9 +8,6 @@ export const isGithub = !!process.env.CI;
 /** Branch name if running on github (via `GITHUB_REF`) */
 export const githubBranchName = getEnv('GITHUB_REF', isGithub)?.replace('refs/heads/', '');
 
-/** Relative path to the repo renovate config */
-export const repoRenovateConfigPath = '.github/renovate.json5';
-
 /**
  * In CI, log an error with the github workflow command format so it shows up in the summary
  * and possibly pointing to the specific file. Logs normally in local runs.
@@ -49,5 +46,5 @@ export function logGroup(name) {
  * In CI, end a log group using github workflow commands. Logs an empty line in local runs.
  */
 export function logEndGroup() {
-  console.log(isGithub ? '::endgroup::\n' : '\n\n');
+  console.log(isGithub ? '::endgroup::\n' : '');
 }

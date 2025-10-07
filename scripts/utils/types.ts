@@ -4,6 +4,17 @@ import type { RenovateConfig } from 'renovate/dist/config/types.js';
 
 export type { RenovateConfig };
 
+export type RenovateLogLevels = {
+  trace: 10;
+  debug: 20;
+  info: 30;
+  warn: 40;
+  error: 50;
+  fatal: 60;
+};
+
+export type RenovateLogLevelName = keyof RenovateLogLevels;
+
 /**
  * - 10 = trace
  * - 20 = debug
@@ -12,12 +23,12 @@ export type { RenovateConfig };
  * - 50 = error
  * - 60 = fatal
  */
-export type RenovateLogLevel = 10 | 20 | 30 | 40 | 50 | 60;
+export type RenovateLogLevelValue = RenovateLogLevels[keyof RenovateLogLevels];
 
 /** Entry in Renovate's log file */
 export type RenovateLog = {
   msg: string;
-  level: RenovateLogLevel;
+  level: RenovateLogLevelValue;
   time: string;
   err?: Error & { err?: Error };
 

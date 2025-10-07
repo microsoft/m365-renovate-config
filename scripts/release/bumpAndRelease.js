@@ -1,6 +1,5 @@
 import readChangesets from '@changesets/read';
 import fs from 'fs';
-import path from 'path';
 import * as git from '../utils/git.js';
 import {
   defaultBranch,
@@ -9,7 +8,7 @@ import {
   logEndGroup,
   logGroup,
 } from '../utils/github.js';
-import { root } from '../utils/paths.js';
+import { paths } from '../utils/paths.js';
 import { runBin } from '../utils/runBin.js';
 import { getHeadingText, splitByHeading } from '../utils/markdown.js';
 import { updateRefs } from './updateRefs.js';
@@ -18,7 +17,6 @@ import { readPackageJson } from '../utils/readPackageJson.js';
 import { getReleaseBranchFromVersion } from '../utils/getReleaseBranches.js';
 import { checkToken } from '../checkToken.js';
 
-const changelogFile = path.join(root, 'CHANGELOG.md');
 const headingLevel = 2;
 const skipCi = '[skip ci]';
 
@@ -31,7 +29,7 @@ const skipCi = '[skip ci]';
  * @param {string} newVersion
  */
 export async function amendChangelog(prevVersion, newVersion) {
-  const changelog = fs.readFileSync(changelogFile, 'utf8');
+  const changelog = fs.readFileSync(paths.changelog, 'utf8');
 
   let changelogEntry = '';
   const sections = splitByHeading(changelog, headingLevel);
@@ -67,10 +65,10 @@ export async function amendChangelog(prevVersion, newVersion) {
   );
 
   const formattedContent = await formatFileContents(
-    changelogFile,
+    paths.changelog,
     changelog.replace(changelogEntry, amendedEntry),
   );
-  fs.writeFileSync(changelogFile, formattedContent);
+  fs.writeFileSync(paths.changelog, formattedContent);
 
   return amendedEntry;
 }
@@ -86,7 +84,7 @@ export async function bumpAndRelease(github, githubToken) {
   await checkToken(githubToken);
   await git.setCredentials(githubToken);
 
-  const changesets = await readChangesets(root);
+  const changesets = await readChangesets(paths.root);
   if (!changesets.length) {
     console.log('No changesets found');
     return;
@@ -101,7 +99,7 @@ export async function bumpAndRelease(github, githubToken) {
 
   // Update the version and changelog
   logGroup('Bumping versions and updating changelog locally');
-  await runBin('changeset', ['version'], { cwd: root, stdio: 'inherit', reject: true });
+  await runBin('changeset', ['version'], { cwd: paths.root, stdio: 'inherit', reject: true });
   logEndGroup();
 
   // Get the new version to determine the tag name and release branch

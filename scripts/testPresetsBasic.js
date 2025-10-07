@@ -7,17 +7,11 @@ import path from 'path';
 import { Transform } from 'stream';
 import { getLocalPresetFromExtends } from './utils/extends.js';
 import { formatFileContents } from './utils/formatFile.js';
-import {
-  isGithub,
-  logEndGroup,
-  logError,
-  logOther,
-  logGroup,
-  repoRenovateConfigPath,
-} from './utils/github.js';
+import { isGithub, logEndGroup, logError, logOther, logGroup } from './utils/github.js';
 import { readPresetsAndConfigs, specialConfigNames } from './utils/readPresets.js';
-import { formatRenovateLog } from './utils/renovateLogs.js';
+import { formatRenovateLog, getRenovateEnv } from './utils/renovateLogs.js';
 import { runBin } from './utils/runBin.js';
+import { paths } from './utils/paths.js';
 
 const presetArg = process.argv
   .find((arg) => arg.startsWith('--preset='))
@@ -40,11 +34,14 @@ async function checkFile(preset, hasInvalidRepoConfig) {
   // and for configs needing migration.
   const configProcess = runBin('renovate-config-validator', [], {
     quiet: true,
-    env: {
-      RENOVATE_CONFIG_FILE: absolutePath,
-      LOG_LEVEL: 'warn',
-      LOG_FORMAT: 'json', // log as JSON to make it easier to determine if migration is needed
-    },
+    env: getRenovateEnv({
+      configFile: absolutePath,
+      logLevel: 'warn',
+      // log as JSON to make it easier to determine if migration is needed
+      logFormat: 'json',
+      logFile: paths.logFileBasic,
+      logFileLevel: 'debug',
+    }),
   });
 
   let migratedConfig;
@@ -213,12 +210,15 @@ function checkExtends(preset, presetNames) {
 }
 
 async function runTests() {
+  // Create an empty log file before the tests start (renovate will append to this file)
+  fs.writeFileSync(paths.logFileBasic, '');
+
   const presets = readPresetsAndConfigs();
 
   // The repo config must be checked first (and migrated if necessary) because Renovate will
   // always include it in the other configs
   assert(
-    presets[0].filename === repoRenovateConfigPath,
+    presets[0].name === specialConfigNames.repoConfig,
     'Repo config must be first in the list returned by readPresets',
   );
 
@@ -241,7 +241,10 @@ async function runTests() {
 
     logGroup(`Validating ${preset.filename}`);
 
-    const configResult = await checkFile(preset, failedPresets.includes(repoRenovateConfigPath));
+    const configResult = await checkFile(
+      preset,
+      failedPresets.includes(paths.repoRenovateConfigRel),
+    );
     const extendsResult = checkExtends(preset, presetNames);
 
     if (configResult === 'error' || extendsResult === 'error') {

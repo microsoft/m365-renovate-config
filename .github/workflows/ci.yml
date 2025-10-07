@@ -51,17 +51,25 @@ jobs:
 
       - name: Basic preset validation
         run: yarn test:basic
+        id: validate
+
+      - name: Upload dry run results
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: ${{ always() && steps.validate.outcome != 'skipped' }}
+        with:
+          path: renovate.validate.log
+          name: renovate-validate-log
 
       - name: Renovate dry run with all presets
         run: yarn test:full
-        id: renovate
+        id: dryRun
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
           TOKEN_REQUIRED: 1
 
       - name: Upload dry run results
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: ${{ always() && steps.renovate.outcome != 'skipped' }}
+        if: ${{ always() && steps.dryRun.outcome != 'skipped' }}
         with:
           path: renovate.log
           name: renovate-dry-run-log

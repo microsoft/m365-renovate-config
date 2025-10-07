@@ -11,8 +11,8 @@ import {
   logGroup,
   logOther,
 } from './utils/github.js';
-import { root } from './utils/paths.js';
-import { logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.js';
+import { paths } from './utils/paths.js';
+import { getRenovateEnv, logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.js';
 import { runBin } from './utils/runBin.js';
 import serverConfig from './serverConfig.js';
 import { checkToken } from './checkToken.js';
@@ -35,8 +35,7 @@ async function runTests() {
 
   checkToken();
 
-  const logFile = path.join(root, 'renovate.log');
-  fs.writeFileSync(logFile, ''); // Renovate wants this to exist already
+  fs.writeFileSync(paths.logFileFull, ''); // Renovate wants this to exist already
 
   logGroup('Renovate server config:');
   console.log(JSON.stringify(serverConfig, null, 2));
@@ -45,17 +44,17 @@ async function runTests() {
   logGroup('Running Renovate');
   const result = await runBin('renovate', [], {
     stdio: 'inherit',
-    env: {
-      LOG_LEVEL: 'info',
-      LOG_FILE: logFile,
-      LOG_FILE_LEVEL: 'debug',
-      RENOVATE_CONFIG_FILE: configFilePath,
-    },
+    env: getRenovateEnv({
+      logLevel: 'info',
+      logFile: paths.logFileFull,
+      logFileLevel: 'debug',
+      configFile: configFilePath,
+    }),
   });
   logEndGroup();
 
   if (result.failed) {
-    logRenovateError(logFile);
+    logRenovateError(paths.logFileFull);
     process.exit(1);
   }
 }
