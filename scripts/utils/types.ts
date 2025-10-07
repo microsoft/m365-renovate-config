@@ -1,3 +1,5 @@
+// This file is .ts not .d.ts to ensure proper type checking
+// (it only exports types and is never run)
 import type { RenovateConfig } from 'renovate/dist/config/types.js';
 
 export type { RenovateConfig };
@@ -39,15 +41,18 @@ export type RenovateLog = {
 /** Renovate log file entry for preset validation */
 export type RenovatePresetDebugLog = RenovateLog & { preset: string };
 
-export type LocalPresetData = {
+/** Basic data for a config file or preset */
+export type ConfigData = {
   /** Absolute path to the preset file */
   absolutePath: string;
   /** Name of the preset (no extension) */
   name: string;
   /** Filename with extension (relative path in the case of .github/renovate.json5) */
   filename: string;
-  /** Content of the preset file */
-  content: string;
-  /** Parsed content of the preset file */
-  json: RenovateConfig;
+  /** Content of the preset file. Undefined for server config. */
+  content?: string;
+  /** Parsed content of the preset file. Undefined for server config. */
+  json?: RenovateConfig;
 };
+
+export type LocalPresetData = Required<ConfigData>;

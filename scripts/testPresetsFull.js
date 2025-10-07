@@ -23,15 +23,8 @@ async function runTests() {
   const repository = getEnv('GITHUB_REPOSITORY', isGithub);
 
   if (!isGithub || repository !== defaultRepo) {
-    // This would be possible but complex to test when running against a github branch, and likely
-    // not possible to completely test locally. Steps for testing against a github branch:
-    // - Modify the config files to point to a temporary generated tag name
-    // - Commit the modified files and create the tag
-    // - Push the tag (don't push the commit to the branch)
-    //   - Not sure if this would work for fork PRs, and we don't want a fork's unvalidated
-    //     changes pushed to a tag in the main repo
-    // - Run the test
-    // - Delete the tag
+    // This is possible to test against a github branch in the main repo, but won't work with fork PRs
+    // or locally. In that case, exit with a warning.
     logOther(
       'warning',
       'Skipping full Renovate test run (only works after configs are checked in ' +

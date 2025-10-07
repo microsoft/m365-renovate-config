@@ -1,3 +1,4 @@
+/** @import { ConfigData, LocalPresetData } from './types.js' */
 import fs from 'fs';
 import jju from 'jju';
 import path from 'path';
@@ -6,16 +7,21 @@ import { root } from './paths.js';
 
 const excludeFiles = ['tsconfig.json', 'package.json'];
 const repoConfigAbsPath = path.join(root, repoRenovateConfigPath);
+const serverConfigPath = 'scripts/serverConfig.js';
+const serverConfigAbsPath = path.join(root, serverConfigPath);
+
+export const specialConfigNames = {
+  serverConfig: 'server config',
+  repoConfig: 'repo config',
+};
 
 /**
- * Get the contents of the preset files and optionally the repo Renovate config.
- * If the repo config is included, it will be first in the array (needed for basic tests).
+ * Get the contents of the preset files.
  * @param {Object} param0
- * @param {boolean} [param0.includeRepoConfig] whether to include .github/renovate.json5
  * @param {string[]} [param0.exclude] presets names to exclude
- * @returns {import('./types.js').LocalPresetData[]}
+ * @returns {LocalPresetData[]}
  */
-export function readPresets({ includeRepoConfig, exclude: excludePresets = [] } = {}) {
+export function readPresets({ exclude: excludePresets = [] } = {}) {
   const presetFiles = fs
     .readdirSync(root)
     .filter((file) => /^[^.].*\.json$/.test(file) && !excludeFiles.includes(file));
@@ -25,33 +31,46 @@ export function readPresets({ includeRepoConfig, exclude: excludePresets = [] } 
     process.exit(1);
   }
 
-  const presets = /** @type {import('./types.js').LocalPresetData[]} */ ([]);
-
-  if (includeRepoConfig) {
-    const content = fs.readFileSync(repoConfigAbsPath, 'utf8');
-    presets.push({
-      absolutePath: repoConfigAbsPath,
-      filename: repoRenovateConfigPath,
-      content,
-      json: jju.parse(content),
-      name: 'repo config',
-    });
-  }
-
-  for (const preset of presetFiles) {
-    const presetName = path.basename(preset, '.json');
-    if (!excludePresets.includes(presetName)) {
+  return presetFiles
+    .filter((f) => !excludePresets.includes(f))
+    .map((preset) => {
+      const presetName = path.basename(preset, '.json');
       const presetPath = path.join(root, preset);
       const content = fs.readFileSync(presetPath, 'utf8');
-      presets.push({
+      return {
         absolutePath: presetPath,
         name: presetName,
         filename: preset,
         content,
         json: JSON.parse(content),
-      });
-    }
-  }
+      };
+    });
+}
 
-  return presets;
+/**
+ * Get the contents of the repo config, preset files, and server config.
+ * The repo config will always be first in the array.
+ * @returns {ConfigData[]} Presets and configs.
+ * All properties will be included for the presets and repo config.
+ * The contents are omitted from the server config since it's JS.
+ */
+export function readPresetsAndConfigs() {
+  const repoConfigContent = fs.readFileSync(repoConfigAbsPath, 'utf8');
+  return [
+    {
+      // repo config
+      absolutePath: repoConfigAbsPath,
+      filename: repoRenovateConfigPath,
+      content: repoConfigContent,
+      json: jju.parse(repoConfigContent),
+      name: specialConfigNames.repoConfig,
+    },
+    ...readPresets(),
+    {
+      // server config (omit contents)
+      absolutePath: serverConfigAbsPath,
+      name: specialConfigNames.serverConfig,
+      filename: serverConfigPath,
+    },
+  ];
 }
