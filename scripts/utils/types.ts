@@ -33,6 +33,8 @@ export type RenovateLog = {
   newConfig?: any; // seems equivalent to migratedConfig
   /** Errors in config validation logs (for general caught exceptions, see `err`) */
   errors?: Array<{ topic: string; message: string }>;
+  /** Errors while running renovate */
+  loggerErrors?: RenovateLog[];
 
   // arbitrary properties allowed
   [key: string]: any;

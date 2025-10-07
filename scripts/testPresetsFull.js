@@ -64,24 +64,40 @@ async function runTests() {
 function logRenovateError(logFile) {
   const logs = readRenovateLogs(logFile);
 
-  const invalidPresetLog = logs.find((l) => !!l.err && l.msg === 'config-presets-invalid');
-  if (invalidPresetLog) {
+  // If a preset fails to validate while running renovate, there's a special message config-presets-invalid.
+  // (Unclear if there can be multiple of these logs, but check anyway.)
+  const invalidPresetLogs = logs.filter((l) => !!l.err && l.msg === 'config-presets-invalid');
+  if (invalidPresetLogs.length) {
     // As of writing, there's only a debug log which directly includes the name of the preset that
-    // failed to validate (it's not included in any of the higher-severity logs)
-    const presetDebugLog = /** @type {RenovatePresetDebugLog | undefined} */ (
-      logs.find((l) => !!l.err && /** @type {RenovatePresetDebugLog} */ (l).preset)
+    // failed to validate (it's not included in any of the higher-severity logs).
+    const presetDebugLogs = /** @type {RenovatePresetDebugLog[]} */ (
+      logs.filter((l) => !!l.err && /** @type {RenovatePresetDebugLog} */ (l).preset)
     );
 
-    if (presetDebugLog) {
-      logError(`Preset "${presetDebugLog.preset}" is invalid`);
-      logRenovateErrorDetails(presetDebugLog);
+    if (presetDebugLogs.length) {
+      for (const log of presetDebugLogs) {
+        logError(`Preset "${log.preset}" is invalid`);
+        logRenovateErrorDetails(log);
+      }
     } else {
-      logError('A preset failed to validate');
-      logRenovateErrorDetails(invalidPresetLog);
+      logError('One or more presets failed to validate');
+      for (const log of invalidPresetLogs) {
+        logRenovateErrorDetails(log);
+      }
     }
   } else {
-    logError('Running Renovate failed for an unknown reason');
+    const errorRollupLog = logs.find((l) => l.loggerErrors);
+    if (errorRollupLog?.loggerErrors?.length) {
+      logError('Error while running Renovate');
+      for (const log of errorRollupLog.loggerErrors) {
+        logRenovateErrorDetails(log);
+      }
+    } else {
+      logError('Running Renovate failed for an unknown reason (see logs)');
+    }
   }
+
+  logError('For debug logs, see the renovate-dry-run-log artifact.');
 }
 
 runTests().catch((err) => {

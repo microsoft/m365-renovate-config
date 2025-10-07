@@ -49,8 +49,8 @@ jobs:
       # - name: Lint presets
       #   run: yarn lint
 
-      # - name: Basic preset validation
-      #   run: yarn test:basic
+      - name: Basic preset validation
+        run: yarn test:basic
 
       - name: Renovate dry run with all presets
         run: yarn test:full
@@ -59,9 +59,9 @@ jobs:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
           TOKEN_REQUIRED: 1
 
-      - name: Upload dry run results on failure
+      - name: Upload dry run results
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: ${{ failure() && steps.renovate.outcome == 'failure' }}
+        if: ${{ always() && steps.renovate.outcome != 'skipped' }}
         with:
           path: renovate.log
           name: renovate-dry-run-log
