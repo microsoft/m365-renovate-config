@@ -16,9 +16,10 @@ for (const { name: presetName, filename, json } of presets) {
 
   // Verify required attributes are present (and have the correct value, if relevant)
   for (const [name, value] of Object.entries(requiredAttributes)) {
-    if (!json[name]) {
+    const actualValue = /** @type {*} */ (json)[name];
+    if (!actualValue) {
       logIssue(`missing required attribute "${name}"`);
-    } else if (value && json[name] !== value) {
+    } else if (value && actualValue !== value) {
       logIssue(`attribute "${name}" must be "${value}"`);
     }
   }
