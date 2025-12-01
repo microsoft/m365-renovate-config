@@ -1,8 +1,8 @@
 // This file is .ts not .d.ts to ensure proper type checking
 // (it only exports types and is never run)
-import type { RenovateConfig } from 'renovate/dist/config/types.js';
+import type { RenovateConfig, AllConfig } from 'renovate/dist/config/types.js';
 
-export type { RenovateConfig };
+export type { RenovateConfig, AllConfig };
 
 export type RenovateLogLevels = {
   trace: 10;
