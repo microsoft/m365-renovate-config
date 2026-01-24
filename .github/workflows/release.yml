@@ -6,11 +6,11 @@ on:
 concurrency:
   group: ${{ github.ref }}-release
 
+permissions: {}
+
 jobs:
   prerelease:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     outputs:
       shouldRelease: ${{ steps.shouldRelease.outputs.shouldRelease }}
     steps:
