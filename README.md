@@ -226,6 +226,7 @@ Apply all the groupings from this repo (except groupTypes).
   "extends": [
     "group:monorepos",
     "group:recommended",
+    "github>microsoft/m365-renovate-config:groupActions",
     "github>microsoft/m365-renovate-config:groupD3",
     "github>microsoft/m365-renovate-config:groupEslint",
     "github>microsoft/m365-renovate-config:groupFixtureUpdates",
