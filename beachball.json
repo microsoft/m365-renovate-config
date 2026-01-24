@@ -4,7 +4,7 @@
   "description": "Recommended config for library repos which use Beachball for publishing.",
 
   "extends": [
-    "github>microsoft/m365-renovate-config#v2.8.0",
-    "github>microsoft/m365-renovate-config:beachballPostUpgrade#v2.8.0"
+    "github>microsoft/m365-renovate-config#v2",
+    "github>microsoft/m365-renovate-config:beachballPostUpgrade#v2"
   ]
 }
