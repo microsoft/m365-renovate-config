@@ -37,5 +37,8 @@
     "renovate": "42.92.3",
     "typescript": "^5.0.3"
   },
+  "resolutions": {
+    "@yarnpkg/core@npm:4.5.0/tar@npm:^6.0.5": "^7.0.0"
+  },
   "packageManager": "yarn@4.12.0"
 }
