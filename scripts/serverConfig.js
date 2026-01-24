@@ -22,7 +22,10 @@ const config = {
   token: getToken() || '',
   force: {
     printConfig: true,
-    // force an "extends" config with all the presets from this repo
+    // Force an "extends" config with all the presets from this repo.
+    // (Note this will NOT fix the names of extended presets within another preset,
+    // so extended presets will be fetched from main, not the branch. This is usually
+    // fine but will cause an error if a preset extends a newly-added preset in a PR.)
     extends: presets.map((p) => getExtendsForLocalPreset(p.name, branchRef)),
     // also use the current branch as the base
     ...(githubBranchName &&

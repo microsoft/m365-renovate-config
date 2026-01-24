@@ -6,7 +6,7 @@
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
-      "groupName": "GitHub actions (official)",
+      "groupName": "GitHub Actions (official)",
       "matchPackageNames": ["actions/*", "github/*"],
       "dependencyDashboardApproval": false
     }

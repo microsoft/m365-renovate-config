@@ -75,8 +75,25 @@ function logRenovateError(logFile) {
 
     if (presetDebugLogs.length) {
       for (const log of presetDebugLogs) {
-        logError(`Preset "${log.preset}" is invalid`);
-        logRenovateErrorDetails(log);
+        const maybeHttpError =
+          /** @type {{ response?: { statusCode?: number }; options?: { url?: string } } | undefined} */ (
+            log.err?.err
+          );
+        if (maybeHttpError?.response?.statusCode === 404) {
+          const url = maybeHttpError.options?.url;
+          if (url?.includes(defaultRepo) && !url.includes('?ref=')) {
+            logError(
+              `Preset "${log.preset}" not found at URL: ${url}\n` +
+                'This is expected if the preset was added in this PR and another preset extends it.',
+            );
+          } else {
+            logError(`Preset "${log.preset}" not found (404)`);
+            logRenovateErrorDetails(log);
+          }
+        } else {
+          logError(`Preset "${log.preset}" is invalid`);
+          logRenovateErrorDetails(log);
+        }
       }
     } else {
       logError('One or more presets failed to validate');

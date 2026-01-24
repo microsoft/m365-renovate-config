@@ -226,7 +226,6 @@ Apply all the groupings from this repo (except groupTypes).
   "extends": [
     "group:monorepos",
     "group:recommended",
-    "github>microsoft/m365-renovate-config:groupActions",
     "github>microsoft/m365-renovate-config:groupD3",
     "github>microsoft/m365-renovate-config:groupEslint",
     "github>microsoft/m365-renovate-config:groupFixtureUpdates",
@@ -262,7 +261,7 @@ Group and auto-update official GitHub Actions.
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
-      "groupName": "GitHub actions (official)",
+      "groupName": "GitHub Actions (official)",
       "matchPackageNames": ["actions/*", "github/*"],
       "dependencyDashboardApproval": false
     }
