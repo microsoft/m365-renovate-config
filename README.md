@@ -226,16 +226,17 @@ Apply all the groupings from this repo (except groupTypes).
   "extends": [
     "group:monorepos",
     "group:recommended",
-    "github>microsoft/m365-renovate-config:groupD3#v2",
-    "github>microsoft/m365-renovate-config:groupEslint#v2",
-    "github>microsoft/m365-renovate-config:groupFixtureUpdates#v2",
-    "github>microsoft/m365-renovate-config:groupFluent#v2",
-    "github>microsoft/m365-renovate-config:groupJest#v2",
-    "github>microsoft/m365-renovate-config:groupLageBackfill#v2",
-    "github>microsoft/m365-renovate-config:groupNodeMajor#v2",
-    "github>microsoft/m365-renovate-config:groupReact#v2",
-    "github>microsoft/m365-renovate-config:groupRollup#v2",
-    "github>microsoft/m365-renovate-config:groupYargs#v2"
+    "github>microsoft/m365-renovate-config:groupActions",
+    "github>microsoft/m365-renovate-config:groupD3",
+    "github>microsoft/m365-renovate-config:groupEslint",
+    "github>microsoft/m365-renovate-config:groupFixtureUpdates",
+    "github>microsoft/m365-renovate-config:groupFluent",
+    "github>microsoft/m365-renovate-config:groupJest",
+    "github>microsoft/m365-renovate-config:groupLageBackfill",
+    "github>microsoft/m365-renovate-config:groupNodeMajor",
+    "github>microsoft/m365-renovate-config:groupReact",
+    "github>microsoft/m365-renovate-config:groupRollup",
+    "github>microsoft/m365-renovate-config:groupYargs"
   ]
 }
 ```

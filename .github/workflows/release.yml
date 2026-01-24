@@ -2,21 +2,33 @@ name: Release
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: [CI]
-    types: [completed]
-    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-release
 
-permissions:
-  actions: read
-
 jobs:
+  prerelease:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      shouldRelease: ${{ steps.shouldRelease.outputs.shouldRelease }}
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        with:
+          fetch-depth: 0
+
+      - uses: ecraig12345/beachball-actions/should-release@336d3a84a5c452f5264803f4c62c6c34b4a51fbe
+        id: shouldRelease
+        with:
+          token: ${{ github.token }}
+          batch: true
+          mode: output
+          changeGlob: '.changeset/*.md'
+
   release:
-    # Only run this if it's a workflow_dispatch trigger or the CI workflow was successful
-    if: ${{ github.event.workflow_run == null || github.event.workflow_run.conclusion == 'success' }}
+    needs: prerelease
+    if: ${{ needs.prerelease.outputs.shouldRelease == 'yes' }}
 
     runs-on: ubuntu-latest
 
@@ -38,17 +50,24 @@ jobs:
 
       - run: yarn --immutable
 
-      - name: Check if release is needed
-        uses: ecraig12345/beachball-actions/should-release@336d3a84a5c452f5264803f4c62c6c34b4a51fbe # v2
-        id: shouldRelease
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          batch: true
-          mode: output
-          changeGlob: '.changeset/*.md'
+      - name: Type check scripts
+        run: yarn build
+
+      - name: Lint presets
+        run: yarn lint
+
+      - name: Basic preset validation
+        run: yarn test:basic
+        id: validate
+
+      - name: Renovate dry run with all presets
+        run: yarn test:full
+        id: dryRun
+        env:
+          TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
+          TOKEN_REQUIRED: 1
 
       - name: Release
-        if: ${{ steps.shouldRelease.outputs.shouldRelease == 'yes' }}
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           # Used by changesets and when pushing updates

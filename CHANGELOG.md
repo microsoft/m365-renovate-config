@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.8.1
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.8.0...v2.8.1) - January 24, 2026 at 12:27 AM PST
+
+### Patch Changes
+
+- [#255](https://github.com/microsoft/m365-renovate-config/pull/255) [`cd06d25`](https://github.com/microsoft/m365-renovate-config/commit/cd06d255fb79ba07e338a73fc0c17367948db2a1) - Add groupActions to groupMore (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.8.0
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.7.6...v2.8.0) - January 24, 2026 at 12:15 AM PST
