@@ -94,6 +94,8 @@ These logs come from `renovate` in `testPresetsFull.js`.
 
 A config extends `github>microsoft/m365-renovate-config:oops` which doesn't exist.
 
+If the fetch URL does not include `?ref=...` (e.g. `https://api.github.com/repos/microsoft/m365-renovate-config/contents/newPreset.json`) it probably means some preset extends `newPreset` which was newly-added in this PR (see comment in `serverConfig.js`).
+
 ```jsonc
 [
   {
@@ -158,4 +160,10 @@ A config extends `github>microsoft/m365-renovate-config:oops` which doesn't exis
     "msg": "Renovate is exiting with a non-zero code due to the following logged errors",
   },
 ]
+```
+
+### Preset 404 (usually does not exist in main yet)
+
+```jsonc
+
 ```

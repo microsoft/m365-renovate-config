@@ -88,6 +88,7 @@ In this section, ONLY edit between "extra content" marker comments!
   - [beachball](#beachball)
 - [Grouping presets](#grouping-presets)
   - [groupMore](#groupmore)
+  - [groupActions](#groupactions)
   - [groupD3](#groupd3)
   - [groupEslint](#groupeslint)
   - [groupFixtureUpdates](#groupfixtureupdates)
@@ -244,6 +245,33 @@ Apply all the groupings from this repo (except groupTypes).
 <!-- start extra content (EDITABLE between these comments) -->
 
 To use this preset but disable an individual grouping, add its name to the `ignorePresets` array.
+
+<!-- end extra content -->
+
+---
+
+#### `groupActions`
+
+Group and auto-update official GitHub Actions.
+
+<details><summary><b>Show config JSON</b></summary>
+
+```json
+{
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions (official)",
+      "matchPackageNames": ["actions/*", "github/*"],
+      "dependencyDashboardApproval": false
+    }
+  ]
+}
+```
+
+</details>
+
+<!-- start extra content (EDITABLE between these comments) -->
 
 <!-- end extra content -->
 
