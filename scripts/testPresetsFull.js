@@ -1,105 +1,61 @@
-/** @import { RenovateLog } from './utils/types.js' */
+/** @import { RenovatePresetDebugLog } from './utils/types.js' */
 
 import fs from 'fs';
 import path from 'path';
-import { getExtendsForLocalPreset } from './utils/extends.js';
 import { getEnv } from './utils/getEnv.js';
 import {
-  defaultBranch,
   defaultRepo,
   isGithub,
   logEndGroup,
   logError,
   logGroup,
-  primaryBranches,
+  logOther,
 } from './utils/github.js';
-import { root } from './utils/paths.js';
-import { readPresets } from './utils/readPresets.js';
-import { logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.js';
+import { paths } from './utils/paths.js';
+import { getRenovateEnv, logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.js';
 import { runBin } from './utils/runBin.js';
+import serverConfig from './serverConfig.js';
+import { checkToken } from './checkToken.js';
 
-/** @typedef {RenovateLog & { preset: string }} RenovatePresetDebugLog */
-/** */
+const configFilePath = path.join(import.meta.dirname, 'serverConfig.js');
 
 async function runTests() {
-  const ref = getEnv('GITHUB_REF', isGithub);
-  const branchName = ref.replace('refs/heads/', '');
   const repository = getEnv('GITHUB_REPOSITORY', isGithub);
-  const eventName = getEnv('GITHUB_EVENT_NAME', isGithub);
-  const token = getEnv('TOKEN', isGithub);
 
-  if (
-    !isGithub ||
-    !primaryBranches.includes(branchName) ||
-    eventName !== 'push' ||
-    repository !== defaultRepo
-  ) {
-    // This would be possible but complex to test when running against a github branch, and likely
-    // not possible to completely test locally. Steps for testing against a github branch:
-    // - Modify the config files to point to a temporary generated tag name
-    // - Commit the modified files and create the tag
-    // - Push the tag (don't push the commit to the branch)
-    //   - Not sure if this would work for fork PRs, and we don't want a fork's unvalidated
-    //     changes pushed to a tag in the main repo
-    // - Run the test
-    // - Delete the tag
-    console.log('Skipping full Renovate test run (only meaningful after configs are checked in)');
+  if (!isGithub || repository !== defaultRepo) {
+    // This is possible to test against a github branch in the main repo, but won't work with fork PRs
+    // or locally. In that case, exit with a warning.
+    logOther(
+      'warning',
+      'Skipping full Renovate test run (only works after configs are checked in ' +
+        'or for branches in the main repo)',
+    );
     process.exit(0);
   }
 
-  const presets = readPresets();
-  // add a reference to the branch if not testing main
-  const branchRef = branchName === defaultBranch ? '' : branchName;
+  checkToken();
 
-  const logFile = path.join(root, 'renovate.log');
-  fs.writeFileSync(logFile, ''); // Renovate wants this to exist already
-
-  // https://docs.renovatebot.com/self-hosted-configuration/
-  const selfHostedConfig = {
-    // All we really need here is the config validation, so do the shortest type of dry run
-    // https://docs.renovatebot.com/self-hosted-configuration/#dryrun
-    dryRun: 'extract',
-    repositories: [defaultRepo],
-    hostRules: [{ abortOnError: true }],
-    logFile,
-    logFileLevel: 'debug',
-    token,
-    force: {
-      printConfig: true,
-      // force an "extends" config with all the presets from this repo
-      extends: presets.map((p) => getExtendsForLocalPreset(p.name, branchRef)),
-      // also use the current branch as the base
-      ...(branchName !== defaultBranch && {
-        baseBranches: [branchName],
-        useBaseBranchConfig: 'merge',
-      }),
-    },
-  };
-  // Normally the Renovate server config would be JS, but Renovate seems to have trouble importing
-  // the JS config due to this package having type: module (and fails with a misleading error).
-  // So write the config to JSON instead.
-  // Also, use .json5 to ensure it's not interpreted as a preset by any other steps.
-  const configFile = path.join(root, 'renovate-config.json5');
-  const configContent = JSON.stringify(selfHostedConfig, null, 2);
-  fs.writeFileSync(configFile, configContent);
+  fs.writeFileSync(paths.logFileFull, ''); // Renovate wants this to exist already
 
   logGroup('Renovate server config:');
-  console.log(configContent);
+  console.log(JSON.stringify(serverConfig, null, 2));
   logEndGroup();
 
   logGroup('Running Renovate');
   const result = await runBin('renovate', [], {
     stdio: 'inherit',
-    env: { LOG_LEVEL: 'info', RENOVATE_CONFIG_FILE: configFile },
+    env: getRenovateEnv({
+      logLevel: 'info',
+      logFile: paths.logFileFull,
+      logFileLevel: 'debug',
+      configFile: configFilePath,
+    }),
   });
   logEndGroup();
 
   if (result.failed) {
-    logRenovateError(logFile);
+    logRenovateError(paths.logFileFull);
     process.exit(1);
-  } else {
-    // clean up temporary server config
-    fs.unlinkSync(configFile);
   }
 }
 
@@ -107,24 +63,57 @@ async function runTests() {
 function logRenovateError(logFile) {
   const logs = readRenovateLogs(logFile);
 
-  const invalidPresetLog = logs.find((l) => !!l.err && l.msg === 'config-presets-invalid');
-  if (invalidPresetLog) {
+  // If a preset fails to validate while running renovate, there's a special message config-presets-invalid.
+  // (Unclear if there can be multiple of these logs, but check anyway.)
+  const invalidPresetLogs = logs.filter((l) => !!l.err && l.msg === 'config-presets-invalid');
+  if (invalidPresetLogs.length) {
     // As of writing, there's only a debug log which directly includes the name of the preset that
-    // failed to validate (it's not included in any of the higher-severity logs)
-    const presetDebugLog = /** @type {RenovatePresetDebugLog | undefined} */ (
-      logs.find((l) => !!l.err && /** @type {RenovatePresetDebugLog} */ (l).preset)
+    // failed to validate (it's not included in any of the higher-severity logs).
+    const presetDebugLogs = /** @type {RenovatePresetDebugLog[]} */ (
+      logs.filter((l) => !!l.err && /** @type {RenovatePresetDebugLog} */ (l).preset)
     );
 
-    if (presetDebugLog) {
-      logError(`Preset "${presetDebugLog.preset}" is invalid`);
-      logRenovateErrorDetails(presetDebugLog);
+    if (presetDebugLogs.length) {
+      for (const log of presetDebugLogs) {
+        const maybeHttpError =
+          /** @type {{ response?: { statusCode?: number }; options?: { url?: string } } | undefined} */ (
+            log.err?.err
+          );
+        if (maybeHttpError?.response?.statusCode === 404) {
+          const url = maybeHttpError.options?.url;
+          if (url?.includes(defaultRepo) && !url.includes('?ref=')) {
+            logError(
+              `Preset "${log.preset}" not found at URL: ${url}\n` +
+                'This is expected if the preset was added in this PR and another preset extends it.',
+            );
+          } else {
+            logError(`Preset "${log.preset}" not found (404)`);
+            logRenovateErrorDetails(log);
+          }
+        } else {
+          logError(`Preset "${log.preset}" is invalid`);
+          logRenovateErrorDetails(log);
+        }
+      }
     } else {
-      logError('A preset failed to validate');
-      logRenovateErrorDetails(invalidPresetLog);
+      logError('One or more presets failed to validate');
+      for (const log of invalidPresetLogs) {
+        logRenovateErrorDetails(log);
+      }
     }
   } else {
-    logError('Running Renovate failed for an unknown reason');
+    const errorRollupLog = logs.find((l) => l.loggerErrors);
+    if (errorRollupLog?.loggerErrors?.length) {
+      logError('Error while running Renovate');
+      for (const log of errorRollupLog.loggerErrors) {
+        logRenovateErrorDetails(log);
+      }
+    } else {
+      logError('Running Renovate failed for an unknown reason (see logs)');
+    }
   }
+
+  logError('For debug logs, see the renovate-dry-run-log artifact.');
 }
 
 runTests().catch((err) => {

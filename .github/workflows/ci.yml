@@ -17,23 +17,27 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 0
 
       - run: printenv | sort
 
       - name: Set up Node
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           cache: yarn
           node-version-file: .nvmrc
 
-      - run: yarn --frozen-lockfile
+      - run: yarn --immutable
 
       - name: Check token
-        if: github.event_name == 'push'
-        run: yarn check-token "$TOKEN"
+        run: |
+          if [[ -n "$TOKEN" || "$GITHUB_EVENT_NAME" -eq "push" ]]; then
+            yarn check-token "$TOKEN"
+          else
+            echo "Skipping token check"
+          fi
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
 
@@ -51,11 +55,25 @@ jobs:
 
       - name: Basic preset validation
         run: yarn test:basic
+        id: validate
+
+      - name: Upload validation logs
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        if: ${{ always() && steps.validate.outcome != 'skipped' }}
+        with:
+          path: renovate.validate.log
+          name: renovate-validate-log
 
       - name: Renovate dry run with all presets
-        if: github.event_name == 'push'
-        run: |
-          yarn check-token "$TOKEN"
-          yarn test:full
+        run: yarn test:full
+        id: dryRun
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
+          TOKEN_REQUIRED: 1
+
+      - name: Upload dry run logs
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        if: ${{ always() && steps.dryRun.outcome != 'skipped' }}
+        with:
+          path: renovate.log
+          name: renovate-dry-run-log

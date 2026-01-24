@@ -1,6 +1,6 @@
 import { execaNode } from 'execa';
 import path from 'path';
-import { root } from './paths.js';
+import { paths } from './paths.js';
 
 /**
  * Run a binary provided by a node module
@@ -10,13 +10,13 @@ import { root } from './paths.js';
  */
 export function runBin(bin, args, opts = {}) {
   const { quiet, ...execOpts } = opts;
-  const scriptPath = path.join(root, 'node_modules/.bin', bin);
+  const scriptPath = path.join(paths.root, 'node_modules/.bin', bin);
   !quiet && console.log(`Running: ${bin} ${args.join(' ')}`);
   !quiet && console.log(`(resolved: node ${scriptPath} ${args.join(' ')})`);
   !quiet && opts.env && console.log(`(env: ${JSON.stringify(opts.env)} )`);
 
   return execaNode(scriptPath, args, {
-    cwd: root,
+    cwd: paths.root,
     all: true,
     reject: false, // don't throw on failure
     ...execOpts,

@@ -1,5 +1,5 @@
 import { execa } from 'execa';
-import { root } from './paths.js';
+import { paths } from './paths.js';
 
 /**
  * @param {string} file
@@ -12,7 +12,7 @@ export function exec(file, args, opts = {}) {
   !quiet && opts.env && console.log(`(env: ${JSON.stringify(opts.env)} )`);
 
   return execa(file, args, {
-    cwd: root,
+    cwd: paths.root,
     all: true,
     reject: false, // don't throw on failure
     ...execOpts,

@@ -6,5 +6,10 @@
     // (since json5 allows things like unquoted keys that jsonc doesn't).
     "*.json5": "jsonc"
   },
-  "javascript.preferences.importModuleSpecifierEnding": "js"
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/*.code-search": true,
+    "**/.yarn/releases": true
+  }
 }

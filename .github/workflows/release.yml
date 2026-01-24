@@ -24,22 +24,22 @@ jobs:
     environment: release
 
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 0
           # Don't save creds in the git config (so it's easier to override later)
           persist-credentials: false
 
       - name: Set up Node
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           cache: yarn
           node-version-file: .nvmrc
 
-      - run: yarn --frozen-lockfile
+      - run: yarn --immutable
 
       - name: Check if release is needed
-        uses: ecraig12345/beachball-actions/should-release@27312284362c35e986a171b871edee5f32afe782 # v2
+        uses: ecraig12345/beachball-actions/should-release@336d3a84a5c452f5264803f4c62c6c34b4a51fbe # v2
         id: shouldRelease
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
