@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ecraig12345/beachball-actions/should-release@336d3a84a5c452f5264803f4c62c6c34b4a51fbe
+      - uses: ecraig12345/beachball-actions/should-release@de6144851ea40b250efb8fbfb4e8c88868eebe4b
         id: shouldRelease
         with:
           token: ${{ github.token }}
