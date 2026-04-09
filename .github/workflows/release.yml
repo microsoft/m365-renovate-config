@@ -6,19 +6,19 @@ on:
 concurrency:
   group: ${{ github.ref }}-release
 
+permissions: {}
+
 jobs:
   prerelease:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     outputs:
       shouldRelease: ${{ steps.shouldRelease.outputs.shouldRelease }}
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
 
-      - uses: ecraig12345/beachball-actions/should-release@336d3a84a5c452f5264803f4c62c6c34b4a51fbe
+      - uses: microsoft/beachball-actions/should-release@cf7d34819ad50dce8894b3ff99a2a7899aefee3d # v3
         id: shouldRelease
         with:
           token: ${{ github.token }}
@@ -36,7 +36,7 @@ jobs:
     environment: release
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
           # Don't save creds in the git config (so it's easier to override later)

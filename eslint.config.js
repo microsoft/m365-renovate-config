@@ -36,6 +36,8 @@ const config = [
       'no-var': 'error',
       'require-await': 'error',
       'spaced-comment': ['error', 'always'],
+      // error.cause is not consistently displayed by other logic
+      'preserve-caught-error': 'off',
 
       // not needed with typescript checking, copied from https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslint-recommended.ts
       // (this repo currently doesn't use typescript-eslint)
