@@ -917,7 +917,7 @@ Update "noisy" (frequently-updating) packages once every other week.
 {
   "packageRules": [
     {
-      "matchPackageNames": ["@microsoft/api-extractor*"],
+      "matchPackageNames": ["@microsoft/api-extractor*", "github/codeql-action"],
       "schedule": ["before 5am on the 8th and 22nd day of the month"]
     }
   ]
