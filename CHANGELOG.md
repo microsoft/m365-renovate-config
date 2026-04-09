@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.8.2
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.8.1...v2.8.2) - April 8, 2026 at 7:30 PM PDT
+
+### Patch Changes
+
+- [#277](https://github.com/microsoft/m365-renovate-config/pull/277) [`ad5a08e`](https://github.com/microsoft/m365-renovate-config/commit/ad5a08e8bad86c9e4d2714c5c7217adc2f4c9371) - Add github/codeql-action to scheduleNoisy (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.8.1
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.8.0...v2.8.1) - January 24, 2026 at 12:27 AM PST
