@@ -35,7 +35,7 @@
     "node-fetch": "^3.3.1",
     "prettier": "^3.0.0",
     "renovate": "43.101.2",
-    "typescript": "^5.0.3"
+    "typescript": "^6.0.0"
   },
   "resolutions": {
     "@yarnpkg/core@npm:4.5.0/tar@npm:^6.0.5": "^7.0.0"
