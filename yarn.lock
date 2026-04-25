@@ -1550,6 +1550,9 @@ __metadata:
     prettier: "npm:^3.0.0"
     renovate: "npm:43.138.1"
     typescript: "npm:^6.0.0"
+  dependenciesMeta:
+    re2:
+      built: true
   languageName: unknown
   linkType: soft
 

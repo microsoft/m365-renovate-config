@@ -75,6 +75,7 @@ jobs:
         with:
           # Used to authenticate the `github` object (used for creating the release)
           github-token: ${{ secrets.REPO_PAT }}
+          # This must use the special require() wrapper provided by the action to resolve paths
           script: |
-            const { release } = await import('./scripts/release/index.ts');
+            const { release } = require('./scripts/release/index.ts');
             await release(github);
