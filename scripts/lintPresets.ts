@@ -1,7 +1,7 @@
-import { logError } from './utils/github.js';
-import { readPresets } from './utils/readPresets.js';
+import { logError } from './utils/github.ts';
+import { readPresets } from './utils/readPresets.ts';
 
-const requiredAttributes = {
+const requiredAttributes: Record<string, string> = {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   description: '',
 };
@@ -9,14 +9,14 @@ const requiredAttributes = {
 const presets = readPresets();
 
 for (const { name: presetName, filename, json } of presets) {
-  const logIssue = (/** @type {*} */ message) => {
+  const logIssue = (message: string) => {
     logError(`${presetName}: ${message}`, filename);
     process.exitCode = 1;
   };
 
   // Verify required attributes are present (and have the correct value, if relevant)
   for (const [name, value] of Object.entries(requiredAttributes)) {
-    const actualValue = /** @type {*} */ (json)[name];
+    const actualValue = (json as any)[name];
     if (!actualValue) {
       logIssue(`missing required attribute "${name}"`);
     } else if (value && actualValue !== value) {

@@ -10,13 +10,13 @@
   "scripts": {
     "build": "tsc",
     "change": "changeset",
-    "check-token": "node ./scripts/checkToken.js",
+    "check-token": "node ./scripts/checkToken.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint . && node ./scripts/lintPresets.js",
-    "test:basic": "node ./scripts/testPresetsBasic.js",
-    "test:full": "node ./scripts/testPresetsFull.js",
-    "update-readme": "node ./scripts/updateReadme.js"
+    "lint": "eslint . && node ./scripts/lintPresets.ts",
+    "test:basic": "node ./scripts/testPresetsBasic.ts",
+    "test:full": "node ./scripts/testPresetsFull.ts",
+    "update-readme": "node ./scripts/updateReadme.ts"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
@@ -34,11 +34,7 @@
     "jju": "^1.4.0",
     "node-fetch": "^3.3.1",
     "prettier": "^3.0.0",
-    "renovate": "43.101.2",
-    "typescript": "^5.0.3"
-  },
-  "resolutions": {
-    "@yarnpkg/core@npm:4.5.0/tar@npm:^6.0.5": "^7.0.0"
-  },
-  "packageManager": "yarn@4.12.0"
+    "renovate": "43.138.1",
+    "typescript": "^6.0.0"
+  }
 }

@@ -1,5 +1,5 @@
 import path from 'path';
-import { getEnv } from './getEnv.js';
+import { getEnv } from './getEnv.ts';
 
 export const defaultRepoDetails = { owner: 'microsoft', repo: 'm365-renovate-config' };
 export const defaultRepo = `${defaultRepoDetails.owner}/${defaultRepoDetails.repo}`;
@@ -11,23 +11,21 @@ export const githubBranchName = getEnv('GITHUB_REF', isGithub)?.replace('refs/he
 /**
  * In CI, log an error with the github workflow command format so it shows up in the summary
  * and possibly pointing to the specific file. Logs normally in local runs.
- * @param {unknown} err Error
- * @param {string} [file] Source file. If provided with no extension, ".json" will be appended.
+ * @param err Error
+ * @param file Source file. If provided with no extension, ".json" will be appended.
  * @see {@link https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions}
  */
-export function logError(err, file) {
-  logOther('error', /** @type {Error} */ (err).stack || String(err), file);
+export function logError(err: unknown, file?: string) {
+  logOther('error', (err as Error).stack || String(err), file);
 }
 
 /**
  * In CI, log a message with the github workflow command format so it shows up in the summary
  * and possibly pointing to the specific file. Logs normally in local runs.
- * @param {'error' | 'warning' | 'notice'} level
- * @param {string} text
- * @param {string} [file] Source file. If provided with no extension, ".json" will be appended.
+ * @param file Source file. If provided with no extension, ".json" will be appended.
  * @see {@link https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions}
  */
-export function logOther(level, text, file) {
+export function logOther(level: 'error' | 'warning' | 'notice', text: string, file?: string) {
   file = file && !path.extname(file) ? `${file}.json` : file;
   const method =
     level === 'error' ? console.error : level === 'warning' ? console.warn : console.log;
@@ -36,9 +34,8 @@ export function logOther(level, text, file) {
 
 /**
  * In CI, start a log group using github workflow commands. Logs normally in local runs.
- * @param {string} name Group name
  */
-export function logGroup(name) {
+export function logGroup(name: string) {
   console.log(isGithub ? `::group::${name}` : `${name}\n`);
 }
 

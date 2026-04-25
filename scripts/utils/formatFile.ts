@@ -1,13 +1,11 @@
 // this is a CJS module which causes interop issues
 import prettier from 'prettier';
-import { runBin } from './runBin.js';
+import { runBin } from './runBin.ts';
 
 /**
  * Format a file with Prettier
- * @param {string} file path to file
- * @param {Parameters<typeof runBin>[2]} [options]
  */
-export async function formatFile(file, options = {}) {
+export async function formatFile(file: string, options: Parameters<typeof runBin>[2] = {}) {
   await runBin('prettier', ['--write', '--loglevel=warn', file], {
     stdio: 'inherit',
     reject: true,
@@ -17,15 +15,12 @@ export async function formatFile(file, options = {}) {
 
 /**
  * Cached Prettier config. In theory this could vary between files, but in this repo it shouldn't.
- * @type {import('prettier').Options | null | undefined}
  */
-let config;
+let config: prettier.Options | null | undefined;
 /**
  * Format file contents with Prettier
- * @param {string} filepath
- * @param {string} contents
  */
-export async function formatFileContents(filepath, contents) {
+export async function formatFileContents(filepath: string, contents: string) {
   if (!config) {
     config = await prettier.resolveConfig(filepath);
     if (!config) {

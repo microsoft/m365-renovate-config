@@ -1,14 +1,11 @@
-import { execaNode } from 'execa';
+import { execaNode, type Options } from 'execa';
 import path from 'path';
-import { paths } from './paths.js';
+import { paths } from './paths.ts';
 
 /**
  * Run a binary provided by a node module
- * @param {string} bin
- * @param {string[]} args
- * @param {import('execa').Options & { quiet?: boolean }} [opts]
  */
-export function runBin(bin, args, opts = {}) {
+export function runBin(bin: string, args: string[], opts: Options & { quiet?: boolean } = {}) {
   const { quiet, ...execOpts } = opts;
   const scriptPath = path.join(paths.root, 'node_modules/.bin', bin);
   !quiet && console.log(`Running: ${bin} ${args.join(' ')}`);
@@ -18,7 +15,7 @@ export function runBin(bin, args, opts = {}) {
   return execaNode(scriptPath, args, {
     cwd: paths.root,
     all: true,
-    reject: false, // don't throw on failure
+    reject: false,
     ...execOpts,
   });
 }
