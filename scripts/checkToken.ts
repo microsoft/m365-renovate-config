@@ -1,7 +1,7 @@
-import fetch from 'node-fetch';
+import fetch, { type Response } from 'node-fetch';
 import { pathToFileURL } from 'url';
-import { getEnv } from './utils/getEnv.js';
-import { logError } from './utils/github.js';
+import { getEnv } from './utils/getEnv.ts';
+import { logError } from './utils/github.ts';
 
 // Renovate tends to fail silently on invalid tokens in some cases, so this script checks the token.
 // It's also good for detecting if an invalid secret name was used.
@@ -14,7 +14,7 @@ export function getToken() {
   return getEnv('TOKEN', !!process.env.TOKEN_REQUIRED);
 }
 
-export async function checkToken(token = getToken()) {
+export async function checkToken(token: string | undefined = getToken()) {
   if (!token) {
     throw new Error('GitHub token not provided (is the variable name valid?)');
   }
@@ -22,8 +22,7 @@ export async function checkToken(token = getToken()) {
     throw new Error(`Value starting with "${token.slice(0, 4)}" is not a GitHub token`);
   }
 
-  /** @type {import('node-fetch').Response} */
-  let result;
+  let result: Response;
   try {
     result = await fetch('https://api.github.com', {
       headers: { Authorization: `Bearer ${token}` },

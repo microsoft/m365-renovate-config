@@ -1,10 +1,8 @@
-/** @import { RenovateLog, RenovateLogLevelName, RenovateLogLevelValue } from './types.js' */
-
 import fs from 'fs';
-import { logEndGroup, logGroup } from './github.js';
+import { logEndGroup, logGroup } from './github.ts';
+import type { RenovateLog, RenovateLogLevelName, RenovateLogLevelValue } from './types.ts';
 
-/** @type {Record<RenovateLogLevelValue, string>} */
-const logLevelStrings = {
+const logLevelStrings: Record<RenovateLogLevelValue, string> = {
   10: 'trace',
   20: 'debug',
   30: 'info',
@@ -14,15 +12,7 @@ const logLevelStrings = {
 };
 
 /**
- *
- * @param {object} params
- * @param {RenovateLogLevelName} [params.logLevel] Log level for console output (default info)
- * @param {'json'|'pretty'} [params.logFormat] Log format for console output (default pretty)
- * @param {string} [params.logFile] Path to a log file
- * @param {RenovateLogLevelName} [params.logFileLevel] Log level for the log file
- * @param {'json'|'pretty'} [params.logFileFormat] Log format for the log file (default json)
- * @param {string} [params.configFile] Path to the config file
- * @returns {Record<string, string>} Environment variables to set for Renovate
+ * @returns Environment variables to set for Renovate
  */
 export function getRenovateEnv({
   logLevel,
@@ -31,7 +21,20 @@ export function getRenovateEnv({
   logFileLevel,
   logFileFormat,
   configFile,
-}) {
+}: {
+  /** Log level for console output (default info) */
+  logLevel?: RenovateLogLevelName;
+  /** Log format for console output (default pretty) */
+  logFormat?: 'json' | 'pretty';
+  /** Path to a log file */
+  logFile?: string;
+  /** Log level for the log file */
+  logFileLevel?: RenovateLogLevelName;
+  /** Log format for the log file (default json) */
+  logFileFormat?: 'json' | 'pretty';
+  /** Path to the config file */
+  configFile?: string;
+}): Record<string, string> {
   return {
     ...(logLevel && { LOG_LEVEL: logLevel }),
     ...(logFormat && { LOG_FORMAT: logFormat }),
@@ -44,10 +47,8 @@ export function getRenovateEnv({
 
 /**
  * Read a Renovate log file, which has entries in JSON format.
- * @param {string} logFile
- * @returns {RenovateLog[]}
  */
-export function readRenovateLogs(logFile) {
+export function readRenovateLogs(logFile: string): RenovateLog[] {
   // Each line in the log file is a JSON blob
   return fs
     .readFileSync(logFile, 'utf8')
@@ -63,8 +64,7 @@ export function readRenovateLogs(logFile) {
     .filter((l) => !!l);
 }
 
-/** @param {RenovateLog} log */
-export function logRenovateErrorDetails(log) {
+export function logRenovateErrorDetails(log: RenovateLog) {
   const { err } = log;
   if (!err) return;
 
@@ -72,7 +72,7 @@ export function logRenovateErrorDetails(log) {
 
   // Typically the inner error in Renovate logs is the one with interesting content.
   // For example, if a preset name is invalid, this is where you'll find the 404 HTTPError.
-  const innerError = /** @type {(Error & Record<string, any>) | undefined} */ (err.err);
+  const innerError = err.err as (Error & Record<string, any>) | undefined;
   if (innerError?.name === 'HTTPError') {
     console.log(`HTTP error requesting ${innerError.options?.url}`);
     console.log(innerError.message);
@@ -91,11 +91,10 @@ export function logRenovateErrorDetails(log) {
 }
 
 /**
- * @param {RenovateLog} log
- * @param {boolean} [all] whether to print all the extra properties
+ * @param all whether to print all the extra properties
  * (exception: for logs with errors, always prints all properties)
  */
-export function formatRenovateLog(log, all) {
+export function formatRenovateLog(log: RenovateLog, all?: boolean) {
   // destructure a bunch of extra properties to get rid of them from the logged object
   const { msg, level, time, name, hostname, pid, logContext, v, ...rest } = log;
 

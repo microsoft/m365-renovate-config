@@ -1,25 +1,20 @@
 // Heavily modified from https://github.com/changesets/action
 import fs from 'fs';
-import { exec } from './exec.js';
-import { defaultBranch } from './github.js';
+import { exec } from './exec.ts';
+import { defaultBranch } from './github.ts';
 
 const netrc = `${process.env.HOME}/.netrc`;
 const user = 'github-actions[bot]';
 
-/**
- * @param {string[]} args
- * @param {Parameters<typeof exec>[2]} [options]
- */
-export function git(args, options) {
+export function git(args: string[], options?: Parameters<typeof exec>[2]) {
   return exec('git', args, { stdio: 'inherit', reject: true, ...options });
 }
 
 /**
  * Set username and email (as github-actions[bot]) and GitHub credentials (in .netrc).
  * Also set event handlers to try to clean up the credentials on exit.
- * @param {string} githubToken
  */
-export async function setCredentials(githubToken) {
+export async function setCredentials(githubToken: string) {
   await git(['config', 'user.name', user]);
   await git(['config', 'user.email', `${user}@users.noreply.github.com"`]);
 
@@ -35,8 +30,7 @@ export function cleanUpCredentials() {
   fs.rmSync(netrc, { force: true });
 }
 
-/** @param {string} branch */
-export async function push(branch) {
+export async function push(branch: string) {
   await git(['push', 'origin', `HEAD:${branch}`]);
 }
 
@@ -46,9 +40,8 @@ export async function pushTags() {
 
 /**
  * Switch to the branch, creating it if it doesn't exist
- * @param {string} branch
  */
-export async function switchToMaybeExistingBranch(branch) {
+export async function switchToMaybeExistingBranch(branch: string) {
   // for this one, don't throw on error (it's expected if the branch doesn't exist)
   const result = await git(['checkout', branch], { stdio: 'pipe', reject: false });
   if (result.failed) {
@@ -60,27 +53,20 @@ export async function switchToMaybeExistingBranch(branch) {
 
 /**
  * Merge with main (accepting main version for any conflicts)
- * @param {string} [message]
  */
-export async function mergeMain(message) {
+export async function mergeMain(message?: string) {
   await git(['merge', defaultBranch, '--no-edit', '-Xtheirs', ...(message ? ['-m', message] : [])]);
 }
 
-/** @param {string} tagName */
-export async function tag(tagName) {
+export async function tag(tagName: string) {
   await git(['tag', tagName]);
 }
 
-/**
- * @param {string} pathSpec
- * @param {'hard' | 'soft' | 'mixed'} [mode]
- */
-export async function reset(pathSpec, mode = 'hard') {
+export async function reset(pathSpec: string, mode: 'hard' | 'soft' | 'mixed' = 'hard') {
   await git(['reset', `--${mode}`, pathSpec]);
 }
 
-/** @param {string} message */
-export async function commitAll(message) {
+export async function commitAll(message: string) {
   await git(['add', '.']);
   await git(['commit', '-m', message]);
 }

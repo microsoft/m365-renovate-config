@@ -1,9 +1,9 @@
-/** @import { ConfigData, LocalPresetData } from './types.js' */
 import fs from 'fs';
 import jju from 'jju';
 import path from 'path';
-import { logError } from './github.js';
-import { paths } from './paths.js';
+import { logError } from './github.ts';
+import { paths } from './paths.ts';
+import type { ConfigData, LocalPresetData } from './types.ts';
 
 const excludeFiles = ['tsconfig.json', 'package.json'];
 
@@ -14,11 +14,9 @@ export const specialConfigNames = {
 
 /**
  * Get the contents of the preset files.
- * @param {Object} param0
- * @param {string[]} [param0.exclude] presets names to exclude
- * @returns {LocalPresetData[]}
  */
-export function readPresets({ exclude: excludePresets = [] } = {}) {
+export function readPresets(params: { exclude?: string[] } = {}): LocalPresetData[] {
+  const excludePresets = params?.exclude ?? [];
   const presetFiles = fs
     .readdirSync(paths.root)
     .filter((file) => /^[^.].*\.json$/.test(file) && !excludeFiles.includes(file));
@@ -47,11 +45,10 @@ export function readPresets({ exclude: excludePresets = [] } = {}) {
 /**
  * Get the contents of the repo config, preset files, and server config.
  * The repo config will always be first in the array.
- * @returns {ConfigData[]} Presets and configs.
  * All properties will be included for the presets and repo config.
  * The contents are omitted from the server config since it's JS.
  */
-export function readPresetsAndConfigs() {
+export function readPresetsAndConfigs(): ConfigData[] {
   const repoConfigContent = fs.readFileSync(paths.repoRenovateConfig, 'utf8');
   return [
     {

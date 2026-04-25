@@ -1,21 +1,22 @@
 import readChangesets from '@changesets/read';
+import type { Octokit } from '@octokit/rest';
 import fs from 'fs';
-import * as git from '../utils/git.js';
+import { checkToken } from '../checkToken.ts';
+import { formatFileContents } from '../utils/formatFile.ts';
+import { getReleaseBranchFromVersion } from '../utils/getReleaseBranches.ts';
+import * as git from '../utils/git.ts';
 import {
   defaultBranch,
   defaultRepo,
   defaultRepoDetails,
   logEndGroup,
   logGroup,
-} from '../utils/github.js';
-import { paths } from '../utils/paths.js';
-import { runBin } from '../utils/runBin.js';
-import { getHeadingText, splitByHeading } from '../utils/markdown.js';
-import { updateRefs } from './updateRefs.js';
-import { formatFileContents } from '../utils/formatFile.js';
-import { readPackageJson } from '../utils/readPackageJson.js';
-import { getReleaseBranchFromVersion } from '../utils/getReleaseBranches.js';
-import { checkToken } from '../checkToken.js';
+} from '../utils/github.ts';
+import { getHeadingText, splitByHeading } from '../utils/markdown.ts';
+import { paths } from '../utils/paths.ts';
+import { readPackageJson } from '../utils/readPackageJson.ts';
+import { runBin } from '../utils/runBin.ts';
+import { updateRefs } from './updateRefs.ts';
 
 const headingLevel = 2;
 const skipCi = '[skip ci]';
@@ -25,10 +26,8 @@ const skipCi = '[skip ci]';
  * Returns the new entry's text (not the full changelog).
  * (This would ideally be done via some changesets API during the `version` command,
  * but that's not supported as of writing.)
- * @param {string} prevVersion
- * @param {string} newVersion
  */
-export async function amendChangelog(prevVersion, newVersion) {
+export async function amendChangelog(prevVersion: string, newVersion: string) {
   const changelog = fs.readFileSync(paths.changelog, 'utf8');
 
   let changelogEntry = '';
@@ -76,11 +75,8 @@ export async function amendChangelog(prevVersion, newVersion) {
 /**
  * Update changelog and version, commit/push to main and `releaseBranch`, and create a release.
  * Throws an error if anything fails.
- *
- * @param {import('@octokit/rest').Octokit} github
- * @param {string} githubToken
  */
-export async function bumpAndRelease(github, githubToken) {
+export async function bumpAndRelease(github: Octokit, githubToken: string) {
   await checkToken(githubToken);
   await git.setCredentials(githubToken);
 

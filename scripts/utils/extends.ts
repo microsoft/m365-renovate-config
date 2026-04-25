@@ -1,6 +1,6 @@
 import assert from 'assert';
 import path from 'path';
-import { defaultRepo } from './github.js';
+import { defaultRepo } from './github.ts';
 
 export const repoPresetRegex = new RegExp(
   `^github>${defaultRepo}(?::(\\w+)(?:\\(.*?\\))?)?(?:#.*)?$`,
@@ -12,28 +12,23 @@ runTests();
 /**
  * If `extendsStr` points to a preset from this repo, get its name.
  * Returns undefined otherwise. (Doesn't verify that the preset name exists.)
- * @param {string} extendsStr
  */
-export function getLocalPresetFromExtends(extendsStr) {
+export function getLocalPresetFromExtends(extendsStr: string): string | undefined {
   const match = extendsStr.match(repoPresetRegex);
   return match ? match[1] || 'default' : undefined;
 }
 
 /**
  * Add `ref` to the end of `extendsStr`, replacing any existing ref.
- * @param {string} extendsStr
- * @param {string} ref
  */
-function setExtendsRef(extendsStr, ref) {
+function setExtendsRef(extendsStr: string, ref: string) {
   return extendsStr.replace(/($|#.*)/, `#${ref}`);
 }
 
 /**
  * For any local presets in `presets`, add `ref` to the end, replacing any existing ref.
- * @param {string[]} presets
- * @param {string} ref
  */
-export function setExtendsRefs(presets, ref) {
+export function setExtendsRefs(presets: string[], ref: string) {
   return presets.map((preset) =>
     // if it's a preset in this repo, either add the ref to the end or replace the existing ref
     getLocalPresetFromExtends(preset) ? setExtendsRef(preset, ref) : preset,
@@ -43,23 +38,22 @@ export function setExtendsRefs(presets, ref) {
 /**
  * Get a reference to a local preset for use in an `extends` config.
  * (Doesn't verify that the preset name exists.)
- * @param {string} preset Preset name or path (basename will be used)
- * @param {string} [ref]
+ * @param preset Preset name or path (basename will be used)
  */
-export function getExtendsForLocalPreset(preset, ref) {
+export function getExtendsForLocalPreset(preset: string, ref?: string) {
   const presetName = path.basename(preset, '.json');
   const presetRef = ref ? `#${ref}` : '';
   return `github>${defaultRepo}:${presetName}${presetRef}`;
 }
 
 function runTests() {
-  const tests = [
+  const tests: [string, string][] = [
     [`github>${defaultRepo}`, 'default'],
     [`github>${defaultRepo}:automergeTypes`, 'automergeTypes'],
     [`github>${defaultRepo}:restrictNode(14)`, 'restrictNode'],
   ];
 
-  const refTests = tests.map(([str, preset]) => [str + '#v123', preset]);
+  const refTests: [string, string][] = tests.map(([str, preset]) => [str + '#v123', preset]);
 
   for (const [extnds, preset] of [...tests, ...refTests]) {
     const res1 = getLocalPresetFromExtends(extnds);

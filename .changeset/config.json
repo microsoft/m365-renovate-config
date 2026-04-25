@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": ["../scripts/release/changelog.cjs", { "repo": "microsoft/m365-renovate-config" }],
+  "changelog": ["../scripts/release/changelog.ts", { "repo": "microsoft/m365-renovate-config" }],
   "commit": false,
   "fixed": [],
   "linked": [],
