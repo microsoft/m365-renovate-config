@@ -1,33 +1,28 @@
-/** @import { ConfigData, LocalPresetData, RenovateLog } from './utils/types.js' */
-
 import assert from 'assert';
 import fs from 'fs';
 import jju from 'jju';
 import path from 'path';
 import { Transform } from 'stream';
-import { getLocalPresetFromExtends } from './utils/extends.js';
-import { formatFileContents } from './utils/formatFile.js';
-import { isGithub, logEndGroup, logError, logOther, logGroup } from './utils/github.js';
-import { readPresetsAndConfigs, specialConfigNames } from './utils/readPresets.js';
-import { formatRenovateLog, getRenovateEnv } from './utils/renovateLogs.js';
-import { runBin } from './utils/runBin.js';
-import { paths } from './utils/paths.js';
+import { getLocalPresetFromExtends } from './utils/extends.ts';
+import { formatFileContents } from './utils/formatFile.ts';
+import { isGithub, logEndGroup, logError, logOther, logGroup } from './utils/github.ts';
+import { paths } from './utils/paths.ts';
+import { readPresetsAndConfigs, specialConfigNames } from './utils/readPresets.ts';
+import { formatRenovateLog, getRenovateEnv } from './utils/renovateLogs.ts';
+import { runBin } from './utils/runBin.ts';
+import type { ConfigData, LocalPresetData, RenovateLog } from './utils/types.ts';
 
 const presetArg = process.argv
   .find((arg) => arg.startsWith('--preset='))
   ?.split('=')[1]
   .replace(/^(['"])(.*)\1$/, '$2');
 
-/** @typedef {'error'|'unknown'|'ok'} Result */
-/** */
+type Result = 'error' | 'unknown' | 'ok';
 
 /**
  * Validate a preset or config file.
- * @param {ConfigData} preset
- * @param {boolean} hasInvalidRepoConfig
- * @returns {Promise<Result>}
  */
-async function checkFile(preset, hasInvalidRepoConfig) {
+async function checkFile(preset: ConfigData, hasInvalidRepoConfig: boolean): Promise<Result> {
   const { absolutePath, filename } = preset;
 
   // Use renovate-config-validator to test for blatantly invalid configuration
@@ -44,15 +39,14 @@ async function checkFile(preset, hasInvalidRepoConfig) {
     }),
   });
 
-  let migratedConfig;
-  let newConfig;
-  let errorMessages = /** @type {Set<string>} */ (new Set());
+  let migratedConfig: any;
+  let newConfig: any;
+  const errorMessages = new Set<string>();
   // Format the JSON logs as nice text (to be sent to stdout) and detect special properties,
   // including `migratedConfig` (or `newConfig`) indicating that the config needs migration
   const logTransform = new Transform({
-    transform(chunk, encoding, callback) {
-      /** @type {RenovateLog} */
-      let logJson;
+    transform(chunk, _encoding, callback) {
+      let logJson: RenovateLog;
       try {
         logJson = JSON.parse(chunk.toString());
       } catch {
@@ -116,7 +110,7 @@ async function checkFile(preset, hasInvalidRepoConfig) {
   const updatedConfig = migratedConfig || newConfig;
   if (updatedConfig) {
     if (preset.json && preset.content) {
-      return migrateConfig(/** @type {LocalPresetData} */ (preset), updatedConfig);
+      return migrateConfig(preset as LocalPresetData, updatedConfig);
     }
 
     // The server config can't be auto-migrated because it's JS
@@ -133,11 +127,8 @@ async function checkFile(preset, hasInvalidRepoConfig) {
 
 /**
  * Write migrated config content to a file and format it if appropriate.
- * @param {LocalPresetData} preset
- * @param {*} migratedConfig
- * @returns {Promise<Result>}
  */
-async function migrateConfig(preset, migratedConfig) {
+async function migrateConfig(preset: LocalPresetData, migratedConfig: any): Promise<Result> {
   const { name, filename, absolutePath, content } = preset;
   const migratedContent = jju.update(content, migratedConfig, {
     indent: 2,
@@ -147,7 +138,7 @@ async function migrateConfig(preset, migratedConfig) {
   // Update the file if running locally or this is the repo config (to prevent others from failing).
   // There's no point in updating other configs in CI since they can't be committed.
   const isRepoConfig = name === specialConfigNames.repoConfig;
-  let result = /** @type {Result} */ ('ok');
+  let result: Result = 'ok';
 
   if (isGithub) {
     result = 'error';
@@ -182,11 +173,8 @@ async function migrateConfig(preset, migratedConfig) {
  * Check the validity of any preset `extends` values that point to local presets.
  * (This is useful when renaming things.)
  * DOES NOT check the validity of built-in or other remote presets.
- * @param {ConfigData} preset
- * @param {string[]} presetNames
- * @returns {Exclude<Result,'warn'>}
  */
-function checkExtends(preset, presetNames) {
+function checkExtends(preset: ConfigData, presetNames: string[]): Exclude<Result, 'warn'> {
   const { json, filename } = preset;
   if (!json || !json.extends) {
     return 'ok';
@@ -230,8 +218,8 @@ async function runTests() {
 
   const presetNames = allPresetNames.slice(1);
 
-  const maybeFailedPresets = /** @type {string[]} */ ([]);
-  const failedPresets = /** @type {string[]} */ ([]);
+  const maybeFailedPresets: string[] = [];
+  const failedPresets: string[] = [];
 
   for (let i = 0; i < presets.length; i++) {
     const preset = presets[i];

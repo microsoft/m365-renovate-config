@@ -1,32 +1,30 @@
 import fs from 'fs';
-import { readPresets } from './utils/readPresets.js';
+import { pathToFileURL } from 'url';
+import { formatFileContents } from './utils/formatFile.ts';
+import { git } from './utils/git.ts';
+import { logError } from './utils/github.ts';
 import {
   getComments,
   getHeadingText,
   getMarkedSection,
   slugify,
   splitByHeading,
-} from './utils/markdown.js';
-import { formatFileContents } from './utils/formatFile.js';
-import { logError } from './utils/github.js';
-import { git } from './utils/git.js';
-import { pathToFileURL } from 'url';
+} from './utils/markdown.ts';
+import { readPresets } from './utils/readPresets.ts';
 
 const readmeFile = 'README.md';
 
-/**
- * @typedef {{
- *   name: string;
- *   nameWithArgs: string;
- *   content: string;
- * }} PresetSection
- * @typedef {{
- *   name: string;
- *   presets: (string | RegExp)[];
- *   rest?: boolean;
- * }} PresetGroup
- * @typedef {{ [presetName: string]: string }} PresetExtraTexts
- */
+type PresetSection = {
+  name: string;
+  nameWithArgs: string;
+  content: string;
+};
+type PresetGroup = {
+  name: string;
+  presets: (string | RegExp)[];
+  rest?: boolean;
+};
+type PresetExtraTexts = { [presetName: string]: string };
 
 const excludedPresets = [
   'beachballLibraryRecommended',
@@ -34,8 +32,7 @@ const excludedPresets = [
   'libraryRecommended',
 ];
 
-/** @type {PresetGroup[]} */
-const presetGroups = [
+const presetGroups: PresetGroup[] = [
   {
     name: 'Full config presets',
     presets: ['default', 'beachball'],
@@ -68,18 +65,15 @@ const comments = {
   /** Wraps extra content within each preset's docs */
   extra: getComments('extra content', 'EDITABLE between these comments'),
 };
-const requiredComments = /** @type {string[]} */ ([]).concat(
+const requiredComments: string[] = ([] as string[]).concat(
   ...[comments.main, comments.toc].map(({ start, end }) => [start, end]),
 );
 
 /**
  * Get any extra text added for each preset
- * @param {string[]} presetNames
- * @param {string} presetsSection
  */
-function getPresetExtraTexts(presetNames, presetsSection) {
-  /** @type {PresetExtraTexts} */
-  const presetExtraTexts = {};
+function getPresetExtraTexts(presetNames: string[], presetsSection: string) {
+  const presetExtraTexts: PresetExtraTexts = {};
   splitByHeading(presetsSection, 4)
     .slice(1) // remove the first part, which will be an h3
     .forEach((text) => {
@@ -100,9 +94,9 @@ function getPresetExtraTexts(presetNames, presetsSection) {
 }
 
 /**
- * @param {boolean} [check] If true, throw if the readme is out of date. Otherwise, update it.
+ * @param check If true, throw if the readme is out of date. Otherwise, update it.
  */
-export async function updateReadme(check) {
+export async function updateReadme(check?: boolean) {
   // read the readme and replace newlines for ease of processing
   const originalReadme = fs.readFileSync(readmeFile, 'utf8').replace(/\r?\n/g, '\n');
 
@@ -161,7 +155,7 @@ ${comments.extra.end}
   const remainingPresets = [...newPresets];
   const newPresetGroups = presetGroups.map((group) => {
     const { name, presets: presetsToGroup, rest } = group;
-    const includedPresets = /** @type {PresetSection[]} */ ([]);
+    const includedPresets: PresetSection[] = [];
 
     if (rest) {
       // catch-all case: add all remaining presets to the group

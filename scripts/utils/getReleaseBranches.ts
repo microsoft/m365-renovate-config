@@ -1,4 +1,4 @@
-import { readPackageJson } from './readPackageJson.js';
+import { readPackageJson } from './readPackageJson.ts';
 
 /**
  * Get the list of major version release branches that should currently exist
@@ -7,7 +7,7 @@ import { readPackageJson } from './readPackageJson.js';
 export function getReleaseBranches() {
   const version = readPackageJson().version;
   const major = Number(version.split('.')[0]);
-  const branches = /** @type {string[]} */ ([]);
+  const branches: string[] = [];
   for (let i = 1; i <= major; i++) {
     branches.push(`v${i}`);
   }
@@ -16,9 +16,8 @@ export function getReleaseBranches() {
 
 /**
  * Get the major release branch from a version.
- * @param {string} version
  */
-export function getReleaseBranchFromVersion(version) {
+export function getReleaseBranchFromVersion(version: string) {
   const major = Number(version.split('.')[0]);
   if (isNaN(major)) {
     // in case it's called with a range or something

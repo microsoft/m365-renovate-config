@@ -264,6 +264,7 @@ Group and auto-update official GitHub Actions.
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions (official)",
       "matchPackageNames": ["actions/*", "github/*"],
+      "matchDepTypes": ["action"],
       "dependencyDashboardApproval": false
     }
   ]
@@ -273,6 +274,8 @@ Group and auto-update official GitHub Actions.
 </details>
 
 <!-- start extra content (EDITABLE between these comments) -->
+
+This is set to only `matchDepTypes: ["action"]` because of [newer "actions" dependency types](https://docs.renovatebot.com/modules/manager/github-actions/#dependency-types) which should be updated separately.
 
 <!-- end extra content -->
 
@@ -778,7 +781,7 @@ Restrict Node version to the range `arg0` and ignore updates incompatible with y
 {
   "packageRules": [
     {
-      "matchPackageNames": ["@types/node", "node", "nodejs/node"],
+      "matchPackageNames": ["@types/node", "node", "nodejs/node", "node-version"],
       "allowedVersions": "{{arg0}}"
     },
     {

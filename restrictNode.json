@@ -5,7 +5,7 @@
 
   "packageRules": [
     {
-      "matchPackageNames": ["@types/node", "node", "nodejs/node"],
+      "matchPackageNames": ["@types/node", "node", "nodejs/node", "node-version"],
       "allowedVersions": "{{arg0}}"
     },
     {

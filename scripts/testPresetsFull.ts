@@ -1,8 +1,8 @@
-/** @import { RenovatePresetDebugLog } from './utils/types.js' */
-
 import fs from 'fs';
 import path from 'path';
-import { getEnv } from './utils/getEnv.js';
+import { checkToken } from './checkToken.ts';
+import serverConfig from './serverConfig.ts';
+import { getEnv } from './utils/getEnv.ts';
 import {
   defaultRepo,
   isGithub,
@@ -10,12 +10,11 @@ import {
   logError,
   logGroup,
   logOther,
-} from './utils/github.js';
-import { paths } from './utils/paths.js';
-import { getRenovateEnv, logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.js';
-import { runBin } from './utils/runBin.js';
-import serverConfig from './serverConfig.js';
-import { checkToken } from './checkToken.js';
+} from './utils/github.ts';
+import { paths } from './utils/paths.ts';
+import { getRenovateEnv, logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.ts';
+import { runBin } from './utils/runBin.ts';
+import type { RenovatePresetDebugLog } from './utils/types.ts';
 
 const configFilePath = path.join(import.meta.dirname, 'serverConfig.js');
 
@@ -59,8 +58,7 @@ async function runTests() {
   }
 }
 
-/** @param {string} logFile */
-function logRenovateError(logFile) {
+function logRenovateError(logFile: string) {
   const logs = readRenovateLogs(logFile);
 
   // If a preset fails to validate while running renovate, there's a special message config-presets-invalid.
@@ -69,16 +67,15 @@ function logRenovateError(logFile) {
   if (invalidPresetLogs.length) {
     // As of writing, there's only a debug log which directly includes the name of the preset that
     // failed to validate (it's not included in any of the higher-severity logs).
-    const presetDebugLogs = /** @type {RenovatePresetDebugLog[]} */ (
-      logs.filter((l) => !!l.err && /** @type {RenovatePresetDebugLog} */ (l).preset)
-    );
+    const presetDebugLogs = logs.filter(
+      (l) => !!l.err && (l as RenovatePresetDebugLog).preset,
+    ) as RenovatePresetDebugLog[];
 
     if (presetDebugLogs.length) {
       for (const log of presetDebugLogs) {
-        const maybeHttpError =
-          /** @type {{ response?: { statusCode?: number }; options?: { url?: string } } | undefined} */ (
-            log.err?.err
-          );
+        const maybeHttpError = log.err?.err as
+          | { response?: { statusCode?: number }; options?: { url?: string } }
+          | undefined;
         if (maybeHttpError?.response?.statusCode === 404) {
           const url = maybeHttpError.options?.url;
           if (url?.includes(defaultRepo) && !url.includes('?ref=')) {

@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.8.3
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.8.2...v2.8.3) - April 24, 2026 at 8:46 PM PDT
+
+### Patch Changes
+
+- [#281](https://github.com/microsoft/m365-renovate-config/pull/281) [`7b26096`](https://github.com/microsoft/m365-renovate-config/commit/7b2609679ec0bcac6a8df969d446cd1fff8301fa) - Prevent accidental node updates lumped with github actions updates (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.8.2
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.8.1...v2.8.2) - April 8, 2026 at 7:30 PM PDT
