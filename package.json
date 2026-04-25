@@ -36,5 +36,10 @@
     "prettier": "^3.0.0",
     "renovate": "43.138.1",
     "typescript": "^6.0.0"
+  },
+  "dependenciesMeta": {
+    "re2": {
+      "built": true
+    }
   }
 }
