@@ -8,6 +8,7 @@
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions (official)",
       "matchPackageNames": ["actions/*", "github/*"],
+      "matchDepTypes": ["action"],
       "dependencyDashboardApproval": false
     }
   ]
