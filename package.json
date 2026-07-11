@@ -35,7 +35,7 @@
     "node-fetch": "^3.3.1",
     "prettier": "^3.0.0",
     "renovate": "43.138.1",
-    "typescript": "^6.0.0"
+    "typescript": "^7.0.0"
   },
   "dependenciesMeta": {
     "re2": {
