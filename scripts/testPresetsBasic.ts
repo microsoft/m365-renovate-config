@@ -4,12 +4,12 @@ import jju from 'jju';
 import path from 'path';
 import { Transform } from 'stream';
 import { getLocalPresetFromExtends } from './utils/extends.ts';
-import { formatFileContents } from './utils/formatFile.ts';
+import { updateAndFormat } from './utils/formatFile.ts';
 import { isGithub, logEndGroup, logError, logOther, logGroup } from './utils/github.ts';
 import { paths } from './utils/paths.ts';
 import { readPresetsAndConfigs, specialConfigNames } from './utils/readPresets.ts';
-import { formatRenovateLog, getRenovateEnv } from './utils/renovateLogs.ts';
-import { runBin } from './utils/runBin.ts';
+import { formatRenovateLog } from './utils/renovateLogs.ts';
+import { installRenovateTemp, runRenovate } from './utils/runRenovate.ts';
 import type { ConfigData, LocalPresetData, RenovateLog } from './utils/types.ts';
 
 const presetArg = process.argv
@@ -27,16 +27,14 @@ async function checkFile(preset: ConfigData, hasInvalidRepoConfig: boolean): Pro
 
   // Use renovate-config-validator to test for blatantly invalid configuration
   // and for configs needing migration.
-  const configProcess = runBin('renovate-config-validator', [], {
-    quiet: true,
-    env: getRenovateEnv({
-      configFile: absolutePath,
-      logLevel: 'warn',
-      // log as JSON to make it easier to determine if migration is needed
-      logFormat: 'json',
-      logFile: paths.logFileBasic,
-      logFileLevel: 'debug',
-    }),
+  const configProcess = runRenovate('renovate-config-validator', {
+    configFile: absolutePath,
+    logLevel: 'warn',
+    // log as JSON to make it easier to determine if migration is needed
+    logFormat: 'json',
+    logFile: paths.logFileBasic,
+    logFileLevel: 'debug',
+    options: { stdio: 'pipe', reject: false },
   });
 
   let migratedConfig: any;
@@ -157,13 +155,7 @@ async function migrateConfig(preset: LocalPresetData, migratedConfig: any): Prom
   if (!isGithub || isRepoConfig) {
     // Actually update and format the file
     console.log(`Migrating ${filename} (see git diff for details)`);
-    try {
-      const formattedContent = await formatFileContents(absolutePath, migratedContent);
-      fs.writeFileSync(absolutePath, formattedContent);
-    } catch (err) {
-      logError(err);
-      result = 'error';
-    }
+    await updateAndFormat(absolutePath, migratedContent);
   }
 
   return result;
@@ -198,6 +190,8 @@ function checkExtends(preset: ConfigData, presetNames: string[]): Exclude<Result
 }
 
 async function runTests() {
+  await installRenovateTemp();
+
   // Create an empty log file before the tests start (renovate will append to this file)
   fs.writeFileSync(paths.logFileBasic, '');
 

@@ -1,5 +1,4 @@
 import fetch, { type Response } from 'node-fetch';
-import { pathToFileURL } from 'url';
 import { getEnv } from './utils/getEnv.ts';
 import { logError } from './utils/github.ts';
 
@@ -7,14 +6,13 @@ import { logError } from './utils/github.ts';
 // It's also good for detecting if an invalid secret name was used.
 
 /**
- * Get the TOKEN environment variable, if set. The CI pipeline sets another variable TOKEN_REQUIRED
- * which will cause accessing this to throw if the token isn't present.
+ * Get the TOKEN environment variable, if set. Throws if `required` is true and the token is not present.
  */
-export function getToken() {
-  return getEnv('TOKEN', !!process.env.TOKEN_REQUIRED);
+export function getToken(required?: boolean) {
+  return getEnv('TOKEN', required);
 }
 
-export async function checkToken(token: string | undefined = getToken()) {
+export async function checkToken(token: string) {
   if (!token) {
     throw new Error('GitHub token not provided (is the variable name valid?)');
   }
@@ -24,7 +22,7 @@ export async function checkToken(token: string | undefined = getToken()) {
 
   let result: Response;
   try {
-    result = await fetch('https://api.github.com', {
+    result = await fetch('https://api.github.com/repos/microsoft/m365-renovate-config', {
       headers: { Authorization: `Bearer ${token}` },
     });
   } catch (err) {
@@ -38,13 +36,10 @@ export async function checkToken(token: string | undefined = getToken()) {
   }
 }
 
-// ESM version of `if (require.main === module)`
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  (async () => {
-    await checkToken(process.argv[2]);
-    console.log('Token is valid');
-  })().catch((err) => {
+if (import.meta.main) {
+  await checkToken(process.argv[2]).catch((err) => {
     logError(err);
     process.exit(1);
   });
+  console.log('Token is valid');
 }

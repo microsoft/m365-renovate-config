@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { pathToFileURL } from 'url';
-import { formatFileContents } from './utils/formatFile.ts';
+import path from 'path';
+import { updateAndFormat } from './utils/formatFile.ts';
 import { git } from './utils/git.ts';
 import { logError } from './utils/github.ts';
 import {
@@ -10,9 +10,10 @@ import {
   slugify,
   splitByHeading,
 } from './utils/markdown.ts';
+import { paths } from './utils/paths.ts';
 import { readPresets } from './utils/readPresets.ts';
 
-const readmeFile = 'README.md';
+const readmePath = path.join(paths.root, 'README.md');
 
 type PresetSection = {
   name: string;
@@ -98,7 +99,7 @@ function getPresetExtraTexts(presetNames: string[], presetsSection: string) {
  */
 export async function updateReadme(check?: boolean) {
   // read the readme and replace newlines for ease of processing
-  const originalReadme = fs.readFileSync(readmeFile, 'utf8').replace(/\r?\n/g, '\n');
+  const originalReadme = fs.readFileSync(readmePath, 'utf8').replace(/\r?\n/g, '\n');
 
   const missingComments = requiredComments.filter((comment) => !originalReadme.includes(comment));
   if (missingComments.length) {
@@ -144,6 +145,7 @@ ${modifiedJson}
 
 ${comments.extra.start}
 ${extraContent}
+
 ${comments.extra.end}
 
 ---
@@ -199,19 +201,19 @@ ${comments.extra.end}
     .join('\n');
 
   // Update readme and format
-  const newReadme = await formatFileContents(
-    readmeFile,
+  await updateAndFormat(
+    readmePath,
     originalReadme
       .replace(presetsSection, newPresetGroups.map((g) => g.content).join('\n'))
       .replace(oldToc, newToc),
   );
+  const newReadme = fs.readFileSync(readmePath, 'utf8').replace(/\r?\n/g, '\n');
 
   if (newReadme.trim() === originalReadme.trim()) {
     console.log('\nReadme is up to date!\n');
   } else {
-    fs.writeFileSync(readmeFile, newReadme);
     if (check) {
-      await git(['diff', readmeFile]);
+      await git(['--no-page', 'diff', readmePath]);
       throw new Error(
         "Readme is out of date (see above for diff). Please run 'yarn update-readme' and commit the changes.",
       );
@@ -221,8 +223,7 @@ ${comments.extra.end}
   }
 }
 
-// ESM version of `if (require.main === module)`
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (import.meta.main) {
   const check = process.argv.includes('--check');
   updateReadme(check).catch((err) => {
     console.error(err.stack || err);

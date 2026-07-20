@@ -2,7 +2,7 @@ import readChangesets from '@changesets/read';
 import type { Octokit } from '@octokit/rest';
 import fs from 'fs';
 import { checkToken } from '../checkToken.ts';
-import { formatFileContents } from '../utils/formatFile.ts';
+import { updateAndFormat } from '../utils/formatFile.ts';
 import { getReleaseBranchFromVersion } from '../utils/getReleaseBranches.ts';
 import * as git from '../utils/git.ts';
 import {
@@ -63,11 +63,7 @@ export async function amendChangelog(prevVersion: string, newVersion: string) {
     `${heading}\n\n${compareLink} - ${releaseDate}`,
   );
 
-  const formattedContent = await formatFileContents(
-    paths.changelog,
-    changelog.replace(changelogEntry, amendedEntry),
-  );
-  fs.writeFileSync(paths.changelog, formattedContent);
+  await updateAndFormat(paths.changelog, changelog.replace(changelogEntry, amendedEntry));
 
   return amendedEntry;
 }
@@ -95,7 +91,7 @@ export async function bumpAndRelease(github: Octokit, githubToken: string) {
 
   // Update the version and changelog
   logGroup('Bumping versions and updating changelog locally');
-  await runBin('changeset', ['version'], { cwd: paths.root, stdio: 'inherit', reject: true });
+  await runBin('changeset', ['version']);
   logEndGroup();
 
   // Get the new version to determine the tag name and release branch

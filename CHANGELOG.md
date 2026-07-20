@@ -1,5 +1,13 @@
 # @microsoft/m365-renovate-config
 
+## 2.8.4
+
+[Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.8.3...v2.8.4) - July 20, 2026 at 4:52 PM PDT
+
+### Patch Changes
+
+- [#292](https://github.com/microsoft/m365-renovate-config/pull/292) [`f46e7e0`](https://github.com/microsoft/m365-renovate-config/commit/f46e7e0099706071ac98bb0514ba278f7a282473) - Update default minimumReleaseAge to 7d for npm, 3d for others (Thanks [@ecraig12345](https://github.com/ecraig12345)!)
+
 ## 2.8.3
 
 [Compare source](https://github.com/microsoft/m365-renovate-config/compare/v2.8.2...v2.8.3) - April 24, 2026 at 8:46 PM PDT
