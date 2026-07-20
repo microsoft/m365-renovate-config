@@ -66,7 +66,11 @@ export async function installRenovateTemp() {
     }),
   );
 
-  await execa('yarn', ['install'], { cwd: renovateDir, stdio: 'inherit', reject: true });
+  await execa('yarn', ['install', '--no-frozen-lockfile'], {
+    cwd: renovateDir,
+    stdio: 'inherit',
+    reject: true,
+  });
 
   return renovateDir;
 }
