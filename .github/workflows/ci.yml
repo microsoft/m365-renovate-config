@@ -41,7 +41,7 @@ jobs:
             echo "Skipping token check"
           fi
         env:
-          TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check formatting
         run: yarn format:check
