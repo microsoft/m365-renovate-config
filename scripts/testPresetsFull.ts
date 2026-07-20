@@ -73,8 +73,7 @@ function logRenovateError(logFile: string) {
     if (presetDebugLogs.length) {
       for (const log of presetDebugLogs) {
         const maybeHttpError = log.err?.err as
-          | { response?: { statusCode?: number }; options?: { url?: string } }
-          | undefined;
+          { response?: { statusCode?: number }; options?: { url?: string } } | undefined;
         if (maybeHttpError?.response?.statusCode === 404) {
           const url = maybeHttpError.options?.url;
           if (url?.includes(defaultRepo) && !url.includes('?ref=')) {

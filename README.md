@@ -183,6 +183,7 @@ Other settings:
 - `timezone`: Run schedules relative to Pacific time, since many M365 repos are based in that time zone. See the [time zone list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for other options.
 - `vulnerabilityAlerts`: Enable PRs to address security vulnerabilities. Note that this **only** works for GitHub and currently is **only** able to update direct dependencies (except in repos using `npm` 6 or older).
 - For `devDependencies`: Use "devDependencies" in commit messages (instead of the default "dependencies") to be clearer about what is being modified
+
 <!-- end extra content -->
 
 ---
@@ -403,6 +404,7 @@ To customize this rule's behavior for individual packages, you can add entries t
 
 - Exclude individual packages: `{ "groupName": "fixture dependencies", "matchPackageNames": ["!foo"] }` (or other [exclusion options](https://docs.renovatebot.com/configuration-options/#matchrepositories))
 - Limit the allowed versions for a specific package: `{ "matchPackageNames": ["foo"], "allowedVersions": "<6.0.0 }`
+
 <!-- end extra content -->
 
 ---
@@ -1128,6 +1130,7 @@ Some alternative strategies which would need to be configured per repo (see [Ren
 
 - Create a `packageRules` group which requires dependency dashboard approval for only major upgrades of specific packages that are known to be high risk/effort.
 - Set [schedules](https://docs.renovatebot.com/configuration-options/#schedule) for individual `packageRules` groups to avoid the upgrades being forgotten.
+
 <!-- end extra content -->
 
 ---
