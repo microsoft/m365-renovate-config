@@ -1,5 +1,4 @@
 import fetch, { type Response } from 'node-fetch';
-import { pathToFileURL } from 'url';
 import { getEnv } from './utils/getEnv.ts';
 import { logError } from './utils/github.ts';
 
@@ -38,13 +37,10 @@ export async function checkToken(token: string | undefined = getToken()) {
   }
 }
 
-// ESM version of `if (require.main === module)`
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  (async () => {
-    await checkToken(process.argv[2]);
-    console.log('Token is valid');
-  })().catch((err) => {
+if (import.meta.main) {
+  await checkToken(process.argv[2]).catch((err) => {
     logError(err);
     process.exit(1);
   });
+  console.log('Token is valid');
 }
