@@ -35,12 +35,7 @@ jobs:
       - run: yarn --immutable
 
       - name: Check token
-        run: |
-          if [[ -n "$TOKEN" || "$GITHUB_EVENT_NAME" -eq "push" ]]; then
-            yarn check-token "$TOKEN"
-          else
-            echo "Skipping token check"
-          fi
+        run: yarn check-token "$TOKEN"
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -72,7 +67,6 @@ jobs:
         id: dryRun
         env:
           TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
-          TOKEN_REQUIRED: 1
 
       - name: Upload dry run logs
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

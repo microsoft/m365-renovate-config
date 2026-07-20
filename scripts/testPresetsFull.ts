@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { checkToken } from './checkToken.ts';
+import { checkToken, getToken } from './checkToken.ts';
 import serverConfig from './serverConfig.ts';
 import { getEnv } from './utils/getEnv.ts';
 import {
@@ -32,7 +32,7 @@ async function runTests() {
     process.exit(0);
   }
 
-  checkToken();
+  checkToken(getToken(true) || '');
 
   await installRenovateTemp();
 

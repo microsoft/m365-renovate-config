@@ -6,14 +6,13 @@ import { logError } from './utils/github.ts';
 // It's also good for detecting if an invalid secret name was used.
 
 /**
- * Get the TOKEN environment variable, if set. The CI pipeline sets another variable TOKEN_REQUIRED
- * which will cause accessing this to throw if the token isn't present.
+ * Get the TOKEN environment variable, if set. Throws if `required` is true and the token is not present.
  */
-export function getToken() {
-  return getEnv('TOKEN', !!process.env.TOKEN_REQUIRED);
+export function getToken(required?: boolean) {
+  return getEnv('TOKEN', required);
 }
 
-export async function checkToken(token: string | undefined = getToken()) {
+export async function checkToken(token: string) {
   if (!token) {
     throw new Error('GitHub token not provided (is the variable name valid?)');
   }

@@ -49,7 +49,11 @@ export async function installRenovateTemp() {
     }
   });
 
-  fs.copyFileSync(path.join(paths.root, '.yarnrc.yml'), path.join(renovateDir, '.yarnrc.yml'));
+  const yarnrcContent = fs.readFileSync(path.join(paths.root, '.yarnrc.yml'), 'utf8');
+  fs.writeFileSync(
+    path.join(renovateDir, '.yarnrc.yml'),
+    yarnrcContent + '\nenableImmutableInstalls: false\nenableProgressBars: false\n',
+  );
   fs.cpSync(path.join(paths.root, '.yarn/releases'), path.join(renovateDir, '.yarn/releases'), {
     recursive: true,
   });
@@ -66,9 +70,10 @@ export async function installRenovateTemp() {
     }),
   );
 
-  await execa('yarn', ['install', '--no-frozen-lockfile'], {
+  await execa('yarn', ['install'], {
     cwd: renovateDir,
     stdio: 'inherit',
+    all: false,
     reject: true,
   });
 
