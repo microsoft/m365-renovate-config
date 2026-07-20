@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { checkToken } from './checkToken.ts';
+import { checkToken, getToken } from './checkToken.ts';
 import serverConfig from './serverConfig.ts';
 import { getEnv } from './utils/getEnv.ts';
 import {
@@ -12,8 +12,8 @@ import {
   logOther,
 } from './utils/github.ts';
 import { paths } from './utils/paths.ts';
-import { getRenovateEnv, logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.ts';
-import { runBin } from './utils/runBin.ts';
+import { logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.ts';
+import { installRenovateTemp, runRenovate } from './utils/runRenovate.ts';
 import type { RenovatePresetDebugLog } from './utils/types.ts';
 
 const configFilePath = path.join(import.meta.dirname, 'serverConfig.js');
@@ -32,7 +32,9 @@ async function runTests() {
     process.exit(0);
   }
 
-  checkToken();
+  checkToken(getToken(true) || '');
+
+  await installRenovateTemp();
 
   fs.writeFileSync(paths.logFileFull, ''); // Renovate wants this to exist already
 
@@ -41,14 +43,11 @@ async function runTests() {
   logEndGroup();
 
   logGroup('Running Renovate');
-  const result = await runBin('renovate', [], {
-    stdio: 'inherit',
-    env: getRenovateEnv({
-      logLevel: 'info',
-      logFile: paths.logFileFull,
-      logFileLevel: 'debug',
-      configFile: configFilePath,
-    }),
+  const result = await runRenovate('renovate', {
+    logLevel: 'info',
+    logFile: paths.logFileFull,
+    logFileLevel: 'debug',
+    configFile: configFilePath,
   });
   logEndGroup();
 
@@ -74,8 +73,7 @@ function logRenovateError(logFile: string) {
     if (presetDebugLogs.length) {
       for (const log of presetDebugLogs) {
         const maybeHttpError = log.err?.err as
-          | { response?: { statusCode?: number }; options?: { url?: string } }
-          | undefined;
+          { response?: { statusCode?: number }; options?: { url?: string } } | undefined;
         if (maybeHttpError?.response?.statusCode === 404) {
           const url = maybeHttpError.options?.url;
           if (url?.includes(defaultRepo) && !url.includes('?ref=')) {
