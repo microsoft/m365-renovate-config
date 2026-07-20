@@ -22,7 +22,7 @@ export async function checkToken(token: string) {
 
   let result: Response;
   try {
-    result = await fetch('https://api.github.com/' + getEnv('GITHUB_REPOSITORY', true), {
+    result = await fetch('https://api.github.com/repos/microsoft/m365-renovate-config', {
       headers: { Authorization: `Bearer ${token}` },
     });
   } catch (err) {
