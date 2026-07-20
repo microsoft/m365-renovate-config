@@ -1,17 +1,18 @@
 // Renovate self-hosted (server) config for testPresetsFull.ts
 // https://docs.renovatebot.com/self-hosted-configuration/
+// (types are exported from 'renovate/dist/config/types.js' but the explicit renovate dep was
+// removed to decrease maintenance overhead)
 
 import { getToken } from './checkToken.ts';
 import { getExtendsForLocalPreset } from './utils/extends.ts';
 import { defaultBranch, defaultRepo, githubBranchName } from './utils/github.ts';
 import { readPresets } from './utils/readPresets.ts';
-import type { AllConfig } from './utils/types.ts';
 
 const presets = readPresets();
 // add a reference to the branch if not testing main
 const branchRef = githubBranchName === defaultBranch ? '' : githubBranchName;
 
-const config: AllConfig = {
+const config = {
   // All we really need here is the config validation, so do the shortest type of dry run
   // https://docs.renovatebot.com/self-hosted-configuration/#dryrun
   dryRun: 'extract',

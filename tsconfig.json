@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "strict": true,
+    "noUnusedLocals": true,
     "types": ["node"]
   },
   "include": ["scripts"],

@@ -12,8 +12,8 @@ import {
   logOther,
 } from './utils/github.ts';
 import { paths } from './utils/paths.ts';
-import { getRenovateEnv, logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.ts';
-import { runBin } from './utils/runBin.ts';
+import { logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.ts';
+import { runRenovate } from './utils/runBin.ts';
 import type { RenovatePresetDebugLog } from './utils/types.ts';
 
 const configFilePath = path.join(import.meta.dirname, 'serverConfig.js');
@@ -41,14 +41,11 @@ async function runTests() {
   logEndGroup();
 
   logGroup('Running Renovate');
-  const result = await runBin('renovate', [], {
-    stdio: 'inherit',
-    env: getRenovateEnv({
-      logLevel: 'info',
-      logFile: paths.logFileFull,
-      logFileLevel: 'debug',
-      configFile: configFilePath,
-    }),
+  const result = await runRenovate('renovate', {
+    logLevel: 'info',
+    logFile: paths.logFileFull,
+    logFileLevel: 'debug',
+    configFile: configFilePath,
   });
   logEndGroup();
 

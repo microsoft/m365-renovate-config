@@ -8,8 +8,8 @@ import { formatFileContents } from './utils/formatFile.ts';
 import { isGithub, logEndGroup, logError, logOther, logGroup } from './utils/github.ts';
 import { paths } from './utils/paths.ts';
 import { readPresetsAndConfigs, specialConfigNames } from './utils/readPresets.ts';
-import { formatRenovateLog, getRenovateEnv } from './utils/renovateLogs.ts';
-import { runBin } from './utils/runBin.ts';
+import { formatRenovateLog } from './utils/renovateLogs.ts';
+import { runRenovate } from './utils/runBin.ts';
 import type { ConfigData, LocalPresetData, RenovateLog } from './utils/types.ts';
 
 const presetArg = process.argv
@@ -27,16 +27,14 @@ async function checkFile(preset: ConfigData, hasInvalidRepoConfig: boolean): Pro
 
   // Use renovate-config-validator to test for blatantly invalid configuration
   // and for configs needing migration.
-  const configProcess = runBin('renovate-config-validator', [], {
-    quiet: true,
-    env: getRenovateEnv({
-      configFile: absolutePath,
-      logLevel: 'warn',
-      // log as JSON to make it easier to determine if migration is needed
-      logFormat: 'json',
-      logFile: paths.logFileBasic,
-      logFileLevel: 'debug',
-    }),
+  const configProcess = runRenovate('renovate-config-validator', {
+    configFile: absolutePath,
+    logLevel: 'warn',
+    // log as JSON to make it easier to determine if migration is needed
+    logFormat: 'json',
+    logFile: paths.logFileBasic,
+    logFileLevel: 'debug',
+    options: { stdio: 'pipe', reject: false },
   });
 
   let migratedConfig: any;

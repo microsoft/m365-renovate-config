@@ -95,7 +95,7 @@ export async function bumpAndRelease(github: Octokit, githubToken: string) {
 
   // Update the version and changelog
   logGroup('Bumping versions and updating changelog locally');
-  await runBin('changeset', ['version'], { cwd: paths.root, stdio: 'inherit', reject: true });
+  await runBin('changeset', ['version']);
   logEndGroup();
 
   // Get the new version to determine the tag name and release branch

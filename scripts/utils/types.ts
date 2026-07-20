@@ -1,9 +1,3 @@
-// This file is .ts not .d.ts to ensure proper type checking
-// (it only exports types and is never run)
-import type { RenovateConfig, AllConfig } from 'renovate/dist/config/types.js';
-
-export type { RenovateConfig, AllConfig };
-
 export type RenovateLogLevels = {
   trace: 10;
   debug: 20;
@@ -66,8 +60,23 @@ export type ConfigData = {
   filename: string;
   /** Content of the preset file. Undefined for server config. */
   content?: string;
-  /** Parsed content of the preset file. Undefined for server config. */
-  json?: RenovateConfig;
+  /**
+   * Parsed content of the preset file. Undefined for server config.
+   * @see https://docs.renovatebot.com/configuration-options/
+   */
+  json?: BasicRenovateConfig;
+};
+
+/**
+ * Subset of Renovate config properties used (types are exported from `renovate/dist/config/types.js`
+ * but the explicit renovate dep was removed to decrease maintenance overhead)
+ * @see https://docs.renovatebot.com/configuration-options/
+ */
+type BasicRenovateConfig = {
+  $schema?: string;
+  description?: string;
+  extends?: string[];
+  ignorePresets?: string[];
 };
 
 export type LocalPresetData = Required<ConfigData>;

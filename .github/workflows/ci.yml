@@ -6,6 +6,8 @@ on:
       - main
       # validate configs that are pushed to a branch
       - 'v[0-9]*'
+  schedule:
+    - cron: '0 0 * * 1'
 
 concurrency:
   group: ${{ github.ref }}-ci

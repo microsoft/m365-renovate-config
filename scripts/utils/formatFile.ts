@@ -6,11 +6,7 @@ import { runBin } from './runBin.ts';
  * Format a file with Prettier
  */
 export async function formatFile(file: string, options: Parameters<typeof runBin>[2] = {}) {
-  await runBin('prettier', ['--write', '--loglevel=warn', file], {
-    stdio: 'inherit',
-    reject: true,
-    ...options,
-  });
+  await runBin('prettier', ['--write', '--loglevel=warn', file]);
 }
 
 /**

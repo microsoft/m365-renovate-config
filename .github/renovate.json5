@@ -23,15 +23,10 @@
 
   "packageRules": [
     {
-      // Group updates of all deps except Renovate.
+      // Group updates of all dev deps
       "groupName": "devDependencies",
       "matchPackageNames": ["*"],
       "matchUpdateTypes": ["minor", "patch"],
-      "matchDepNames": ["!renovate"],
-      "schedule": ["before 5am on the 1st day of the month"]
-    },
-    {
-      "matchPackageNames": ["renovate"],
       "schedule": ["before 5am on the 1st day of the month"]
     }
   ]

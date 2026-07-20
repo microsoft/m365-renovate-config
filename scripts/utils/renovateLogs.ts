@@ -11,17 +11,7 @@ const logLevelStrings: Record<RenovateLogLevelValue, string> = {
   60: 'fatal',
 };
 
-/**
- * @returns Environment variables to set for Renovate
- */
-export function getRenovateEnv({
-  logLevel,
-  logFormat,
-  logFile,
-  logFileLevel,
-  logFileFormat,
-  configFile,
-}: {
+export type RenovateEnvParams = {
   /** Log level for console output (default info) */
   logLevel?: RenovateLogLevelName;
   /** Log format for console output (default pretty) */
@@ -34,7 +24,13 @@ export function getRenovateEnv({
   logFileFormat?: 'json' | 'pretty';
   /** Path to the config file */
   configFile?: string;
-}): Record<string, string> {
+};
+
+/**
+ * @returns Environment variables to set for Renovate
+ */
+export function getRenovateEnv(params: RenovateEnvParams): Record<string, string> {
+  const { logLevel, logFormat, logFile, logFileLevel, logFileFormat, configFile } = params;
   return {
     ...(logLevel && { LOG_LEVEL: logLevel }),
     ...(logFormat && { LOG_FORMAT: logFormat }),
