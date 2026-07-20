@@ -6,6 +6,7 @@ on:
       - main
       # validate configs that are pushed to a branch
       - 'v[0-9]*'
+  # run weekly to validate against renovate changes
   schedule:
     - cron: '0 0 * * 1'
 

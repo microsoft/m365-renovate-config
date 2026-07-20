@@ -9,7 +9,7 @@ import { isGithub, logEndGroup, logError, logOther, logGroup } from './utils/git
 import { paths } from './utils/paths.ts';
 import { readPresetsAndConfigs, specialConfigNames } from './utils/readPresets.ts';
 import { formatRenovateLog } from './utils/renovateLogs.ts';
-import { runRenovate } from './utils/runBin.ts';
+import { installRenovateTemp, runRenovate } from './utils/runRenovate.ts';
 import type { ConfigData, LocalPresetData, RenovateLog } from './utils/types.ts';
 
 const presetArg = process.argv
@@ -196,6 +196,8 @@ function checkExtends(preset: ConfigData, presetNames: string[]): Exclude<Result
 }
 
 async function runTests() {
+  await installRenovateTemp();
+
   // Create an empty log file before the tests start (renovate will append to this file)
   fs.writeFileSync(paths.logFileBasic, '');
 

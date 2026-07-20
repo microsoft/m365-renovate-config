@@ -13,7 +13,7 @@ import {
 } from './utils/github.ts';
 import { paths } from './utils/paths.ts';
 import { logRenovateErrorDetails, readRenovateLogs } from './utils/renovateLogs.ts';
-import { runRenovate } from './utils/runBin.ts';
+import { installRenovateTemp, runRenovate } from './utils/runRenovate.ts';
 import type { RenovatePresetDebugLog } from './utils/types.ts';
 
 const configFilePath = path.join(import.meta.dirname, 'serverConfig.js');
@@ -33,6 +33,8 @@ async function runTests() {
   }
 
   checkToken();
+
+  await installRenovateTemp();
 
   fs.writeFileSync(paths.logFileFull, ''); // Renovate wants this to exist already
 
