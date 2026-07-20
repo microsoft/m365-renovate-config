@@ -912,7 +912,8 @@ This preset is mainly useful if `lockFileMaintenance` is enabled and some or all
 - For `^` or `~` `dependencies`:
   - For versions > `0.x`, explicitly pick up minor updates once a week in case of API changes, and disable explicit patch updates.
   - For `0.x` versions, explicitly pick up patch updates once a week in case of API changes.
-  <!-- end extra content -->
+
+<!-- end extra content -->
 
 ---
 

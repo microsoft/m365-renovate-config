@@ -4,7 +4,7 @@ import jju from 'jju';
 import path from 'path';
 import { Transform } from 'stream';
 import { getLocalPresetFromExtends } from './utils/extends.ts';
-import { formatFileContents } from './utils/formatFile.ts';
+import { updateAndFormat } from './utils/formatFile.ts';
 import { isGithub, logEndGroup, logError, logOther, logGroup } from './utils/github.ts';
 import { paths } from './utils/paths.ts';
 import { readPresetsAndConfigs, specialConfigNames } from './utils/readPresets.ts';
@@ -155,13 +155,7 @@ async function migrateConfig(preset: LocalPresetData, migratedConfig: any): Prom
   if (!isGithub || isRepoConfig) {
     // Actually update and format the file
     console.log(`Migrating ${filename} (see git diff for details)`);
-    try {
-      const formattedContent = await formatFileContents(absolutePath, migratedContent);
-      fs.writeFileSync(absolutePath, formattedContent);
-    } catch (err) {
-      logError(err);
-      result = 'error';
-    }
+    await updateAndFormat(absolutePath, migratedContent);
   }
 
   return result;

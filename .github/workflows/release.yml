@@ -64,7 +64,7 @@ jobs:
         run: yarn test:full
         id: dryRun
         env:
-          TOKEN: ${{ secrets.TOKEN_GITHUB_READ }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TOKEN_REQUIRED: 1
 
       - name: Release
