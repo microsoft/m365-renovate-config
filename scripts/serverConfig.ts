@@ -1,17 +1,17 @@
-// Renovate self-hosted (server) config for testPresetsFull.ts
-// https://docs.renovatebot.com/self-hosted-configuration/
-// (types are exported from 'renovate/dist/config/types.js' but the explicit renovate dep was
-// removed to decrease maintenance overhead)
-
 import { getToken } from './checkToken.ts';
 import { getExtendsForLocalPreset } from './utils/extends.ts';
 import { defaultBranch, defaultRepo, githubBranchName } from './utils/github.ts';
 import { readPresets } from './utils/readPresets.ts';
 
 const presets = readPresets();
-// add a reference to the branch if not testing main
-const branchRef = githubBranchName === defaultBranch ? '' : githubBranchName;
 
+/**
+ * Renovate self-hosted (server) config for testPresetsFull.ts
+ * https://docs.renovatebot.com/self-hosted-configuration/
+ *
+ * (types are exported from `renovate/dist/config/types.js` but the explicit renovate dep was
+ * removed to decrease maintenance overhead)
+ */
 const config = {
   // All we really need here is the config validation, so do the shortest type of dry run
   // https://docs.renovatebot.com/self-hosted-configuration/#dryrun
@@ -26,7 +26,9 @@ const config = {
     // (Note this will NOT fix the names of extended presets within another preset,
     // so extended presets will be fetched from main, not the branch. This is usually
     // fine but will cause an error if a preset extends a newly-added preset in a PR.)
-    extends: presets.map((p) => getExtendsForLocalPreset(p.name, branchRef)),
+    extends: presets.map((p) =>
+      getExtendsForLocalPreset(p.name, githubBranchName === defaultBranch ? '' : githubBranchName),
+    ),
     // also use the current branch as the base
     ...(githubBranchName &&
       githubBranchName !== defaultBranch && {
