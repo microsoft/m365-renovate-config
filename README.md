@@ -1,4 +1,4 @@
-# m365-renovate-config
+# m365-renovate-config - moved to https://github.com/microsoft/beachball/tree/main/renovate
 
 Shared Renovate presets for use in M365 projects.
 
